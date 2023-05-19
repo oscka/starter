@@ -1,0 +1,10 @@
+# starter
+한 Express 템플릿 프로젝트 - Starter
+
+## Project 기술 스택
+- Spring Boot 2.7.11 , jdk 17, gradle 7.6.1
+- Spring Security (with JWT token)
+- Spring Data JDBC + Spring JDBC
+- Postgresql (prod,dev) , H2 (local,test)
+- log4j2 , MDC
+- Spring Data Redis

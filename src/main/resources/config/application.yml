@@ -1,0 +1,59 @@
+spring:
+  application:
+    name: starter
+  profiles:
+    active: local
+  lifecycle:
+    timeout-per-shutdown-phase: 10s # graceful shutdown 유예시간 설정
+#--------------------------
+# i18n
+#--------------------------
+  messages:
+    basename: classpath:i18n/messages, classpath:i18n/error
+    encoding: UTF-8
+    cache-duration: 30
+    always-use-message-format: true
+    use-code-as-default-message: true
+    fallback-to-system-locale: true
+
+# cache ttl 설정 (cacheName:ttl)
+custom:
+  cache:
+
+#--------------------------
+# logging
+#--------------------------
+logging:
+  level:
+    #  root: debug
+    org.springframework.jdbc.core: TRACE
+    org.springframework.jdbc.core.StatementCreatorUtils: TRACE
+#--------------------------
+# actuator
+#--------------------------
+management:
+  endpoints:
+    enabled-by-default: false # 1. Endpoint all disable
+    # 3. Exclude all endpoint for JMX and Expose specific endpoints
+    web.exposure.include: "health,info"
+    jmx.exposure.exclude: "*"
+  # 2. Enable specific endpoints
+  endpoint:
+    info.enabled: true
+    health:
+      enabled: true
+      probes.enabled: true
+      defaults.enabled: true
+
+#--------------------------
+# security
+#--------------------------
+security:
+  jwt:
+    token:
+      issuer: "hanex@hanex.co.kr"
+      private-key-path: ${PRIVATE_KEY}
+      public-key-path: ${PUBLIC_KEY}
+      expire-length: ${TOKEN_EXPIRE_LENGTH:72000000}
+    refresh-token:
+      expire-length: ${REFRESH_TOKEN_EXPIRE_LENGTH:1209600000}

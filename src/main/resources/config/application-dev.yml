@@ -1,0 +1,16 @@
+###################
+# dev
+###################
+spring:
+  datasource:
+    url: jdbc:postgresql://host.docker.internal:54321/hanexdb?currentSchema=sc_starter
+    driverClassName: org.postgresql.Driver
+    username: hanex
+    password: hanex1234
+  redis:
+    host: host.docker.internal
+    port: 6001
+
+logging:
+  config: classpath:log4j2-dev.xml
+
