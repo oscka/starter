@@ -32,7 +32,7 @@ CREATE TABLE `group_mgmt` (
   `updated_by` varchar(30) DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`code`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+);
 
 -- auth_mgmt : 권한 관리
 CREATE TABLE `auth_mgmt` (
@@ -45,7 +45,7 @@ CREATE TABLE `auth_mgmt` (
   `updated_by` varchar(30) DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`auth_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+);
 
 -- tb_login: 로그인
 CREATE TABLE `tb_login` (
@@ -57,7 +57,7 @@ CREATE TABLE `tb_login` (
   `updated_by` varchar(30) DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`login_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+);
 
 -- client_auth: 고객사 권한매핑
 CREATE TABLE `client_auth` (
@@ -71,7 +71,7 @@ CREATE TABLE `client_auth` (
   `updated_by` varchar(30) DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`user_auth_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+);
 
 -- tb_menu : 메뉴 관리
 CREATE TABLE `menu_mgmt` (
@@ -85,7 +85,7 @@ CREATE TABLE `menu_mgmt` (
   `updated_by` varchar(30) DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`code`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+);
 
 -- menu_auth : 메뉴 권한 관리
 CREATE TABLE `menu_auth` (
@@ -105,4 +105,4 @@ CREATE TABLE `menu_auth` (
   `updated_by` varchar(30) DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`menu_auth_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+);
