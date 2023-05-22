@@ -10,9 +10,12 @@ spring:
     username: sa
     password:
     url: jdbc:h2:mem:starter;MODE=PostgreSQL;DATABASE_TO_LOWER=TRUE;DEFAULT_NULL_ORDERING=HIGH
+    #url: jdbc:h2:~/starter;MODE=PostgreSQL;DATABASE_TO_LOWER=TRUE;DEFAULT_NULL_ORDERING=HIGH
     platform: h2
   h2:
-    console.enabled: true
+    console:
+      enabled: true
+      #path: /h2-console  # H2 Console의 Path
   redis:
     host: host.docker.internal
     port: 6001
