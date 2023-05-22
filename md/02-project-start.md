@@ -24,7 +24,7 @@ application.yml 에서 profile 을 local 로 지정하면 application-local.yml 
 - URL : {server-address}**/h2-console**
     - ex) http://localhost:18080/h2-console
 
-2. api test 방법
+2. **API TEST**
 - VSCode
     - (httpYac - Rest Client) Extensions 설치
     - http 확장자인 파일 테스트
@@ -32,3 +32,7 @@ application.yml 에서 profile 을 local 로 지정하면 application-local.yml 
     - Ultimate(유료) 일경우 http 테스트 사용가능
 
 - [User API 테스트](http/users.http)
+
+3. **docker-compose for postgres**
+- [postgres Local PC 에서 docker-compose 로 실행](md/etc/docker-compose.yml)
+
