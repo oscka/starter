@@ -1,6 +1,6 @@
-package com.hanex.starter.domain.owner;
+package com.hanex.starter.domain.customer;
 
-public class OwnerSql {
+public class CustomerSql {
 
     public static final String SELECT_BY_ID_WITH_PRODUCT =  """
                 SELECT

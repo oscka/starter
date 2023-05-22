@@ -1,4 +1,4 @@
-package com.hanex.starter.domain.owner;
+package com.hanex.starter.domain.customer;
 
 import lombok.*;
 import org.springframework.data.annotation.Id;

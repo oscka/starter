@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.UUID;
 
-@RequestMapping("/account")
+@RequestMapping("/v1/account")
 @RequiredArgsConstructor
 @RestController
 public class UserRestController {

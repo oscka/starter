@@ -1,12 +1,12 @@
-package com.hanex.starter.controller.owner;
+package com.hanex.starter.controller.customer;
 
-import com.hanex.starter.domain.owner.BankAccount;
-import com.hanex.starter.domain.owner.Owner;
+import com.hanex.starter.domain.customer.BankAccount;
+import com.hanex.starter.domain.customer.Customer;
 import lombok.*;
 
 import java.util.UUID;
 
-public class OwnerDto {
+public class CustomerDto {
 
 	@Getter
 	@Builder
@@ -14,15 +14,22 @@ public class OwnerDto {
 	@AllArgsConstructor
 	public static class SaveRequest {
 
-		private UUID userId;
+		private String accountType;
+		private String phone;
+
+		private String managerName;
+		private String ceoName;
+		private String registrationNumber;
+
 		private String memo;
+
 		private String bank;
 		private String accountNumber;
 		private String accountUserName;
 		private Boolean accountVerified;
 
-		public Owner toEntity(){
-			return Owner.builder()
+		public Customer toEntity(){
+			return Customer.builder()
 					.bankAccount(BankAccount.builder()
 							.bank(this.bank)
 							.accountNumber(this.accountNumber)
@@ -39,11 +46,16 @@ public class OwnerDto {
 	@Builder
 	@NoArgsConstructor(access = AccessLevel.PROTECTED)
 	@AllArgsConstructor
-	public static class OwnerInfoResponse {
+	public static class CustomerInfoResponse {
 
-		private UUID id;
-		private String name;
+		private String customerCode;
+		private String accountType;
 		private String phone;
+		private String managerName;
+		private String ceoName;
 		private String registrationNumber;
+		private String memo;
+
+
 	}
 }

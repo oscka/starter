@@ -1,4 +1,4 @@
-package com.hanex.starter.domain.owner;
+package com.hanex.starter.domain.customer;
 
 import com.hanex.starter.domain.user.User;
 import lombok.*;
@@ -15,21 +15,20 @@ import java.util.UUID;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Table("tb_owner")
-public class Owner {
+@Table("tb_customer")
+public class Customer {
 
 	@Id
 	private UUID id;
 
-	private AggregateReference<User, @NotNull UUID> userId;
+	private AggregateReference<User, @NotNull UUID> managerId;
 
 	@Column("id")
 	private BankAccount bankAccount;
 
-	private OwnerType ownerType;
+	private CustomerType customerType;
 
 	private String memo;
-
 
 
 	@Builder.Default

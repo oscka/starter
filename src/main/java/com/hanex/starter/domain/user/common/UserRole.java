@@ -11,10 +11,10 @@ C (기능) - Dashboard, CO, SO, 계약 등
  */
 public enum UserRole {
 
-	ADMIN, // 관리자
+	ROLE_ADMIN, // 관리자 (내부 사용자)
 
-	PARTNER, // 파트너 (고객사,거래처,실행사,택배사)
+	ROLE_CLIENT, // 고객사 (화주)
 
-	CUSTOMER // 사용자
+	ROLE_CUSTOMER // 사용자 (거래처,실행사,택배사)
 
 }

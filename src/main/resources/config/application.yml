@@ -50,10 +50,8 @@ management:
 #--------------------------
 security:
   jwt:
-    token:
-      issuer: "hanex@hanex.co.kr"
-      private-key-path: ${PRIVATE_KEY}
-      public-key-path: ${PUBLIC_KEY}
-      expire-length: ${TOKEN_EXPIRE_LENGTH:72000000}
-    refresh-token:
-      expire-length: ${REFRESH_TOKEN_EXPIRE_LENGTH:1209600000}
+    private-key-path: classpath:key/hanex-jwt.jks
+    public-key-path: classpath:key/public.key
+    issuer: "hanex@hanex.co.kr"
+    token-expire-length: 72000000
+    refresh-token-expire-length: 1209600000
