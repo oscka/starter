@@ -45,13 +45,3 @@ management:
       probes.enabled: true
       defaults.enabled: true
 
-#--------------------------
-# security
-#--------------------------
-security:
-  jwt:
-    private-key-path: classpath:key/hanex-jwt.jks
-    public-key-path: classpath:key/public.key
-    issuer: "hanex@hanex.co.kr"
-    token-expire-length: 72000000
-    refresh-token-expire-length: 1209600000
