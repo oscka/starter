@@ -1,7 +1,7 @@
 package com.hanex.starter.domain.user;
 
 import com.hanex.starter.common.util.encrypt.EncryptString;
-import com.hanex.starter.controller.user.dto.UserDto;
+import com.hanex.starter.controller.user.UserDto;
 import com.hanex.starter.domain.user.common.Gender;
 import com.hanex.starter.domain.user.common.UserRole;
 import com.hanex.starter.domain.user.common.UserState;

@@ -14,6 +14,4 @@ public class MessageProperties {
     private Boolean alwaysUseMessageFormat;
     private Boolean useCodeAsDefaultMessage;
     private Boolean fallbackToSystemLocale;
-
-
 }

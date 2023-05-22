@@ -10,3 +10,7 @@
 - log4j2 , MDC
 - spring i18n (message source > 다국어처리)
 - Spring Data Redis
+
+## Project Description
+1. 
+2. [Project 시작](md/02-project-start.md)

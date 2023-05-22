@@ -1,4 +1,4 @@
-package com.hanex.starter.controller.user.dto;
+package com.hanex.starter.controller.user;
 
 
 import com.hanex.starter.common.util.encrypt.EncryptString;

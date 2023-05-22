@@ -1,0 +1,58 @@
+# 사용자 추가
+POST /account
+Content-Type: application/json
+Host: localhost:18080
+
+{
+  "name" : "홍길동",
+  "email" : "test@demo.com",
+  "password" : "test1234",
+  "loginId" : "test",
+  "state" : "ACTIVE"
+}
+
+###
+# 사용자 조회 (List) (회원조회-list)
+GET /account
+Host: localhost:18080
+
+###
+# 사용자 조회 (detail) (회원조회-detail)
+# /account/{loginId}
+GET /account/test
+Host: localhost:18080
+
+###
+# 사용자 수정 (회원수정)
+# PUT /account/{id}
+PUT /account/3
+Host: localhost:18080
+Content-Type: application/json
+
+{
+  "name" : "홍길동",
+  "email" : "test@demo.com",
+  "password" : "test1234",
+  "state" : "ACTIVE"
+}
+
+###
+# 사용자 삭제 (회원탈퇴)
+# DELETE /account/{id}
+DELETE /account/1
+Host: localhost:18080
+
+###
+# 로그인
+POST /account/login
+Host: localhost:18080
+Content-Type: application/json
+{
+  "loginId" : "test",
+  "password" : "test1234"
+}
+
+###
+# 로그아웃
+GET /account/logout
+Host: localhost:18080

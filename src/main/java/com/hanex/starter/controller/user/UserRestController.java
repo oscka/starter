@@ -1,6 +1,5 @@
 package com.hanex.starter.controller.user;
 
-import com.hanex.starter.controller.user.dto.UserDto;
 import com.hanex.starter.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
