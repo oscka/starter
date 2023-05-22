@@ -12,5 +12,5 @@
 - Spring Data Redis
 
 ## Project Description
-1. 
+1. [Project 요구사항 정리](md/01-requirement.md)
 2. [Project 시작](md/02-project-start.md)

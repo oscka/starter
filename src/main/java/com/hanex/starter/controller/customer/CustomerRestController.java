@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
-@RequestMapping("/v1/owner")
+@RequestMapping("/v1/customer")
 @RestController
 @RequiredArgsConstructor
 public class CustomerRestController {

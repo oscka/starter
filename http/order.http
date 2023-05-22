@@ -1,0 +1,10 @@
+#-----------------------
+# order.http
+#-----------------------
+
+###
+# order 생성
+POST /order
+Host: localhost:8080
+Authorization: Bearer <jwt-token>
+Content-Type: application/json

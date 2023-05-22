@@ -1,0 +1,10 @@
+#-----------------------
+# customer.http
+#-----------------------
+
+###
+# customer 생성
+POST /customer
+Host: localhost:8080
+Authorization: Bearer <jwt-token>
+Content-Type: application/json

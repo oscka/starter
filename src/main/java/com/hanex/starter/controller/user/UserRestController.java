@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.UUID;
 
-@RequestMapping("/v1/account")
+@RequestMapping("/v1/users")
 @RequiredArgsConstructor
 @RestController
 public class UserRestController {

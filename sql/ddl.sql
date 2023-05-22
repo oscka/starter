@@ -1,7 +1,6 @@
 -- starter ddl.sql
 
 /*
-
 고객사 client
 거래처,실행사 customer
 로그인 login_tb
@@ -44,6 +43,12 @@ CREATE TABLE `auth_mgmt` (
   `updated_by` varchar(30) DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`auth_id`)
+);
+
+-- client: 고객사
+CREATE TABLE `client` (
+
+
 );
 
 -- tb_login: 로그인

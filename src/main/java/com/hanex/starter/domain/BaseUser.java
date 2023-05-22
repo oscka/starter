@@ -11,16 +11,6 @@ import lombok.Value;
 public class BaseUser {
 
     private String loginId;
-
-    private String name;
-
-    private UserState state;
-
-    private UserRole role;
-
-    private EncryptString email;
-
     private String password;
 
-    private String phone;
 }
