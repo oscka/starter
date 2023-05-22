@@ -14,7 +14,7 @@ import org.springframework.data.relational.core.mapping.Table;
 @Builder
 @Getter
 @ToString
-@Table("tb_client")
+@Table("client")
 public class Client {
 
     private BaseUser baseUser;
@@ -23,7 +23,6 @@ public class Client {
     private UserRole role;
     private EncryptString email;
     private Group group;
-
     private String name;
     private String phone;
 

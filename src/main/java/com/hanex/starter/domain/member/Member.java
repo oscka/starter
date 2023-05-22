@@ -1,5 +1,9 @@
-package com.hanex.starter.domain.customer;
+package com.hanex.starter.domain.member;
 
+import com.hanex.starter.controller.member.MemberDto;
+import com.hanex.starter.domain.client.Client;
+import com.hanex.starter.domain.member.common.BankAccount;
+import com.hanex.starter.domain.member.common.MemberType;
 import com.hanex.starter.domain.user.User;
 import lombok.*;
 import org.springframework.data.annotation.*;
@@ -15,20 +19,21 @@ import java.util.UUID;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Table("tb_customer")
-public class Customer {
+@Table("member_tb")
+public class Member {
 
 	@Id
 	private UUID id;
 
-	private AggregateReference<User, @NotNull UUID> managerId;
+	private AggregateReference<Client, @NotNull UUID> clientId;
 
-	@Column("id")
-	private BankAccount bankAccount;
-
-	private CustomerType customerType;
-
+	private MemberType memberType;
+	private String managerName;
+	private String ceoName;
+	private String registrationNumber;
+	private String phone;
 	private String memo;
+
 
 
 	@Builder.Default
@@ -46,5 +51,11 @@ public class Customer {
 	private AggregateReference<User, @NotNull UUID> updatedBy;
 
 	// ---------------- 비지니스 로직 --------------- //
+
+	public MemberDto.MemberInfoResponse toDto(){
+		return MemberDto.MemberInfoResponse
+
+				.builder().build();
+	}
 
 }

@@ -1,3 +1,5 @@
+# 02. Project 사용 방법
+
 1. **H2 console**
 
 ```yaml

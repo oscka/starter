@@ -2,7 +2,7 @@
 
 /*
 고객사 client
-거래처,실행사 customer
+거래처,실행사 member
 로그인 login_tb
 
 고객사 권한 매핑 client_auth
@@ -22,7 +22,7 @@ CREATE TABLE `group_mgmt` (
   `name` varchar(100) DEFAULT NULL,
   `upper_code` varchar(20) DEFAULT NULL,
   `unit` char(7) DEFAULT NULL,
-  `is_used` char(1) DEFAULT NULL,
+  `use_yn` char(1) DEFAULT NULL,
   `sort_seq` int(11) DEFAULT NULL,
   `memo` varchar(4000) DEFAULT NULL,
   `created_by` varchar(30) DEFAULT NULL,
@@ -45,24 +45,6 @@ CREATE TABLE `auth_mgmt` (
   PRIMARY KEY (`auth_id`)
 );
 
--- client: 고객사
-CREATE TABLE `client` (
-
-
-);
-
--- tb_login: 로그인
-CREATE TABLE `tb_login` (
-  `login_id` varchar(32) NOT NULL,
-  `password` varchar(100) DEFAULT NULL,
-  `auth_id` varchar(30) NOT NULL,
-  `created_by` varchar(30) DEFAULT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_by` varchar(30) DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`login_id`)
-);
-
 -- client_auth: 고객사 권한매핑
 CREATE TABLE `client_auth` (
   `id` varchar(32)  NOT NULL,
@@ -75,6 +57,54 @@ CREATE TABLE `client_auth` (
   `updated_by` varchar(30) DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`user_auth_id`)
+);
+
+
+-- client: 고객사
+CREATE TABLE `client` (
+  `id` varchar(32)  NOT NULL,
+  `auth_id` varchar(30) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `phone` varchar(255) NOT NULL,
+  `memo` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `created_by` varchar(30) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_by` varchar(30) DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+);
+
+
+-- member_tb : 거래처,실행사
+CREATE TABLE `member_tb` (
+  `id` varchar(32)  NOT NULL,
+  `client_id` varchar(30) NOT NULL,
+  `auth_id` varchar(30) NOT NULL,
+  `member_type` varchar(30) NOT NULL,
+  `manager_name` varchar(255) NOT NULL,
+  `ceo_name` varchar(255)  DEFAULT NULL,
+  `registration_number` varchar(255)  DEFAULT NULL,
+  `phone` varchar(255) NOT NULL,
+  `memo` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `created_by` varchar(30) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_by` varchar(30) DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+);
+
+-- tb_login: 로그인
+CREATE TABLE `tb_login` (
+  `login_id` varchar(32) NOT NULL,
+  `password` varchar(100) DEFAULT NULL,
+  `user_id` varchar(30) NOT NULL,
+  `created_by` varchar(30) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_by` varchar(30) DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`login_id`,`user_id`)
 );
 
 -- tb_menu : 메뉴 관리

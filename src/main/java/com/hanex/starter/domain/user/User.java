@@ -21,7 +21,7 @@ import java.util.UUID;
 @Builder
 @Getter
 @ToString
-@Table("tb_user")
+@Table("user_tb")
 public class User {
 
 	@Id
@@ -32,8 +32,6 @@ public class User {
 	private String name;
 
 	private UserState state;
-
-	private Gender gender;
 
 	private UserRole role;
 

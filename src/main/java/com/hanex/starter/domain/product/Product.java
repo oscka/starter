@@ -1,7 +1,7 @@
 package com.hanex.starter.domain.product;
 
 
-import com.hanex.starter.domain.customer.Customer;
+import com.hanex.starter.domain.member.Member;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -27,7 +27,7 @@ public class Product {
 	private Long price;
 	private String description;
 
-	private AggregateReference<Customer, @NotBlank @Size(max = 200) String> ownerId;
+	private AggregateReference<Member, @NotBlank @Size(max = 200) String> ownerId;
 
 
 	@Builder.Default

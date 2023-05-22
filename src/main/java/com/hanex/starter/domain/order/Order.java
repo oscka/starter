@@ -1,7 +1,7 @@
 package com.hanex.starter.domain.order;
 
 import com.hanex.starter.domain.order.common.OrderStatus;
-import com.hanex.starter.domain.customer.Customer;
+import com.hanex.starter.domain.member.Member;
 import com.hanex.starter.domain.user.User;
 import lombok.*;
 import org.springframework.data.annotation.Id;
@@ -19,7 +19,7 @@ public class Order {
 	private Long id;
 	private List<OrderLineItem> orderLineItems;
 	private User user;
-	private Customer customer;
+	private Member member;
 	private OrderStatus status;
 	private Instant orderDateTime;
 }

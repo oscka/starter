@@ -1,6 +1,6 @@
-package com.hanex.starter.domain.customer;
+package com.hanex.starter.domain.member.common;
 
-public enum CustomerType {
+public enum MemberType {
     
     // 고객사(화주)
     CLIENT,
@@ -8,7 +8,7 @@ public enum CustomerType {
     // 거래처
     CUSTOMER,
 
-    // 실행사 (
+    // 실행사
     EXCUTOR
 
     ;

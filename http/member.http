@@ -1,10 +1,10 @@
 #-----------------------
-# customer.http
+# member.http
 #-----------------------
 
 ###
-# customer 생성
-POST /customer
+# member 생성
+POST /member
 Host: localhost:8080
 Authorization: Bearer <jwt-token>
 Content-Type: application/json

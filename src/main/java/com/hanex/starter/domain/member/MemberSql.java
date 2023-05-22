@@ -1,6 +1,6 @@
-package com.hanex.starter.domain.customer;
+package com.hanex.starter.domain.member;
 
-public class CustomerSql {
+public class MemberSql {
 
     public static final String SELECT_BY_ID_WITH_PRODUCT =  """
                 SELECT
