@@ -24,8 +24,8 @@ public class MemberRestController {
 	}
 
 	@GetMapping
-	private ResponseEntity<Page<MemberDto.MemberInfoResponse>> findAll(Pageable pageable){
-		return ResponseEntity.ok(memberService.findAll(pageable));
+	private ResponseEntity<Page<MemberDto.MemberInfoResponse>> findAll(Pageable pageable, @RequestParam Long clientId){
+		return ResponseEntity.ok(memberService.findAll(pageable,clientId));
 	}
 
 

@@ -6,6 +6,7 @@ import com.hanex.starter.domain.member.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jdbc.core.mapping.AggregateReference;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;
@@ -27,8 +28,8 @@ public class MemberService {
     }
 
 
-    public Page<MemberDto.MemberInfoResponse> findAll(Pageable pageable){
-        Page<Member> member = memberRepository.findByClientIdAndSearchCondition(pageable);
+    public Page<MemberDto.MemberInfoResponse> findAll(Pageable pageable,Long clientId){
+        Page<Member> member = memberRepository.findByClientIdAndSearchCondition(AggregateReference.to(clientId),pageable);
         return null;
     }
 }

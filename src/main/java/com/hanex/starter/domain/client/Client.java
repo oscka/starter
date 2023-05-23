@@ -8,6 +8,7 @@ import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Table;
 
 @EqualsAndHashCode(of = "id")
@@ -17,8 +18,9 @@ import org.springframework.data.relational.core.mapping.Table;
 @Table("client")
 public class Client {
 
+    @Id
+    private Long id;
     private BaseUser baseUser;
-
     private UserState state;
     private UserRole role;
     private EncryptString email;

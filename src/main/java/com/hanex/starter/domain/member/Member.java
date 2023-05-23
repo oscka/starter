@@ -28,13 +28,12 @@ public class Member {
 	private AggregateReference<Client, @NotNull UUID> clientId;
 
 	private MemberType memberType;
+
 	private String managerName;
 	private String ceoName;
 	private String registrationNumber;
 	private String phone;
 	private String memo;
-
-
 
 	@Builder.Default
 	@CreatedDate
@@ -45,10 +44,10 @@ public class Member {
 	private Instant updatedAt = Instant.now();
 
 	@CreatedBy
-	private AggregateReference<User, @NotNull UUID> createdBy;
+	private AggregateReference<Client, @NotNull UUID> createdBy;
 
 	@LastModifiedBy
-	private AggregateReference<User, @NotNull UUID> updatedBy;
+	private AggregateReference<Client, @NotNull UUID> updatedBy;
 
 	// ---------------- 비지니스 로직 --------------- //
 

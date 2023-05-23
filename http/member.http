@@ -4,7 +4,9 @@
 
 ###
 # member 생성
-POST /member
-Host: localhost:8080
-Authorization: Bearer <jwt-token>
+POST /v1/member
+Host: localhost:18080
 Content-Type: application/json
+
+
+Authorization: Bearer <jwt-token>

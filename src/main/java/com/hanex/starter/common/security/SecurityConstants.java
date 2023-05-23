@@ -10,7 +10,7 @@ public class SecurityConstants {
 
     public static final String TOKEN_TYPE = "JWT";
 
-    public static final String TOKEN_ISSUER = "auth-service";
+    public static final String TOKEN_ISSUER = "http://auth-service";
 
     public static final String TOKEN_AUDIENCE = "rest-app";
 

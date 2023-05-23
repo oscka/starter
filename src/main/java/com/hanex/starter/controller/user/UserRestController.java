@@ -16,7 +16,7 @@ public class UserRestController {
 	private final UserService userService;
 
 	@PostMapping
-	private ResponseEntity<Void> register(UserDto.SaveRequest save){
+	private ResponseEntity<Void> register(@RequestBody @Valid UserDto.SaveRequest save){
 		userService.register(save);
 		return ResponseEntity.ok().build();
 	}

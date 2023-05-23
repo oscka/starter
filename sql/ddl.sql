@@ -9,134 +9,127 @@
 권한 auth_mgmt
 그룹 group_mgmt
 
-내부 직원  account
-계약 tb_contract
-주문 tb_order
-상품 tb_product
-*/
+계약 contract_tb
+주문 order_tb
+상품 product_tb
 
+postgres 예약어일경우 >> 테이블명 + '_tb'
+예약어 확인 : https://postgresql.kr/docs/10/sql-keywords-appendix.html
+*/
 
 -- group_mgmt : 그룹 관리 (고객사)
 CREATE TABLE `group_mgmt` (
-  `code` varchar(20) NOT NULL,
-  `name` varchar(100) DEFAULT NULL,
-  `upper_code` varchar(20) DEFAULT NULL,
-  `unit` char(7) DEFAULT NULL,
-  `use_yn` char(1) DEFAULT NULL,
-  `sort_seq` int(11) DEFAULT NULL,
-  `memo` varchar(4000) DEFAULT NULL,
-  `created_by` varchar(30) DEFAULT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_by` varchar(30) DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`code`)
+  `code` varchar(20) primary key,
+  `name` varchar(100),
+  `upper_code` varchar(20),
+  `unit` char(7),
+  `use_yn` char(1),
+  `sort_seq` int(11),
+  `memo` varchar(4000),
+  `created_by` varchar(30),
+  `created_at` timestamp,
+  `updated_by` varchar(30),
+  `updated_at` timestamp
 );
 
 -- auth_mgmt : 권한 관리
 CREATE TABLE `auth_mgmt` (
-  `id` varchar(32)  NOT NULL,
-  `auth_code` varchar(20)  DEFAULT NULL,
-  `auth_name` varchar(20)  DEFAULT NULL,
-  `sort_seq` int(11) DEFAULT NULL,
-  `created_by` varchar(30) DEFAULT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_by` varchar(30) DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`auth_id`)
+  `id` varchar(32) primary key,
+  `auth_code` varchar(20) ,
+  `auth_name` varchar(20) ,
+  `sort_seq` int(11),
+  `created_by` varchar(30),
+  `created_at` timestamp,
+  `updated_by` varchar(30),
+  `updated_at` timestamp
 );
 
 -- client_auth: 고객사 권한매핑
 CREATE TABLE `client_auth` (
-  `id` varchar(32)  NOT NULL,
-  `client_id` varchar(32)  DEFAULT NULL,
-  `auth_code` varchar(20)  DEFAULT NULL,
-  `group_code` varchar(20)  DEFAULT NULL,
+  `id` varchar(32)  primary key,
+  `client_id` varchar(32) ,
+  `auth_code` varchar(20) ,
+  `group_code` varchar(20) ,
   `auth_id` varchar(32)  NOT NULL,
-  `created_by` varchar(30) DEFAULT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_by` varchar(30) DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`user_auth_id`)
+  `created_by` varchar(30),
+  `created_at` timestamp,
+  `updated_by` varchar(30),
+  `updated_at` timestamp
 );
 
 
 -- client: 고객사
 CREATE TABLE `client` (
-  `id` varchar(32)  NOT NULL,
+  `id` varchar(32) primary key,
   `auth_id` varchar(30) NOT NULL,
   `name` varchar(255) NOT NULL,
   `phone` varchar(255) NOT NULL,
   `memo` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
-  `created_by` varchar(30) DEFAULT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_by` varchar(30) DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  `created_by` varchar(30),
+  `created_at` timestamp,
+  `updated_by` varchar(30),
+  `updated_at` timestamp
 );
 
 
 -- member_tb : 거래처,실행사
 CREATE TABLE `member_tb` (
-  `id` varchar(32)  NOT NULL,
+  `id` varchar(32)  primary key,
   `client_id` varchar(30) NOT NULL,
   `auth_id` varchar(30) NOT NULL,
   `member_type` varchar(30) NOT NULL,
   `manager_name` varchar(255) NOT NULL,
-  `ceo_name` varchar(255)  DEFAULT NULL,
-  `registration_number` varchar(255)  DEFAULT NULL,
+  `ceo_name` varchar(255) ,
+  `registration_number` varchar(255) ,
   `phone` varchar(255) NOT NULL,
   `memo` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
-  `created_by` varchar(30) DEFAULT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_by` varchar(30) DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  `created_by` varchar(30),
+  `created_at` timestamp,
+  `updated_by` varchar(30),
+  `updated_at` timestamp
 );
 
 -- tb_login: 로그인
 CREATE TABLE `tb_login` (
-  `login_id` varchar(32) NOT NULL,
-  `password` varchar(100) DEFAULT NULL,
-  `user_id` varchar(30) NOT NULL,
-  `created_by` varchar(30) DEFAULT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_by` varchar(30) DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`login_id`,`user_id`)
+  `user_id` varchar(100) PRIMARY KEY,
+  `login_id` varchar(100) NOT NULL,
+  `password` varchar(100),
+  `created_by` varchar(30),
+  `created_at` timestamp,
+  `updated_by` varchar(30),
+  `updated_at` timestamp
 );
 
 -- tb_menu : 메뉴 관리
 CREATE TABLE `menu_mgmt` (
-  `code` varchar(20) NOT NULL,
-  `menu_name` varchar(100) DEFAULT NULL,
-  `menu_url` varchar(50) DEFAULT NULL,
-  `upper_menu_code` varchar(20) DEFAULT NULL,
-  `sort_seq` int(11) DEFAULT NULL,
-  `created_by` varchar(30) DEFAULT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_by` varchar(30) DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`code`)
+  `code` varchar(20) PRIMARY KEY,
+  `menu_name` varchar(100),
+  `menu_url` varchar(50),
+  `upper_menu_code` varchar(20),
+  `sort_seq` int(11),
+  `created_by` varchar(30),
+  `created_at` timestamp,
+  `updated_by` varchar(30),
+  `updated_at` timestamp
 );
 
 -- menu_auth : 메뉴 권한 관리
 CREATE TABLE `menu_auth` (
-  `auth_id` varchar(32) NOT NULL,
-  `menu_auth_id` varchar(32) NOT NULL,
-  `use_yn` char(1) DEFAULT NULL,
-  `inq_auth` varchar(20) DEFAULT NULL,
-  `inq_yn` char(1) DEFAULT NULL,
-  `insert_yn` char(1) DEFAULT NULL,
-  `update_yn` char(1) DEFAULT NULL,
-  `delete_yn` char(1) DEFAULT NULL,
-  `excel_up_yn` char(1) DEFAULT NULL,
-  `excel_down_yn` char(1) DEFAULT NULL,
+  `menu_auth_id` varchar(32) PRIMARY KEY,
   `menu_code` varchar(20) NOT NULL,
-  `created_by` varchar(30) DEFAULT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_by` varchar(30) DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`menu_auth_id`)
+  `auth_id` varchar(32) NOT NULL,
+  `use_yn` char(1),
+  `inq_auth` varchar(20),
+  `inq_yn` char(1),
+  `insert_yn` char(1),
+  `update_yn` char(1),
+  `delete_yn` char(1),
+  `excel_up_yn` char(1),
+  `excel_down_yn` char(1),
+  `created_by` varchar(30),
+  `created_at` timestamp,
+  `updated_by` varchar(30),
+  `updated_at` timestamp
 );

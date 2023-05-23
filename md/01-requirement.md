@@ -9,15 +9,11 @@
 입출고 관련하여 어떤 계정이 언제 어떻게 처리했는지 모든 이력 확인이 가능합니다.
 
 
+- 권한 Dimension 설명
 참고 | https://osc-korea.atlassian.net/wiki/spaces/consulting/pages/810877437
 
-권한 Dimension 설명 (38분 50초)
-
 A (관리항목) - 화주, 채널 등
-1Level 사용자 - 고객사,거래처, 실행사 , 내부 직원, 관리자
-2Level 업무 - 재무 재고 CSR 기획
 B (업무) - CSR 그룹, 재고관리 그룹, 계약관리 그룹, 기획 그룹 등
-
 C (기능) - Dashboard, CO, SO, 계약 등
 
 고객사,거래처,실행사,택배사
@@ -25,13 +21,10 @@ C (기능) - Dashboard, CO, SO, 계약 등
 거래처 - 고객사의 거래처 (예 : 인삼공사의 온라인 쇼핑몰 or 개인 고객 or 매장 점주)
 실행사 - 지입차량,배,창고 등을 가지고 있는 실제 물류를 실행할 대상
 택배사 - 대부분의 택배사는 api 인터페이스를 제공하기 때문에 그를 활용하는 대상
-
 풀필먼트 시스템은 권한 기반이기 때문에 고객사의 거래처도 대상이 될 수 있다.
 
-client customer member user account 
-### 연관관계
-- 고객사 (tb_client) : 거래처,실행사 (tb_customer) => 1:N
-권한계층.png
-- 업무 : 재무, CSR 재고 기획
-- 
+1Level 사용자 - 고객사,거래처, 실행사 , 내부 직원, 관리자
+2Level 업무 - 재무 재고 CSR 기획
 
+[word]
+client customer member user account

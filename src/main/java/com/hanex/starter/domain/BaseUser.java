@@ -12,5 +12,6 @@ public class BaseUser {
 
     private String loginId;
     private String password;
+    private String authId;
 
 }

@@ -58,6 +58,7 @@ public class SecurityConfig {
         http.headers().addHeaderWriter(new XFrameOptionsHeaderWriter(XFrameOptionsHeaderWriter.XFrameOptionsMode.SAMEORIGIN));
         http.headers().frameOptions().sameOrigin();
 
+
         // path setting
         http
             .authorizeRequests().requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
@@ -79,6 +80,8 @@ public class SecurityConfig {
 
     @Bean
     public PasswordEncoder passwordEncoder() {
+        // BCryptPasswordEncoder: Spring Security에서 제공하는 비밀번호 암호화 객체
+        // service 에서 비밀번호를 암호화,Match  할수 있도록 bean 으로 등록
         return new BCryptPasswordEncoder(12);
     }
 
