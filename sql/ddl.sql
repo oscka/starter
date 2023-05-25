@@ -88,7 +88,7 @@ CREATE TABLE member_tb (
   updated_at timestamp
 );
 
--- tb_login: 로그인
+-- login_tb: 로그인
 CREATE TABLE login_tb (
   user_id uuid PRIMARY KEY,
   login_id varchar(100) NOT NULL,
@@ -99,7 +99,7 @@ CREATE TABLE login_tb (
   updated_at timestamp
 );
 
--- tb_menu : 메뉴 관리
+-- menu_mgmt : 메뉴 관리
 CREATE TABLE menu_mgmt (
   code varchar(20) PRIMARY KEY,
   menu_name varchar(100),
