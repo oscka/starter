@@ -5,6 +5,7 @@ import com.hanex.starter.domain.member.Member;
 import com.hanex.starter.domain.user.User;
 import lombok.*;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.relational.core.mapping.Table;
 
 import java.time.Instant;
 import java.util.List;
@@ -13,6 +14,7 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Getter
+@Table("order_tb")
 public class Order {
 
 	@Id

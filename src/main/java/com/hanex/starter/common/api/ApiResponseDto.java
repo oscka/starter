@@ -1,35 +1,30 @@
 package com.hanex.starter.common.api;
 
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.springframework.http.HttpStatus;
 
 @ToString
-@NoArgsConstructor
 @Getter
 public class ApiResponseDto<T> {
-    public static final ApiResponseDto<String> DEFAULT_OK = new ApiResponseDto<>(ApiResponseCode.OK);
-    public static final ApiResponseDto<String> DEFAULT_UNAUTHORIZED = new ApiResponseDto<>(ApiResponseCode.UNAUTHORIZED);
+    private Integer status; // 에러시에 의미 있음.
+    private String msg; // 에러시에 의미 있음. ex) badRequest
+    private T data; // 에러시에는 구체적인 에러 내용 ex) username이 입력되지 않았습니다
 
-    private ApiResponseCode code;
-    private String message;
-    private T data;
-
-    private ApiResponseDto(ApiResponseCode status) {
-        this.bindStatus(status);
+    public ApiResponseDto(){
+        this.status = HttpStatus.OK.value();
+        this.msg = "성공";
     }
 
-    private ApiResponseDto(ApiResponseCode status, T data) {
-        this.bindStatus(status);
-        this.data = data;
+    public ApiResponseDto(T data){
+        this.status = HttpStatus.OK.value();
+        this.msg = "성공";
+        this.data = data; // 응답할 데이터 바디
     }
 
-    private void bindStatus(ApiResponseCode status) {
-        this.code = status;
-        this.message = status.getMessage();
-    }
-
-    public static <T> ApiResponseDto<T> createOK(T data) {
-        return new ApiResponseDto<>(ApiResponseCode.OK, data);
+    public ApiResponseDto(HttpStatus httpStatus, String msg, T data){
+        this.status = httpStatus.value();
+        this.msg = msg; // 에러 제목
+        this.data = data; // 에러 내용
     }
 }

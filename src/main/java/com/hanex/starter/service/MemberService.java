@@ -22,7 +22,7 @@ public class MemberService {
         memberRepository.save(save.toEntity());
     }
 
-    public MemberDto.MemberInfoResponse findById(UUID id){
+    public MemberDto.MemberInfoResponse findById(Long id){
         Member member = memberRepository.findById(id).orElseThrow(()-> new RuntimeException("존재하지 않는 고객입니다."));
         return member.toDto();
     }

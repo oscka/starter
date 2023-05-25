@@ -1,4 +1,4 @@
-package com.hanex.auth.common.config;
+package com.hanex.starter.common.config;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.MessageSource;
@@ -49,13 +49,15 @@ public class WebConfig implements WebMvcConfigurer {
         return messageSource;
     }
 
+    // error
     @Bean
     public MessageSourceAccessor messageSourceAccessor (){
         return new MessageSourceAccessor(messageSource());
     }
 
+    // validation
     @Override
-    public LocalValidatorFactoryBean  getValidator() {
+    public LocalValidatorFactoryBean getValidator() {
         LocalValidatorFactoryBean bean = new LocalValidatorFactoryBean();
         bean.setValidationMessageSource(validationMessageSource());
         return bean;

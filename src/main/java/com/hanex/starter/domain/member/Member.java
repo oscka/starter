@@ -2,13 +2,10 @@ package com.hanex.starter.domain.member;
 
 import com.hanex.starter.controller.member.MemberDto;
 import com.hanex.starter.domain.client.Client;
-import com.hanex.starter.domain.member.common.BankAccount;
 import com.hanex.starter.domain.member.common.MemberType;
-import com.hanex.starter.domain.user.User;
 import lombok.*;
 import org.springframework.data.annotation.*;
 import org.springframework.data.jdbc.core.mapping.AggregateReference;
-import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
 
 import javax.validation.constraints.NotNull;
@@ -23,12 +20,10 @@ import java.util.UUID;
 public class Member {
 
 	@Id
-	private UUID id;
-
+	private Long id;
 	private AggregateReference<Client, @NotNull UUID> clientId;
-
 	private MemberType memberType;
-
+	private String memberCode;
 	private String managerName;
 	private String ceoName;
 	private String registrationNumber;
@@ -52,9 +47,15 @@ public class Member {
 	// ---------------- 비지니스 로직 --------------- //
 
 	public MemberDto.MemberInfoResponse toDto(){
-		return MemberDto.MemberInfoResponse
-
-				.builder().build();
+		return MemberDto.MemberInfoResponse.builder()
+				.id(this.id)
+				.memberCode(this.memberCode)
+				.managerName(this.managerName)
+				.ceoName(this.ceoName)
+				.registrationNumber(this.registrationNumber)
+				.phone(this.phone)
+				.memo(this.memo)
+				.build();
 	}
 
 }

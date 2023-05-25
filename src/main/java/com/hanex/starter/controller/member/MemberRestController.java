@@ -30,13 +30,13 @@ public class MemberRestController {
 
 
 	@GetMapping("/{id}")
-	private ResponseEntity<MemberDto.MemberInfoResponse> findById(@PathVariable UUID id){
+	private ResponseEntity<MemberDto.MemberInfoResponse> findById(@PathVariable Long id){
 		return ResponseEntity.ok(memberService.findById(id));
 
 	}
 
 	@PutMapping("/{id}")
-	private ResponseEntity<Void> update(@PathVariable String id, @Valid @RequestBody MemberDto.SaveRequest update){
+	private ResponseEntity<Void> update(@PathVariable Long id, @Valid @RequestBody MemberDto.SaveRequest update){
 		return ResponseEntity.ok().build();
 	}
 

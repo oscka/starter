@@ -39,6 +39,7 @@ public class MemberDto {
 	@AllArgsConstructor
 	public static class MemberInfoResponse {
 
+		private Long id;
 		private String memberCode; // memberCode > 자동생성
 		private MemberType memberType;
 		private String managerName;

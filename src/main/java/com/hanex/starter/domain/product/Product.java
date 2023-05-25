@@ -19,7 +19,7 @@ import java.time.Instant;
 @EqualsAndHashCode(of = "id")
 @ToString
 @Getter
-@Table("tb_product")
+@Table("product_tb")
 public class Product {
 
 	private Long id;

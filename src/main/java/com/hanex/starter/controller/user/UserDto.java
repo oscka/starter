@@ -1,7 +1,6 @@
 package com.hanex.starter.controller.user;
 
 
-import com.hanex.starter.common.util.encrypt.EncryptString;
 import com.hanex.starter.domain.user.User;
 import com.hanex.starter.domain.user.common.UserState;
 import lombok.*;
@@ -47,7 +46,7 @@ public class UserDto {
 				.name(this.name)
 				.state(this.state)
 				.password(passwordEncoder.encode(this.password))
-				.email(new EncryptString(this.email))
+				.email(this.email)
 				.build();
 		}
 
@@ -92,7 +91,7 @@ public class UserDto {
 			return User.builder()
 					.name(this.name)
 					.password(passwordEncoder.encode(this.password))
-					.email(new EncryptString(this.email))
+					.email(this.email)
 					.build();
 		}
 

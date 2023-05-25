@@ -1,6 +1,6 @@
 package com.hanex.starter.domain.product;
 
-public class ProductSqls {
+public class ProductSql {
 
 	public static final String SELECT_BY_ID =  """
 		SELECT
