@@ -3,7 +3,7 @@
 ###################
 spring:
   datasource:
-    url: jdbc:postgresql://host.docker.internal:5432/hanexdb?currentSchema=sc_starter
+    url: jdbc:postgresql://localhost:5432/hanexdb?currentSchema=sc_starter
     driverClassName: org.postgresql.Driver
     username: hanex
     password: hanex1234
