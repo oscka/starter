@@ -22,13 +22,13 @@ public class MemberService {
         memberRepository.save(save.toEntity());
     }
 
-    public MemberDto.MemberInfoResponse findById(Long id){
+    public MemberDto.MemberInfoResponse findById(UUID id){
         Member member = memberRepository.findById(id).orElseThrow(()-> new RuntimeException("존재하지 않는 고객입니다."));
         return member.toDto();
     }
 
 
-    public Page<MemberDto.MemberInfoResponse> findAll(Pageable pageable,Long clientId){
+    public Page<MemberDto.MemberInfoResponse> findAll(Pageable pageable,UUID clientId){
         Page<Member> member = memberRepository.findByClientIdAndSearchCondition(AggregateReference.to(clientId),pageable);
         return null;
     }

@@ -24,19 +24,19 @@ public class MemberRestController {
 	}
 
 	@GetMapping
-	private ResponseEntity<Page<MemberDto.MemberInfoResponse>> findAll(Pageable pageable, @RequestParam Long clientId){
+	private ResponseEntity<Page<MemberDto.MemberInfoResponse>> findAll(Pageable pageable, @RequestParam UUID clientId){
 		return ResponseEntity.ok(memberService.findAll(pageable,clientId));
 	}
 
 
 	@GetMapping("/{id}")
-	private ResponseEntity<MemberDto.MemberInfoResponse> findById(@PathVariable Long id){
+	private ResponseEntity<MemberDto.MemberInfoResponse> findById(@PathVariable UUID id){
 		return ResponseEntity.ok(memberService.findById(id));
 
 	}
 
 	@PutMapping("/{id}")
-	private ResponseEntity<Void> update(@PathVariable Long id, @Valid @RequestBody MemberDto.SaveRequest update){
+	private ResponseEntity<Void> update(@PathVariable UUID id, @Valid @RequestBody MemberDto.SaveRequest update){
 		return ResponseEntity.ok().build();
 	}
 

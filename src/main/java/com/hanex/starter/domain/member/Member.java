@@ -20,7 +20,7 @@ import java.util.UUID;
 public class Member {
 
 	@Id
-	private Long id;
+	private UUID id;
 	private AggregateReference<Client, @NotNull UUID> clientId;
 	private MemberType memberType;
 	private String memberCode;

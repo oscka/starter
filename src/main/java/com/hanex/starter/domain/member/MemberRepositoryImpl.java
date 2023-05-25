@@ -14,6 +14,7 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 
 import java.util.List;
+import java.util.UUID;
 
 public class MemberRepositoryImpl implements MemberRepositoryCustom {
 
@@ -32,7 +33,7 @@ public class MemberRepositoryImpl implements MemberRepositoryCustom {
 
     @Override
     public Page<Member> findByClientIdAndSearchCondition(
-            AggregateReference<Client,Long> clientId,
+            AggregateReference<Client, UUID> clientId,
             Pageable pageable
             ) {
         // SORT property 는 entity property 명으로 변경되야 한다.

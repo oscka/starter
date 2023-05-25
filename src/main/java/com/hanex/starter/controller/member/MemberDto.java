@@ -5,6 +5,8 @@ import com.hanex.starter.domain.member.Member;
 import com.hanex.starter.domain.member.common.MemberType;
 import lombok.*;
 
+import java.util.UUID;
+
 public class MemberDto {
 
 	@Getter
@@ -39,7 +41,7 @@ public class MemberDto {
 	@AllArgsConstructor
 	public static class MemberInfoResponse {
 
-		private Long id;
+		private UUID id;
 		private String memberCode; // memberCode > 자동생성
 		private MemberType memberType;
 		private String managerName;

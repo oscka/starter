@@ -10,6 +10,8 @@ import lombok.ToString;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Table;
 
+import java.util.UUID;
+
 @EqualsAndHashCode(of = "id")
 @Builder
 @Getter
@@ -18,7 +20,7 @@ import org.springframework.data.relational.core.mapping.Table;
 public class Client {
 
     @Id
-    private Long id;
+    private UUID id;
     private BaseUser baseUser;
     private UserState state;
     private UserRole role;
