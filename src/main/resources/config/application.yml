@@ -15,7 +15,7 @@ spring:
   application:
     name: starter
   profiles:
-    active: local
+    active: dev
   lifecycle:
     timeout-per-shutdown-phase: 35s # graceful shutdown 유예시간 설정 (default 30s)
 

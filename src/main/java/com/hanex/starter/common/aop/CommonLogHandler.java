@@ -22,7 +22,7 @@ public class CommonLogHandler {
     public void customLog(){}
 
     @Pointcut("@annotation(com.hanex.starter.common.annotation.CustomErrorLog)")
-    public void myErrorLog(){}
+    public void customErrorLog(){}
 
     @AfterReturning("customLog()")
     public void logAdvice(JoinPoint jp) throws Exception {
