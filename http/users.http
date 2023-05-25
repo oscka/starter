@@ -5,13 +5,15 @@
 # 회원가입
 POST /v1/users
 Content-Type: application/json
-Host: localhost:18080
+Host: localhost:8080
 
 {
   "name" : "홍길동",
   "email" : "test@demo.com",
-  "password" : "test1234",
   "loginId" : "test",
+  "password" : "test1234",
+  "role": "ROLE_CLIENT",
+  "phone" : "01012345678",
   "state" : "ACTIVE"
 }
 

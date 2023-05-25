@@ -10,6 +10,7 @@ import lombok.ToString;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
 
 import java.time.Instant;
@@ -27,14 +28,18 @@ public class User {
 
 	private String loginId;
 
+	@Column("user_name")
 	private String name;
 
+	@Column("user_state")
 	private UserState state;
 
+	@Column("user_role")
 	private UserRole role;
 
 	private String email;
 
+	@Column("user_password")
 	private String password;
 
 	private String phone;

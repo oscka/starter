@@ -19,7 +19,7 @@ public class MemberService {
     private final MemberRepository memberRepository;
 
     public void save(MemberDto.SaveRequest save){
-        memberRepository.save(save.toEntity());
+        memberRepository.insert(save.toEntity());
     }
 
     public MemberDto.MemberInfoResponse findById(UUID id){
@@ -31,5 +31,9 @@ public class MemberService {
     public Page<MemberDto.MemberInfoResponse> findAll(Pageable pageable,UUID clientId){
         Page<Member> member = memberRepository.findByClientIdAndSearchCondition(AggregateReference.to(clientId),pageable);
         return null;
+    }
+
+    public boolean update(UUID id, MemberDto.UpdateRequest update){
+        return memberRepository.changeMemberInfo(id,update.toEntity());
     }
 }

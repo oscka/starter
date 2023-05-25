@@ -1,21 +1,20 @@
 package com.hanex.starter.controller.user;
 
+import java.util.UUID;
 
+import com.hanex.starter.common.util.CommonEncoder;
 import com.hanex.starter.domain.user.User;
+import com.hanex.starter.domain.user.common.UserRole;
 import com.hanex.starter.domain.user.common.UserState;
 import lombok.*;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import java.time.Instant;
 
-public class UserDto {
+public class UserDto{
 
-	@Autowired
-	private static PasswordEncoder passwordEncoder;
 
 	@Getter
 	@Builder
@@ -40,14 +39,24 @@ public class UserDto {
 		@NotBlank(message = "{validation.notBlank.password}")
 		private String password;
 
+
+		private String phone;
+
+		private UserRole role;
+
+
 		public User toEntity(){
 			return User.builder()
-				.loginId(this.loginId)
-				.name(this.name)
-				.state(this.state)
-				.password(passwordEncoder.encode(this.password))
-				.email(this.email)
-				.build();
+					.id(UUID.randomUUID())
+					.loginId(this.loginId)
+					.name(this.name)
+					.state(this.state)
+					.phone(this.phone)
+					.role(this.role)
+					.password(new CommonEncoder().encode(this.password))
+					//.email(new EncryptString(this.email))
+					.email(this.email)
+					.build();
 		}
 
 	}
@@ -77,6 +86,7 @@ public class UserDto {
 	@NoArgsConstructor(access = AccessLevel.PROTECTED)
 	public static class UpdateRequest {
 
+
 		@NotBlank(message = "{validation.notBlank.name}")
 		private String name;
 
@@ -90,10 +100,25 @@ public class UserDto {
 		public User toEntity(){
 			return User.builder()
 					.name(this.name)
-					.password(passwordEncoder.encode(this.password))
+					.password(new CommonEncoder().encode(this.password))
+					//.email(new EncryptString(this.email))
 					.email(this.email)
 					.build();
 		}
 
 	}
+
+	@Getter
+	@Builder
+	@AllArgsConstructor
+	@NoArgsConstructor(access = AccessLevel.PROTECTED)
+	public static class LoginRequest {
+
+		@NotBlank(message = "{validation.notBlank.id}")
+		private String loginId;
+
+		@NotBlank(message = "{validation.notBlank.password}")
+		private String password;
+	}
+
 }

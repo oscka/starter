@@ -2,11 +2,26 @@
 # member.http
 #-----------------------
 
+# Authorization: Bearer <jwt-token>
+
 ###
 # member 생성
 POST /v1/member
 Host: localhost:18080
 Content-Type: application/json
 
+{
+   "name": ""
+   , "name": ""
+   , "name": ""
+   , "name": ""
+   , "name": ""
+   , "name": ""
+}
 
-Authorization: Bearer <jwt-token>
+###
+# member 상세 조회
+# GET /v1/member/{uuid}
+GET /v1/member/
+Host: localhost:18080
+

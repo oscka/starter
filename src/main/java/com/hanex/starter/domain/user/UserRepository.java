@@ -25,7 +25,7 @@ public interface UserRepository extends CrudRepository<User, UUID> , UserReposit
 
 	@Modifying
 	@Query("""
-   			UPDATE tb_user u
+   			UPDATE user_tb u
    			SET  u.name = user.name
    				, u.email = user.email
    				, u.password = user.password
