@@ -1,10 +1,23 @@
+#--------------------------
+# server
+#--------------------------
+server:
+  shutdown: graceful  # graceful shutdown 적용
+  servlet:
+    encoding:
+      charset: utf-8
+      force: true
+
+#--------------------------
+# spring
+#--------------------------
 spring:
   application:
     name: starter
   profiles:
     active: local
   lifecycle:
-    timeout-per-shutdown-phase: 10s # graceful shutdown 유예시간 설정
+    timeout-per-shutdown-phase: 35s # graceful shutdown 유예시간 설정 (default 30s)
 
 # cache ttl 설정 (cacheName:ttl)
 custom:

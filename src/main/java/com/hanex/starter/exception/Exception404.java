@@ -1,4 +1,4 @@
-package com.hanex.starter.error.exception;
+package com.hanex.starter.exception;
 
 import com.hanex.starter.common.api.ApiResponseDto;
 import lombok.Getter;

@@ -2,7 +2,7 @@
 
 /*
 고객사 client
-거래처,실행사 member
+거래처,실행사 member_tb
 로그인 login_tb
 
 고객사 권한 매핑 client_auth
@@ -78,6 +78,7 @@ CREATE TABLE `member_tb` (
   `id` varchar(32)  primary key,
   `client_id` varchar(30) NOT NULL,
   `auth_id` varchar(30) NOT NULL,
+  `member_code` varchar(30) NOT NULL,
   `member_type` varchar(30) NOT NULL,
   `manager_name` varchar(255) NOT NULL,
   `ceo_name` varchar(255) ,

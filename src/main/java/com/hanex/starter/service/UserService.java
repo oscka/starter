@@ -3,7 +3,7 @@ package com.hanex.starter.service;
 import com.hanex.starter.controller.user.UserDto;
 import com.hanex.starter.domain.user.User;
 import com.hanex.starter.domain.user.UserRepository;
-import com.hanex.starter.error.exception.NotFoundException;
+import com.hanex.starter.exception.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

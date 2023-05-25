@@ -1,4 +1,4 @@
-package com.hanex.starter.error.exception;
+package com.hanex.starter.exception;
 
 public class NotFoundException extends RuntimeException{
 	public NotFoundException(String message) {

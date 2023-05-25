@@ -1,8 +1,8 @@
-package com.hanex.starter.error;
+package com.hanex.starter.common.aop;
 
 import com.hanex.starter.common.annotation.CustomErrorLog;
 import com.hanex.starter.common.api.ApiResponseDto;
-import com.hanex.starter.error.exception.*;
+import com.hanex.starter.exception.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.MessageSource;

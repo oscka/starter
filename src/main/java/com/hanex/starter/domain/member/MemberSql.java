@@ -21,10 +21,15 @@ public class MemberSql {
                      , m.manager_name 
                      , m.member_code 
                      , m.ceo_name 
-                     , m.registration_name
+                     , m.registration_number
                      , m.phone 
                      , m.memo 
                      , m.client_id 
+                     , m.email
+                     , m.created_by
+                     , m.created_at
+                     , m.updated_by
+                     , m.updated_at
                 FROM member_tb m 
                 """
                 +
