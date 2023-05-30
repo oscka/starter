@@ -1,6 +1,6 @@
 package com.hanex.starter.common.aop;
 
-import com.hanex.starter.exception.Exception400;
+import com.hanex.starter.common.exception.Exception400;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;

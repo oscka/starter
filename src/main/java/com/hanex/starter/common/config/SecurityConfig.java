@@ -1,11 +1,17 @@
 package com.hanex.starter.common.config;
 
+import com.hanex.starter.common.exception.Exception400;
+import com.hanex.starter.common.exception.Exception401;
+import com.hanex.starter.common.exception.Exception403;
 import com.hanex.starter.common.security.FilterResponseUtil;
+import com.hanex.starter.common.security.JwtRequestFilter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -22,6 +28,30 @@ import org.springframework.security.web.header.writers.frameoptions.XFrameOption
 public class SecurityConfig {
 
     private final CorsConfig corsConfig;
+
+    @Bean
+    AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
+        return authenticationConfiguration.getAuthenticationManager();
+    }
+
+    // JWT 필터 등록이 필요함
+    public class CustomSecurityFilterManager extends AbstractHttpConfigurer<CustomSecurityFilterManager, HttpSecurity> {
+        @Override
+        public void configure(HttpSecurity builder) throws Exception {
+            AuthenticationManager authenticationManager = builder.getSharedObject(AuthenticationManager.class);
+            builder.addFilter(new JwtRequestFilter(authenticationManager));
+            // 시큐리티 관련 필터
+            super.configure(builder);
+        }
+    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        // BCryptPasswordEncoder: Spring Security에서 제공하는 비밀번호 암호화 객체
+        // service 에서 비밀번호를 암호화,Match  할수 있도록 bean 으로 등록
+        return new BCryptPasswordEncoder(12);
+    }
+
 
 
     @Bean
@@ -45,45 +75,36 @@ public class SecurityConfig {
         // 6. 인증 실패 처리
         http.exceptionHandling().authenticationEntryPoint((request, response, authException) -> {
             log.warn("인증되지 않은 사용자가 resource 접근 : {}",authException.getMessage());
-            FilterResponseUtil.unAuthorized(response, new RuntimeException("인증되지 않았습니다"));
+            FilterResponseUtil.unAuthorized(response, new Exception401("인증되지 않았습니다"));
         });
 
         // 7. 권한 실패 처리
         http.exceptionHandling().accessDeniedHandler((request, response, accessDeniedException) -> {
             log.warn("권한이 없는 사용자가 resource 접근 : {}",accessDeniedException.getMessage());
-            FilterResponseUtil.forbidden(response, new RuntimeException("권한이 없습니다"));
+            FilterResponseUtil.forbidden(response, new Exception403("권한이 없습니다"));
         });
 
-        // h2-console
+        // cors 설정
+        http.addFilter(corsConfig.corsFilter());
+
+        // 8. 인증, 권한 필터 설정
+        http
+            // img , css 과 같은 static resources 는 허용
+            .authorizeRequests().requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
+            .and()
+            .authorizeRequests(
+                    authorize -> authorize.antMatchers("/v1/order/**").authenticated()
+                            .antMatchers("/v1/member/**").access("hasRole('CUSTOMER') or hasRole('ROLE_ADMIN')")
+                            .antMatchers("/v1/admin/**").hasRole("ADMIN")
+                            .antMatchers("/v1/users/**").access("hasRole('CUSTOMER') or hasRole('ROLE_ADMIN')")
+                            .anyRequest().permitAll()
+            );
+
+
         http.headers().addHeaderWriter(new XFrameOptionsHeaderWriter(XFrameOptionsHeaderWriter.XFrameOptionsMode.SAMEORIGIN));
         http.headers().frameOptions().sameOrigin();
 
-
-        // path setting
-        http
-            .authorizeRequests().requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
-            .and()
-            .authorizeRequests()
-            .antMatchers("/**").permitAll()
-            .antMatchers("/").permitAll()
-            .antMatchers("/h2-console/**").permitAll();
-
         return http.build();
-    }
-
-    public class CustomSecurityFilterManager extends AbstractHttpConfigurer<CustomSecurityFilterManager, HttpSecurity> {
-        @Override
-        public void configure(HttpSecurity http) throws Exception {
-            http
-                .addFilter(corsConfig.corsFilter());
-        }
-    }
-
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        // BCryptPasswordEncoder: Spring Security에서 제공하는 비밀번호 암호화 객체
-        // service 에서 비밀번호를 암호화,Match  할수 있도록 bean 으로 등록
-        return new BCryptPasswordEncoder(12);
     }
 
 }

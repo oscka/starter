@@ -1,11 +1,12 @@
 package com.hanex.starter.common.security;
 
-import com.hanex.starter.domain.user.User;
+import com.hanex.starter.user.domain.User;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 @Setter
@@ -20,7 +21,9 @@ public class CustomUser implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        Collection<GrantedAuthority> collector = new ArrayList<>();
+        collector.add(() -> user.getRole().getId());
+        return collector;
     }
 
     @Override
