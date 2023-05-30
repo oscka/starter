@@ -1,8 +1,9 @@
-package com.hanex.starter.user;
+package com.hanex.starter.user.service;
 
 import com.hanex.starter.user.domain.User;
 import com.hanex.starter.common.exception.NotFoundException;
-import com.hanex.starter.user.domain.UserRepository;
+import com.hanex.starter.user.dto.UserDto;
+import com.hanex.starter.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

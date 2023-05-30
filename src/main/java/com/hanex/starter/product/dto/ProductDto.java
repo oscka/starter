@@ -1,4 +1,4 @@
-package com.hanex.starter.product;
+package com.hanex.starter.product.dto;
 
 import lombok.*;
 

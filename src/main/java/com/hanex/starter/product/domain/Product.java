@@ -1,7 +1,7 @@
-package com.hanex.starter.product;
+package com.hanex.starter.product.domain;
 
 
-import com.hanex.starter.member.Member;
+import com.hanex.starter.member.command.domain.Member;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;

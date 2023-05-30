@@ -1,4 +1,4 @@
-package com.hanex.starter.user.domain;
+package com.hanex.starter.user.repository;
 
 public interface UserRepositoryCustom {
 }

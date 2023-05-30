@@ -1,9 +1,10 @@
-package com.hanex.starter.order;
+package com.hanex.starter.product.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-@RequiredArgsConstructor
 @Service
-public class OrderService {
+@RequiredArgsConstructor
+public class ProductService {
+
 }

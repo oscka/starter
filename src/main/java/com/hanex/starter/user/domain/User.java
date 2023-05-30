@@ -2,7 +2,7 @@ package com.hanex.starter.user.domain;
 
 import com.hanex.starter.common.enums.UserRole;
 import com.hanex.starter.common.enums.UserStatus;
-import com.hanex.starter.user.UserDto;
+import com.hanex.starter.user.dto.UserDto;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;

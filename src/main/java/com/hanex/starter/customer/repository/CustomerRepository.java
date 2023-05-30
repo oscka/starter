@@ -1,6 +1,7 @@
-package com.hanex.starter.customer;
+package com.hanex.starter.customer.repository;
 
 import com.hanex.starter.common.util.jdbc.WithInsert;
+import com.hanex.starter.customer.domain.Customer;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

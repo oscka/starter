@@ -1,5 +1,6 @@
-package com.hanex.starter.user.domain;
+package com.hanex.starter.user.repository;
 
+import com.hanex.starter.user.domain.User;
 import org.springframework.dao.TransientDataAccessResourceException;
 import org.springframework.data.jdbc.core.JdbcAggregateOperations;
 import org.springframework.transaction.annotation.Transactional;

@@ -1,4 +1,4 @@
-package com.hanex.starter.user;
+package com.hanex.starter.user.dto;
 
 import java.util.UUID;
 

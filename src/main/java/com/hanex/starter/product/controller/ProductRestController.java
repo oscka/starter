@@ -1,4 +1,4 @@
-package com.hanex.starter.product;
+package com.hanex.starter.product.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;

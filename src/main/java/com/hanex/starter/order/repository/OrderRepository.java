@@ -1,5 +1,6 @@
-package com.hanex.starter.order;
+package com.hanex.starter.order.repository;
 
+import com.hanex.starter.order.domain.Order;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

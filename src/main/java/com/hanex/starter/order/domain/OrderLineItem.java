@@ -1,6 +1,6 @@
-package com.hanex.starter.order;
+package com.hanex.starter.order.domain;
 
-import com.hanex.starter.product.Product;
+import com.hanex.starter.product.domain.Product;
 import lombok.*;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)

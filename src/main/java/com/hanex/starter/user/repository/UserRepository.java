@@ -1,6 +1,7 @@
-package com.hanex.starter.user.domain;
+package com.hanex.starter.user.repository;
 
 import com.hanex.starter.common.util.jdbc.WithInsert;
+import com.hanex.starter.user.domain.User;
 import org.springframework.data.jdbc.repository.query.Modifying;
 import org.springframework.data.jdbc.repository.query.Query;
 import org.springframework.data.repository.CrudRepository;

@@ -1,4 +1,4 @@
-package com.hanex.starter.customer;
+package com.hanex.starter.customer.domain;
 
 import com.hanex.starter.user.domain.BaseUser;
 import com.hanex.starter.common.enums.Group;
@@ -23,7 +23,7 @@ public class Customer {
     @Id
     private UUID id;
     private BaseUser baseUser;
-    private UserStatus state;
+    private UserStatus customerStatus;
     private UserRole role;
     private String email;
     private Group group;
