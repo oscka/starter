@@ -94,9 +94,9 @@ public class SecurityConfig {
             .and()
             .authorizeRequests(
                     authorize -> authorize.antMatchers("/v1/order/**").authenticated()
-                            .antMatchers("/v1/member/**").access("hasRole('CUSTOMER') or hasRole('ROLE_ADMIN')")
-                            .antMatchers("/v1/admin/**").hasRole("ADMIN")
-                            .antMatchers("/v1/users/**").access("hasRole('CUSTOMER') or hasRole('ROLE_ADMIN')")
+                            .antMatchers("/v1/member/**").access("hasRole('ROLE_CUSTOMER') or hasRole('ROLE_ADMIN')")
+                            .antMatchers("/v1/admin/**").hasRole("ROLE_ADMIN")
+                            .antMatchers("/v1/users/**").access("hasRole('ROLE_CUSTOMER') or hasRole('ROLE_ADMIN')")
                             .anyRequest().permitAll()
             );
 
