@@ -5,16 +5,16 @@
 # 회원가입
 POST /v1/users
 Content-Type: application/json
-Host: localhost:8080
+Host: localhost:18080
 
 {
   "name" : "홍길동",
   "email" : "test@demo.com",
-  "loginId" : "test",
+  "loginId" : "mem",
   "password" : "test1234",
-  "role": "ROLE_CLIENT",
+  "role": "ROLE_MEMBER",
   "phone" : "01012345678",
-  "state" : "ACTIVE"
+  "userStatus" : "ACTIVE"
 }
 
 ###
@@ -24,7 +24,7 @@ Host: localhost:18080
 Content-Type: application/json
 
 {
-  "loginId" : "admin",
+  "loginId" : "mem",
   "password" : "test1234"
 }
 
@@ -32,9 +32,9 @@ Content-Type: application/json
 ###
 # 사용자 조회 (detail) (회원조회-detail)
 # /v1/users/{loginId}
-GET /v1/users/admin
+GET /v1/users/test
 Host: localhost:8080
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2ODU0MjU1NTgsImlzcyI6Imh0dHA6Ly9hdXRoLXNlcnZpY2UiLCJhdWQiOiJ1c2VyIiwiaWF0IjoxNjg1NDI1NDU4LCJzdWIiOiJlMjUyNGZiZS05MTY2LTQ3ZmMtYjYzZS03NjFiYjRhYjdjNGYiLCJsb2dpbklkIjoiYWRtaW4iLCJyb2xlIjoiUk9MRV9BRE1JTiJ9.6nq5v1m-ptxIjxsX6sL4TzYIhC0E0M-gMSNrGqn8RGk
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2ODU0MzIyNDgsImlzcyI6Imh0dHA6Ly9hdXRoLXNlcnZpY2UiLCJhdWQiOiJ1c2VyIiwiaWF0IjoxNjg1NDMyMTQ4LCJzdWIiOiI3ZGU1ZWIzZi1mZTU5LTQ1M2UtYTBjMS1mMWY0OTdjZWVlNWMiLCJsb2dpbklkIjoibWVtIiwicm9sZSI6IlJPTEVfTUVNQkVSIn0.kQudq-MCD_mbRam04TKWd88H2ey-_vRdm3tqI60ww_o
 
 ###
 # 사용자 수정 (회원수정)
@@ -48,7 +48,7 @@ Content-Type: application/json
   "name" : "홍길동",
   "email" : "test@demo.com",
   "password" : "test1234",
-  "state" : "ACTIVE"
+  "userStatus" : "ACTIVE"
 }
 
 ###

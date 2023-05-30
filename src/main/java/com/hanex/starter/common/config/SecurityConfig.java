@@ -45,14 +45,14 @@ public class SecurityConfig {
         }
     }
 
+    /*
+        BCryptPasswordEncoder: Spring Security 에서 제공하는 비밀번호 암호화 객체
+        service 에서 비밀번호를 암호화,Match  할수 있도록 bean 으로 등록한후 CommonEncoder class 를 util 로 사용
+     */
     @Bean
     public PasswordEncoder passwordEncoder() {
-        // BCryptPasswordEncoder: Spring Security에서 제공하는 비밀번호 암호화 객체
-        // service 에서 비밀번호를 암호화,Match  할수 있도록 bean 으로 등록
         return new BCryptPasswordEncoder(12);
     }
-
-
 
     @Bean
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -84,8 +84,6 @@ public class SecurityConfig {
             FilterResponseUtil.forbidden(response, new Exception403("권한이 없습니다"));
         });
 
-        // cors 설정
-        http.addFilter(corsConfig.corsFilter());
 
         // 8. 인증, 권한 필터 설정
         http
@@ -94,11 +92,14 @@ public class SecurityConfig {
             .and()
             .authorizeRequests(
                     authorize -> authorize.antMatchers("/v1/order/**").authenticated()
-                            .antMatchers("/v1/member/**").access("hasRole('ROLE_CUSTOMER') or hasRole('ROLE_ADMIN')")
-                            .antMatchers("/v1/admin/**").hasRole("ROLE_ADMIN")
-                            .antMatchers("/v1/users/**").access("hasRole('ROLE_CUSTOMER') or hasRole('ROLE_ADMIN')")
+                            .antMatchers("/v1/member/**").access("hasRole('CUSTOMER') or hasRole('ADMIN')")
+                            .antMatchers("/v1/admin/**").hasRole("ADMIN")
+                            .antMatchers("/v1/users/**").access("hasRole('CUSTOMER') or hasRole('ADMIN')")
                             .anyRequest().permitAll()
             );
+
+        // 9. CORS 설정
+        http.addFilter(corsConfig.corsFilter());
 
 
         http.headers().addHeaderWriter(new XFrameOptionsHeaderWriter(XFrameOptionsHeaderWriter.XFrameOptionsMode.SAMEORIGIN));

@@ -1,4 +1,4 @@
-package com.hanex.starter.member;
+package com.hanex.starter.member.command.repository;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Sort;

@@ -1,6 +1,7 @@
-package com.hanex.starter.member;
+package com.hanex.starter.member.command.dto;
 
 import com.hanex.starter.common.enums.MemberType;
+import com.hanex.starter.member.command.domain.Member;
 import lombok.*;
 
 import java.util.UUID;

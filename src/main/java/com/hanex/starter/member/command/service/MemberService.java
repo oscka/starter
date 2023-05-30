@@ -1,8 +1,8 @@
-package com.hanex.starter.member;
+package com.hanex.starter.member.command.service;
 
-import com.hanex.starter.member.MemberDto;
-import com.hanex.starter.member.Member;
-import com.hanex.starter.member.MemberRepository;
+import com.hanex.starter.member.command.dto.MemberDto;
+import com.hanex.starter.member.command.repository.MemberRepository;
+import com.hanex.starter.member.command.domain.Member;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

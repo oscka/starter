@@ -1,4 +1,4 @@
-package com.hanex.starter.common.aop;
+package com.hanex.starter.common.exception;
 
 import com.hanex.starter.common.annotation.CustomErrorLog;
 import com.hanex.starter.common.api.ApiResponseDto;

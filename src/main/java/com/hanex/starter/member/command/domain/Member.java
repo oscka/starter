@@ -1,7 +1,8 @@
-package com.hanex.starter.member;
+package com.hanex.starter.member.command.domain;
 
-import com.hanex.starter.customer.Customer;
+import com.hanex.starter.customer.domain.Customer;
 import com.hanex.starter.common.enums.MemberType;
+import com.hanex.starter.member.command.dto.MemberDto;
 import lombok.*;
 import org.springframework.data.annotation.*;
 import org.springframework.data.jdbc.core.mapping.AggregateReference;

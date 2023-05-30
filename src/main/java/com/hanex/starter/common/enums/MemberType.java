@@ -1,16 +1,24 @@
 package com.hanex.starter.common.enums;
 
-public enum MemberType {
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+
+@RequiredArgsConstructor
+@Getter
+public enum MemberType implements EnumType{
     
-    // 고객사(화주)
-    CLIENT,
 
-    // 거래처
-    MEMBER,
+    CLIENT("거래처"),
 
-    // 실행사
-    EXCUTOR
-
+    EXECUTOR("실행사")
     ;
+
+    private final String text;
+
+    @Override
+    public String getId() {
+        return this.name();
+    }
+
 
 }
