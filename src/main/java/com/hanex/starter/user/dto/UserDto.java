@@ -107,15 +107,15 @@ public class UserDto{
 		@NotBlank(message = "{validation.notBlank.email}")
 		private String email;
 
-		@Schema(description = "비밀번호", nullable = false,  example = "test1234")
+		@Schema(description = "휴대폰번호", nullable = false,  example = "01012345678")
 		@NotBlank(message = "{validation.notBlank.password}")
-		private String password;
+		private String phone;
 
 		public User toEntity(){
 			return User.builder()
 					.name(this.name)
-					.password(new CommonEncoder().encode(this.password))
 					.email(this.email)
+					.phone(this.phone)
 					.build();
 		}
 

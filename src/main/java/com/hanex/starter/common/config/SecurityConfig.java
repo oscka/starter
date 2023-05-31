@@ -38,7 +38,8 @@ public class SecurityConfig {
             "/error",
             "/swagger-ui/**",
             "/swagger-resources/**",
-            "/v3/api-docs/**"
+            "/v3/api-docs/**",
+            "/v1/users/**"
     };
 
 
@@ -117,7 +118,6 @@ public class SecurityConfig {
                     authorize -> authorize.antMatchers("/v1/order/**").authenticated()
                             .antMatchers("/v1/member/**").access("hasRole('CUSTOMER') or hasRole('ADMIN')")
                             .antMatchers("/v1/admin/**").hasRole("ADMIN")
-                            .antMatchers("/v1/users/**").access("hasRole('CUSTOMER') or hasRole('ADMIN')")
                             .anyRequest().permitAll()
             );
 

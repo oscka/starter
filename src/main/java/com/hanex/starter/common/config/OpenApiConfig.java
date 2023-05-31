@@ -14,7 +14,10 @@ import org.springframework.context.annotation.Profile;
 @Configuration
 public class OpenApiConfig {
 
-
+    /**
+     * API Grouping > User
+     * @return
+     */
 
     @Bean
     public GroupedOpenApi userApi() {
@@ -25,7 +28,7 @@ public class OpenApiConfig {
     }
 
     /**
-     * API Grouping > admin
+     * API Grouping > Admin
      * @return
      */
     @Bean

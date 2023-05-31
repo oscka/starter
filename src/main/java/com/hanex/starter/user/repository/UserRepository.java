@@ -27,13 +27,17 @@ public interface UserRepository extends CrudRepository<User, UUID> , UserReposit
 
 	@Modifying
 	@Query("""
-   			UPDATE user_tb u
-   			SET  u.user_name = user.name
-   				, u.email = user.email
-   				, u.user_password = user.password
-   			WHERE id = id
+   			UPDATE user_tb
+   			SET  user_name = :name
+   				, email = :email
+   				, phone = :phone
+   			WHERE id = :id
 			""")
-	boolean changeUserInfo(@Param("id") UUID id, @Param("user")User user);
+	boolean changeUserInfo(@Param("id") UUID id, @Param("name") String name, @Param("email")String email, @Param("phone")String phone);
+
+
+
+
 
 	Optional<User> findByIdAndUserStatusIn(UUID uuid, Set<UserStatus> userStatus);
 

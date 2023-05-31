@@ -65,7 +65,7 @@ public class UserService {
 	@CustomLog
 	public void update(UUID id, UserDto.UpdateRequest update){
 		User user = userRepository.findById(id).orElseThrow(()->new Exception404("존재하지 않는 계정입니다."));
-		userRepository.changeUserInfo(id,update.toEntity());
+		userRepository.changeUserInfo(id,update.getName(),update.getEmail(), update.getPhone());
 	}
 
 
