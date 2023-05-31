@@ -6,6 +6,7 @@ import io.jsonwebtoken.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
@@ -25,6 +26,8 @@ import java.io.IOException;
 @Slf4j
 public class JwtRequestFilter extends BasicAuthenticationFilter {
 
+
+
     public JwtRequestFilter(AuthenticationManager authenticationManager) {
         super(authenticationManager);
     }
@@ -32,10 +35,6 @@ public class JwtRequestFilter extends BasicAuthenticationFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filter) throws ServletException, IOException {
 
-        if (request.getRequestURI().contains("swagger") || request.getRequestURI().contains("/v3/api-docs")){
-            filter.doFilter(request,response);
-            return;
-        }
 
         String header = request.getHeader(SecurityConstants.TOKEN_HEADER);
 
@@ -89,5 +88,6 @@ public class JwtRequestFilter extends BasicAuthenticationFilter {
             filter.doFilter(request, response);
         }
     }
+
 
 }

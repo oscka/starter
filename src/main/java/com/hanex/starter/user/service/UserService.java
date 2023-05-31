@@ -1,6 +1,7 @@
 package com.hanex.starter.user.service;
 
 import com.hanex.starter.common.annotation.CustomLog;
+import com.hanex.starter.common.api.ApiResponseDto;
 import com.hanex.starter.common.exception.Exception400;
 import com.hanex.starter.common.exception.Exception404;
 import com.hanex.starter.user.domain.User;
@@ -9,7 +10,9 @@ import com.hanex.starter.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
 
+import javax.validation.Valid;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -74,6 +77,11 @@ public class UserService {
 	public void delete(UUID id){
 		User account = userRepository.findById(id).orElseThrow(()->new Exception404("존재하지 않는 계정입니다."));
 		userRepository.delete(account);
+	}
+
+	@CustomLog
+	public ApiResponseDto login(UserDto.LoginRequest request){
+		return null;
 	}
 
 }

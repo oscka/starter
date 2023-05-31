@@ -23,34 +23,33 @@ public class UserDto{
 	@NoArgsConstructor(access = AccessLevel.PROTECTED)
 	public static class SaveRequest {
 
-		@Schema(description = "로그인 아이디", example = "test", maxLength = 6)
+		@Schema(description = "사용자 ID", nullable = false, example = "user1")
 		@NotBlank(message = "{validation.notBlank.id}")
 		private String loginId;
 
-		@Schema(description = "이름", example = "홍길동")
+		@Schema(description = "사용자 이름", nullable = false, example = "홍길동")
 		@NotBlank(message = "{validation.notBlank.name}")
 		private String name;
 
-		@Schema(description = "사용자 상태", example = "ACTIVE")
+		@Schema(description = "사용자 상태", nullable = false,  example = "ACTIVE")
 		@NotNull
 		private UserStatus userStatus;
 
-		@Schema(description = "이메일", example = "test@test.com")
+		@Schema(description = "사용자 권한", nullable = false,  example = "ROLE_ADMIN")
+		@NotNull
+		private UserRole role;
+
+		@Schema(description = "이메일", nullable = false,  example = "test@test.com")
 		@Pattern(regexp = "^[\\w!#$%&'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$")
 		@NotBlank(message = "{validation.notBlank.email}")
 		private String email;
 
-		@Schema(description = "비밀번호", example = "test1234")
+		@Schema(description = "비밀번호", nullable = false,  example = "test1234")
 		@NotBlank(message = "{validation.notBlank.password}")
 		private String password;
 
 		@Schema(description = "전화번호", example = "01012345678")
 		private String phone;
-
-		@Schema(description = "사용자 권한", example = "ROLE_ADMIN")
-		@NotNull
-		private UserRole role;
-
 
 		public User toEntity(){
 			return User.builder()
@@ -99,14 +98,16 @@ public class UserDto{
 	@NoArgsConstructor(access = AccessLevel.PROTECTED)
 	public static class UpdateRequest {
 
-
+		@Schema(description = "이름", nullable = false,  example = "홍길동")
 		@NotBlank(message = "{validation.notBlank.name}")
 		private String name;
 
+		@Schema(description = "이메일", nullable = false,  example = "test@test.com")
 		@Pattern(regexp = "^[\\w!#$%&'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$")
 		@NotBlank(message = "{validation.notBlank.email}")
 		private String email;
 
+		@Schema(description = "비밀번호", nullable = false,  example = "test1234")
 		@NotBlank(message = "{validation.notBlank.password}")
 		private String password;
 
@@ -127,9 +128,11 @@ public class UserDto{
 	@NoArgsConstructor(access = AccessLevel.PROTECTED)
 	public static class LoginRequest {
 
+		@Schema(description = "사용자 ID", nullable = false, example = "user1")
 		@NotBlank(message = "{validation.notBlank.id}")
 		private String loginId;
 
+		@Schema(description = "비밀번호", nullable = false,  example = "test1234")
 		@NotBlank(message = "{validation.notBlank.password}")
 		private String password;
 	}

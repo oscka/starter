@@ -13,12 +13,15 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import org.springframework.security.web.header.writers.frameoptions.XFrameOptionsHeaderWriter;
 
 @Slf4j
@@ -30,13 +33,22 @@ public class SecurityConfig {
     private final CorsConfig corsConfig;
 
     private static final String[] PERMIT_URL_ARRAY = {
-            /* swagger v3 */
-            "/v3/api-docs/**",
-            "/swagger-ui/**"
+            "/h2-console/**",
+            "/favicon.ico",
+            "/error",
+            "/swagger-ui/**",
+            "/swagger-resources/**",
+            "/v3/api-docs/**"
     };
 
+
     @Bean
-    AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
+    public WebSecurityCustomizer webSecurityCustomizer() {
+        return (web) -> web.ignoring().antMatchers(PERMIT_URL_ARRAY);
+    }
+
+    @Bean
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
     }
 
@@ -45,8 +57,11 @@ public class SecurityConfig {
         @Override
         public void configure(HttpSecurity builder) throws Exception {
             AuthenticationManager authenticationManager = builder.getSharedObject(AuthenticationManager.class);
-            builder.addFilter(new JwtRequestFilter(authenticationManager));
+            // 9. CORS 설정
+            builder.addFilter(corsConfig.corsFilter());
             // 시큐리티 관련 필터
+            builder.addFilterAfter(new JwtRequestFilter(authenticationManager),BasicAuthenticationFilter.class);
+
             super.configure(builder);
         }
     }
@@ -61,7 +76,7 @@ public class SecurityConfig {
     }
 
     @Bean
-    SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
         // 1. CSRF 해제
         http.csrf().disable();
@@ -106,8 +121,7 @@ public class SecurityConfig {
                             .anyRequest().permitAll()
             );
 
-        // 9. CORS 설정
-        http.addFilter(corsConfig.corsFilter());
+
 
 
         http.headers().addHeaderWriter(new XFrameOptionsHeaderWriter(XFrameOptionsHeaderWriter.XFrameOptionsMode.SAMEORIGIN));
@@ -115,5 +129,6 @@ public class SecurityConfig {
 
         return http.build();
     }
+
 
 }

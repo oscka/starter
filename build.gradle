@@ -2,6 +2,7 @@ plugins {
 	id 'java'
 	id 'org.springframework.boot' version '2.7.12'
 	id 'io.spring.dependency-management' version '1.0.15.RELEASE'
+	id 'com.google.cloud.tools.jib' version '3.3.0'
 }
 
 group = 'com.hanex'
@@ -23,6 +24,11 @@ repositories {
 	mavenCentral()
 }
 
+
+ext {
+	set('springCloudVersion', "2021.0.7")
+}
+
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-starter-security'
@@ -35,6 +41,7 @@ dependencies {
 
 	implementation 'org.springframework.boot:spring-boot-starter-actuator'
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
+	implementation "org.springframework.cloud:spring-cloud-starter-openfeign"
 
 	// log4j2
 	implementation 'org.springframework.boot:spring-boot-starter-log4j2'
@@ -61,4 +68,15 @@ dependencies {
 
 tasks.named('test') {
 	useJUnitPlatform()
+}
+
+
+tasks.withType(JavaCompile) {
+	options.encoding = 'UTF-8'
+}
+
+dependencyManagement {
+	imports {
+		mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+	}
 }

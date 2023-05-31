@@ -9,9 +9,12 @@ import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 
 @Configuration
 public class OpenApiConfig {
+
+
 
     @Bean
     public GroupedOpenApi userApi() {
@@ -21,6 +24,10 @@ public class OpenApiConfig {
                 .build();
     }
 
+    /**
+     * API Grouping > admin
+     * @return
+     */
     @Bean
     public GroupedOpenApi adminApi() {
         return GroupedOpenApi.builder()

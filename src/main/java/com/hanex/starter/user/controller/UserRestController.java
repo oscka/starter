@@ -1,5 +1,6 @@
 package com.hanex.starter.user.controller;
 
+import com.hanex.starter.common.annotation.CustomLog;
 import com.hanex.starter.common.api.ApiResponseDto;
 import com.hanex.starter.user.service.UserService;
 import com.hanex.starter.user.dto.UserDto;
@@ -12,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.UUID;
 
-@Tag(name = "users > JWT 토큰 발급용 사용자",description = "사용자 API")
+@Tag(name = "사용자 API",description = "JWT 토큰 발급용 사용자")
 @RequestMapping("/v1/users")
 @RequiredArgsConstructor
 @RestController
@@ -47,4 +48,9 @@ public class UserRestController {
 		return ResponseEntity.ok().build();
 	}
 
+	@Operation(summary = "사용자",description = "회원 탈퇴")
+	@PostMapping("/login")
+	public ApiResponseDto login(@Valid @RequestBody UserDto.LoginRequest request){
+		return ApiResponseDto.createOK(userService.login(request));
+	}
 }
