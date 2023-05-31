@@ -37,10 +37,10 @@ public interface UserRepository extends CrudRepository<User, UUID> , UserReposit
 			""")
 	boolean changeUserInfo(@Param("id") UUID id, @Param("user")User user);
 
-	Optional<User> findByIdAndStateIn(UUID uuid, Set<UserStatus> states);
+	Optional<User> findByIdAndUserStatusIn(UUID uuid, Set<UserStatus> userStatus);
 
 	default Optional<User> findByIdExcludeDeleted(UUID id) {
-		return this.findByIdAndStateIn(id, EnumSet.of(UserStatus.ACTIVE, UserStatus.LOCKED,UserStatus.BAN));
+		return this.findByIdAndUserStatusIn(id, EnumSet.of(UserStatus.ACTIVE, UserStatus.LOCKED,UserStatus.BAN));
 	}
 
 
