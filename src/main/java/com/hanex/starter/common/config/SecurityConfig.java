@@ -29,6 +29,12 @@ public class SecurityConfig {
 
     private final CorsConfig corsConfig;
 
+    private static final String[] PERMIT_URL_ARRAY = {
+            /* swagger v3 */
+            "/v3/api-docs/**",
+            "/swagger-ui/**"
+    };
+
     @Bean
     AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
@@ -89,6 +95,8 @@ public class SecurityConfig {
         http
             // img , css 과 같은 static resources 는 허용
             .authorizeRequests().requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
+            .and()
+            .authorizeRequests().antMatchers(PERMIT_URL_ARRAY).permitAll()
             .and()
             .authorizeRequests(
                     authorize -> authorize.antMatchers("/v1/order/**").authenticated()

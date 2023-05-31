@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+
 /**
  * @author jinseul
  * JWT 토큰 유효성 검사 및 SecurityContextHolder 생성
@@ -31,12 +32,18 @@ public class JwtRequestFilter extends BasicAuthenticationFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filter) throws ServletException, IOException {
 
+        if (request.getRequestURI().contains("swagger") || request.getRequestURI().contains("/v3/api-docs")){
+            filter.doFilter(request,response);
+            return;
+        }
+
         String header = request.getHeader(SecurityConstants.TOKEN_HEADER);
 
         if (header.isBlank()){
             filter.doFilter(request,response);
             return;
         }
+
 
         try {
             byte[] signingkey = SecurityConstants.JWT_SECRET.getBytes();
