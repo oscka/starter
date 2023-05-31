@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.UUID;
 
-@Tag(name = "고객사 API",description = "고객사 API")
+@Tag(name = "사용자 (거래처,실행사,택배사) API",description = "사용자 (거래처,실행사,택배사) API")
 @RequestMapping("/v1/member")
 @RestController
 @RequiredArgsConstructor
@@ -22,40 +22,28 @@ public class MemberRestController {
 
 	private final MemberService memberService;
 
-	/**
-	 * Member 저장
-	 * @param save
-	 * @return
-	 */
+	@Operation(summary = "사용자 생성", description = "Customer (고객사) 가 사용자를 생성")
 	@PostMapping
 	public ApiResponseDto save (@Valid @RequestBody MemberDto.SaveRequest save){
         memberService.save(save);
 		return ApiResponseDto.DEFAULT_OK;
 	}
 
-	/**
-	 * Member List 조회
-	 * @param pageable
-	 * @param clientId
-	 * @return
-	 */
+
+	@Operation(summary = "사용자 리스트 조회", description = "Customer (고객사) 가 사용자 리스트 조회")
 	@GetMapping
 	private ApiResponseDto findAll(Pageable pageable, @RequestParam UUID clientId){
 		return ApiResponseDto.createOK(memberService.findAll(pageable,clientId));
 	}
 
-	@Operation()
+	@Operation(summary = "사용자 단건 조회", description = "Customer (고객사) 가 사용자를 조회")
 	@GetMapping("/{id}")
 	private ApiResponseDto findById(@PathVariable UUID id){
 		return ApiResponseDto.createOK(memberService.findById(id));
 	}
 
-	/**
-	 * Member 수정
-	 * @param id
-	 * @param update
-	 * @return
-	 */
+
+	@Operation(summary = "사용자 수정", description = "Customer (고객사) 가 사용자를 수정")
 	@PutMapping("/{id}")
 	private ApiResponseDto update(@PathVariable UUID id, @Valid @RequestBody MemberDto.UpdateRequest update){
 		memberService.update(id, update);

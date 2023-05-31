@@ -21,20 +21,20 @@ public class AdminController {
 
     private final AdminService adminService;
 
-    @Operation(summary = "사용자 관리", description = "사용자 id 로 상세조회")
+    @Operation(summary = "사용자 id 로 상세조회", description = "UUID 로 조회")
     @GetMapping("/user/{id}")
     public ApiResponseDto findById(UUID id){
         return ApiResponseDto.createOK(adminService.findById(id));
     }
 
-    @Operation(summary = "사용자 관리",description = "사용자 상태 정지")
+    @Operation(summary = "UserStatus > 정지 update",description = "사용자 상태 정지")
     @PutMapping("/user/ban/{id}")
     public ApiResponseDto userBan(UUID id){
         adminService.userBan(id);
         return ApiResponseDto.DEFAULT_OK;
     }
 
-    @Operation(summary = "사용자 관리",description = "사용자 리스트 조회")
+    @Operation(summary = "UserStatus 를 조건으로 User List 조회",description = "사용자 리스트 조회")
     @GetMapping("/user")
     public ApiResponseDto findByUserStatus(@PageableDefault(size = 50, sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable,
                                           @RequestParam(defaultValue = "ACTIVE") String userStatus){

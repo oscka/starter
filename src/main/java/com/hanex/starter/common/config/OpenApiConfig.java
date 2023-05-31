@@ -9,37 +9,71 @@ import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Profile;
 
 @Configuration
 public class OpenApiConfig {
 
+
     /**
-     * API Grouping > User
+     * 1) API Grouping > ALL
      * @return
      */
-
     @Bean
-    public GroupedOpenApi userApi() {
+    public GroupedOpenApi allApi() {
         return GroupedOpenApi.builder()
-                .group("user api")
-                .pathsToMatch("/v1/users/**")
+                .group("API ALL")
+                .pathsToMatch("/**")
                 .build();
     }
 
     /**
-     * API Grouping > Admin
+     * 2) API Grouping > Admin
      * @return
      */
     @Bean
     public GroupedOpenApi adminApi() {
         return GroupedOpenApi.builder()
-                .group("admin api")
+                .group("ADMIN API")
                 .pathsToMatch("/v1/admin/**")
                 //.addOpenApiMethodFilter(method -> method.isAnnotationPresent(Admin.class))
                 .build();
     }
 
+    /**
+     * 3) API Grouping > User
+     * @return
+     */
+    @Bean
+    public GroupedOpenApi userApi() {
+        return GroupedOpenApi.builder()
+                .group("USER API")
+                .pathsToMatch("/v1/users/**")
+                .build();
+    }
+
+    /**
+     * 4) API Grouping > Member
+     * @return
+     */
+    @Bean
+    public GroupedOpenApi memberApi() {
+        return GroupedOpenApi.builder()
+                .group("Member API")
+                .pathsToMatch("/v1/member/**")
+                .build();
+    }
+
+    /**
+     * 5) API Grouping > Customer
+     * @return
+     */
+    @Bean
+    public GroupedOpenApi customerApi() {
+        return GroupedOpenApi.builder()
+                .group("Customer API")
+                .pathsToMatch("/v1/customer/**")
+                .build();
+    }
 
     @Bean
     public OpenAPI openAPI() {

@@ -21,34 +21,34 @@ public class UserRestController {
 
 	private final UserService userService;
 
-	@Operation(summary = "사용자", description = "회원가입")
+	@Operation(summary = "회원가입", description = "User 정보 Insert")
 	@PostMapping("/register")
 	public ResponseEntity<Void> register(@RequestBody @Valid UserDto.SaveRequest save){
 		userService.register(save);
 		return ResponseEntity.ok().build();
 	}
 
-	@Operation(summary = "사용자", description = "로그인 아이디로 사용자 단건 조회")
+	@Operation(summary = "로그인 아이디로 사용자 단건 조회", description = "로그인 아이디로 사용자 단건 조회")
 	@GetMapping("/{loginId}")
 	public ApiResponseDto findByLoginId(@PathVariable String loginId){
 		return new ApiResponseDto<>(userService.findByLoginId(loginId));
 	}
 
-	@Operation(summary = "사용자",description = "사용자 정보 수정")
+	@Operation(summary = "사용자 정보 수정",description = "user upate")
 	@PutMapping("/{id}")
 	public ResponseEntity<Void> update(@PathVariable UUID id,@Valid @RequestBody UserDto.UpdateRequest update){
 		userService.update(id,update);
 		return ResponseEntity.ok().build();
 	}
 
-	@Operation(summary = "사용자",description = "회원 탈퇴")
+	@Operation(summary = "회원 탈퇴",description = "Soft Delete > USER STATUS 만 DELETED 로 update")
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Void> delete(@PathVariable UUID id){
 		userService.delete(id);
 		return ResponseEntity.ok().build();
 	}
 
-	@Operation(summary = "사용자",description = "회원 탈퇴")
+	@Operation(summary = "로그인",description = "Auth Service 에 JWT 토큰 요청")
 	@PostMapping("/login")
 	public ApiResponseDto login(@Valid @RequestBody UserDto.LoginRequest request){
 		return ApiResponseDto.createOK(userService.login(request));
