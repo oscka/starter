@@ -1,14 +1,12 @@
-package com.hanex.starter.member.command.controller;
+package com.hanex.starter.member.query.controller;
 
 import com.hanex.starter.common.api.ApiResponseDto;
-import com.hanex.starter.member.command.dto.MemberDto;
-import com.hanex.starter.member.command.service.MemberService;
+import com.hanex.starter.member.query.dto.MemberDto;
+import com.hanex.starter.member.query.service.MemberService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;

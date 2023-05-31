@@ -1,5 +1,6 @@
 package com.hanex.starter.customer.domain;
 
+import com.hanex.starter.customer.dto.CustomerDto;
 import com.hanex.starter.user.domain.BaseUser;
 import com.hanex.starter.common.enums.Group;
 import com.hanex.starter.common.enums.UserRole;
@@ -17,17 +18,30 @@ import java.util.UUID;
 @Builder
 @Getter
 @ToString
-@Table("client")
+@Table("customer")
 public class Customer {
 
     @Id
     private UUID id;
     private BaseUser baseUser;
     private UserStatus customerStatus;
-    private UserRole role;
+    @Builder.Default
+    private UserRole role = UserRole.ROLE_CUSTOMER;
     private String email;
     private Group group;
     private String name;
     private String phone;
+
+    public CustomerDto.CustomerInfoResponse toDto(){
+        return CustomerDto.CustomerInfoResponse.builder()
+                .id(this.id)
+                .customerStatus(this.customerStatus)
+                .role(this.role)
+                .email(this.email)
+                .name(this.name)
+                .phone(this.phone)
+                .group(this.group)
+                .build();
+    }
 
 }

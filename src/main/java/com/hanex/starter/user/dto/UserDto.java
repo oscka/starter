@@ -16,7 +16,7 @@ import java.time.Instant;
 
 public class UserDto{
 
-	@Schema(description = "회원가입(사용자 정보 저장) 요청 DTO")
+	@Schema(description = "회원가입(User 정보 저장) 요청 DTO")
 	@Getter
 	@Builder
 	@AllArgsConstructor
@@ -67,7 +67,7 @@ public class UserDto{
 
 	}
 
-	@Schema(description = "사용자 조회 응답 DTO")
+	@Schema(description = "User 조회 응답 DTO")
 	@Getter
 	@Builder
 	@AllArgsConstructor
@@ -91,7 +91,7 @@ public class UserDto{
 	}
 
 
-	@Schema(description = "사용자 수정 요청 DTO")
+	@Schema(description = "User 수정 요청 DTO")
 	@Getter
 	@Builder
 	@AllArgsConstructor

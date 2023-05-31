@@ -1,4 +1,4 @@
-package com.hanex.starter.member.command.repository;
+package com.hanex.starter.member.query.repository;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Sort;
@@ -8,7 +8,7 @@ import java.util.Collections;
 import java.util.List;
 
 import static java.util.stream.Collectors.joining;
-import static org.apache.commons.lang3.StringUtils.*;
+import static org.apache.commons.lang3.StringUtils.firstNonBlank;
 
 public class MemberSql {
 
@@ -62,10 +62,8 @@ public class MemberSql {
     }
 
     private static String whereAnd(String ... conditions) {
-        //List<String> finalCond = conditions.findAll({it != null});
         List<String> finalCond = Collections.singletonList(firstNonBlank(conditions));
         Assert.notEmpty(finalCond);
-        //return "WHERE " + finalCond.join("\nAND ");
         return " WHERE " + String.join(finalCond + "\nAND");
     }
 
@@ -75,4 +73,14 @@ public class MemberSql {
                 .map(order -> order.getProperty() + " " + order.getDirection().name())
                 .collect(joining(", "));
     }
+
+    public static final String UPDATE = """
+		UPDATE member_tb
+		SET member_type = :memberType,
+			ceo_name = :ceoName,
+			registration_number = :registrationNumber,
+			phone = :phone,
+			memo = :memo
+		WHERE id = :id
+	""";
 }

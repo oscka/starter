@@ -1,7 +1,7 @@
-package com.hanex.starter.member.command.repository;
+package com.hanex.starter.member.query.repository;
 
 import com.hanex.starter.customer.domain.Customer;
-import com.hanex.starter.member.command.domain.Member;
+import com.hanex.starter.member.query.domain.Member;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jdbc.core.convert.EntityRowMapper;
@@ -14,7 +14,9 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 public class MemberRepositoryImpl implements MemberRepositoryCustom {
@@ -31,6 +33,7 @@ public class MemberRepositoryImpl implements MemberRepositoryCustom {
                 (RelationalPersistentEntity<Member>) mappingContext.getRequiredPersistentEntity(Member.class),
                 jdbcConverter);
     }
+
 
     @Override
     public Page<Member> findByClientIdAndSearchCondition(
@@ -53,5 +56,17 @@ public class MemberRepositoryImpl implements MemberRepositoryCustom {
                 this.jdbcOperations.queryForObject(MemberSql.COUNT_BY_ID_WITH_CLIENT()
                         ,parameterSource
                         , Long.class));
+    }
+
+    public boolean updateMember(UUID id , Member member) {
+        SqlParameterSource parameterSource = new MapSqlParameterSource()
+                .addValue("id", id)
+                .addValue("memberType", member.getMemberType())
+                .addValue("ceoName", member.getCeoName())
+                .addValue("registrationNumber", member.getRegistrationNumber())
+                .addValue("phone", member.getPhone())
+                .addValue("memo", member.getMemo());
+        int affected = jdbcOperations.update(MemberSql.UPDATE, parameterSource);
+        return affected == 1;
     }
 }

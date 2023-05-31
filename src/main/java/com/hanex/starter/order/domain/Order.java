@@ -1,7 +1,6 @@
 package com.hanex.starter.order.domain;
 
 import com.hanex.starter.common.enums.OrderStatus;
-import com.hanex.starter.member.command.domain.Member;
 import com.hanex.starter.user.domain.User;
 import lombok.*;
 import org.springframework.data.annotation.Id;
@@ -21,7 +20,6 @@ public class Order {
 	private Long id;
 	private List<OrderLineItem> orderLineItems;
 	private User user;
-	private Member member;
 	private OrderStatus orderStatus;
 	private Instant orderDateTime;
 }

@@ -1,10 +1,9 @@
 package com.hanex.starter.user.service;
 
 import com.hanex.starter.common.annotation.CustomLog;
-import com.hanex.starter.common.api.ApiResponseDto;
 import com.hanex.starter.common.exception.Exception400;
 import com.hanex.starter.common.exception.Exception404;
-import com.hanex.starter.user.controller.AuthFeignClient;
+import com.hanex.starter.user.feign.AuthFeignClient;
 import com.hanex.starter.user.domain.User;
 import com.hanex.starter.user.dto.UserDto;
 import com.hanex.starter.user.repository.UserRepository;
@@ -12,9 +11,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import javax.validation.Valid;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
 

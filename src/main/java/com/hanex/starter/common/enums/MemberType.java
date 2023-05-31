@@ -4,7 +4,7 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 /**
- * Member 종류
+ * Member 분류
  */
 @RequiredArgsConstructor
 @Getter

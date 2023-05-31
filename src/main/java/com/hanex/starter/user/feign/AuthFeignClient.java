@@ -1,4 +1,4 @@
-package com.hanex.starter.user.controller;
+package com.hanex.starter.user.feign;
 
 import com.hanex.starter.user.dto.UserDto;
 import org.springframework.cloud.openfeign.FeignClient;
