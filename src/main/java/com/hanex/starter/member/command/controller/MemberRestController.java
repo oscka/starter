@@ -1,7 +1,10 @@
 package com.hanex.starter.member.command.controller;
 
+import com.hanex.starter.common.api.ApiResponseDto;
 import com.hanex.starter.member.command.dto.MemberDto;
 import com.hanex.starter.member.command.service.MemberService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -11,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.UUID;
 
+@Tag(name = "고객사 API",description = "고객사 API")
 @RequestMapping("/v1/member")
 @RestController
 @RequiredArgsConstructor
@@ -24,9 +28,9 @@ public class MemberRestController {
 	 * @return
 	 */
 	@PostMapping
-	public ResponseEntity<Void> save (@Valid @RequestBody MemberDto.SaveRequest save){
+	public ApiResponseDto save (@Valid @RequestBody MemberDto.SaveRequest save){
         memberService.save(save);
-		return ResponseEntity.ok().build();
+		return ApiResponseDto.DEFAULT_OK;
 	}
 
 	/**
@@ -36,19 +40,14 @@ public class MemberRestController {
 	 * @return
 	 */
 	@GetMapping
-	private ResponseEntity<Page<MemberDto.MemberInfoResponse>> findAll(Pageable pageable, @RequestParam UUID clientId){
-		return ResponseEntity.ok(memberService.findAll(pageable,clientId));
+	private ApiResponseDto findAll(Pageable pageable, @RequestParam UUID clientId){
+		return ApiResponseDto.createOK(memberService.findAll(pageable,clientId));
 	}
 
-	/**
-	 * Member 정보 조회
-	 * @param id
-	 * @return
-	 */
+	@Operation()
 	@GetMapping("/{id}")
-	private ResponseEntity<MemberDto.MemberInfoResponse> findById(@PathVariable UUID id){
-		return ResponseEntity.ok(memberService.findById(id));
-
+	private ApiResponseDto findById(@PathVariable UUID id){
+		return ApiResponseDto.createOK(memberService.findById(id));
 	}
 
 	/**
@@ -58,8 +57,9 @@ public class MemberRestController {
 	 * @return
 	 */
 	@PutMapping("/{id}")
-	private ResponseEntity<Boolean> update(@PathVariable UUID id, @Valid @RequestBody MemberDto.UpdateRequest update){
-		return ResponseEntity.ok(memberService.update(id, update));
+	private ApiResponseDto update(@PathVariable UUID id, @Valid @RequestBody MemberDto.UpdateRequest update){
+		memberService.update(id, update);
+		return ApiResponseDto.DEFAULT_OK;
 	}
 
 }

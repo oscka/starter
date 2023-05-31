@@ -33,7 +33,8 @@ public class MemberService {
         return null;
     }
 
-    public boolean update(UUID id, MemberDto.UpdateRequest update){
-        return memberRepository.changeMemberInfo(id,update.toEntity());
+    public void update(UUID id, MemberDto.UpdateRequest update){
+
+        memberRepository.changeMemberInfo(id,update.toEntity());
     }
 }

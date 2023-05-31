@@ -3,6 +3,9 @@ package com.hanex.starter.common.enums;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
+/**
+ * 성별
+ */
 @Getter
 @RequiredArgsConstructor
 public enum Gender implements EnumType {

@@ -4,6 +4,10 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
+/**
+ * Spring Security 에서 제공하는 PasswordEncoder 구현후,
+ * encode(암호화) , matches(비밀번호 동일 check) 메서드 제공
+ */
 @Component
 public class CommonEncoder implements PasswordEncoder {
     private final PasswordEncoder passwordEncoder;

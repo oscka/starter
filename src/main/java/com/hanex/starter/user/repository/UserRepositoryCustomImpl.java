@@ -17,12 +17,11 @@ public class UserRepositoryCustomImpl implements UserRepositoryCustom {
 
 	@Transactional
 	public void deleteById(UUID id) {
-		User account = this.jdbcAggregateOperations.findById(id, User.class);
-		if (account == null) {
-			throw new TransientDataAccessResourceException("account does not exist.id: " + id);
+		User user = this.jdbcAggregateOperations.findById(id, User.class);
+		if (user == null) {
+			throw new TransientDataAccessResourceException("user does not exist.id: " + id);
 		}
-
-		this.delete(account);
+		this.delete(user);
 	}
 
 	@Transactional

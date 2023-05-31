@@ -1,16 +1,26 @@
-###################
+#-------------------------
 # dev
-###################
+# application-dev.yml
+#-------------------------
 spring:
+  #-------------------------
+  # spring.datasource
+  #-------------------------
   datasource:
     url: jdbc:postgresql://localhost:5432/hanexdb
     driverClassName: org.postgresql.Driver
     username: hanex
     password: hanex1234
+  #-------------------------
+  # spring.redis
+  #-------------------------
   redis:
     host: host.docker.internal
     port: 6001
 
+#-------------------------
+# logging
+#-------------------------
 logging:
-  config: classpath:log4j2-dev.xml
+  config: classpath:log4j2-local.xml
 

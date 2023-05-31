@@ -1,5 +1,6 @@
 package com.hanex.starter.common.config;
 
+import org.springdoc.core.GroupedOpenApi;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 
@@ -14,6 +15,24 @@ import org.springframework.context.annotation.Profile;
 public class OpenApiConfig {
 
     @Bean
+    public GroupedOpenApi publicApi() {
+        return GroupedOpenApi.builder()
+                .group("user api")
+                .pathsToMatch("/v1/users/**")
+                .build();
+    }
+
+    @Bean
+    public GroupedOpenApi adminApi() {
+        return GroupedOpenApi.builder()
+                .group("admin api")
+                .pathsToMatch("/v1/admin/**")
+                //.addOpenApiMethodFilter(method -> method.isAnnotationPresent(Admin.class))
+                .build();
+    }
+
+
+    @Bean
     public OpenAPI openAPI(@Value("${springdoc.version}") String appVersion) {
         Info info = new Info()
                 .title("Starter API")
@@ -24,5 +43,7 @@ public class OpenApiConfig {
                 .components(new Components())
                 .info(info);
     }
+
+
 
 }

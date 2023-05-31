@@ -1,8 +1,7 @@
-###################
+#-------------------------
 # local
-###################
-server.port: 19090
-
+# application-local.yml
+#-------------------------
 spring:
   datasource:
     url: jdbc:h2:mem:starter;MODE=PostgreSQL;DATABASE_TO_UPPER=false;CASE_INSENSITIVE_IDENTIFIERS=true

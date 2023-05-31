@@ -11,6 +11,7 @@ import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Method;
+import java.util.Arrays;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -28,7 +29,7 @@ public class CommonLogHandler {
     public void logAdvice(JoinPoint jp) throws Exception {
         MethodSignature signature = (MethodSignature) jp.getSignature();
         Method method = signature.getMethod();
-        log.debug("디버그 : "+method.getName()+" 성공");
+        log.debug("[CommonLogHandler] : [{}]" , method.getName());
     }
 
     @Before("customErrorLog()")
@@ -38,7 +39,8 @@ public class CommonLogHandler {
         for (Object arg : args) {
             if(arg instanceof Exception){
                 Exception e = (Exception) arg;
-                log.error("에러 : "+e.getMessage());
+                log.error("[CommonLogHandler] ERROR > {}",e.getMessage());
+                log.error(Arrays.toString(e.getStackTrace()));
             }
         }
     }

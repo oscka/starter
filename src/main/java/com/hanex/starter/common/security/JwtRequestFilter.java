@@ -9,6 +9,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
+import org.springframework.util.StringUtils;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -16,6 +17,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * @author jinseul
+ * JWT 토큰 유효성 검사 및 SecurityContextHolder 생성
+ */
 @Slf4j
 public class JwtRequestFilter extends BasicAuthenticationFilter {
 
@@ -43,11 +48,11 @@ public class JwtRequestFilter extends BasicAuthenticationFilter {
 
             String loginId = (String) claims.get("loginId");
             String role = (String) claims.get("role");
-            log.info("loinId : {} , role : {}",loginId,role);
-            if (!loginId.isBlank()) {
-                //List<SimpleGrantedAuthority> authorities = ((List<?>) claims.get("role")).stream().map(authority -> new SimpleGrantedAuthority((String) authority)).collect(Collectors.toList());
+            if (StringUtils.hasLength(loginId) && StringUtils.hasLength(role)) {
+
                 //List<String> roleList = (List<String>) claims.get("role");
-                //String role = (String) claims.get("role");
+                //List<SimpleGrantedAuthority> authorities = ((List<?>) claims.get("role")).stream().map(authority -> new SimpleGrantedAuthority((String) authority)).collect(Collectors.toList());
+
                 User user = User.builder()
                         .loginId(loginId)
                         .role(UserRole.valueOf(role))

@@ -56,6 +56,10 @@ public class User {
 		this.userStatus = UserStatus.LOCKED;
 	}
 
+	public void ban() {
+		this.userStatus = UserStatus.BAN;
+	}
+
 	public void delete() {
 		this.userStatus = UserStatus.DELETED;
 	}

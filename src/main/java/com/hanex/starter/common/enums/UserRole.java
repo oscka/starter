@@ -3,14 +3,13 @@ package com.hanex.starter.common.enums;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
-/*
-권한 Dimension 설명
-
-A (관리항목) - 화주, 채널 등
-
-B (업무) - CSR 그룹, 재고관리 그룹, 계약관리 그룹, 기획 그룹 등
-
-C (기능) - Dashboard, CO, SO, 계약 등
+/**
+ * 사용자 권한
+ *
+ * 권한 Dimension 설명
+ * A (관리항목) - 화주, 채널 등
+ * B (업무) - CSR 그룹, 재고관리 그룹, 계약관리 그룹, 기획 그룹 등
+ * C (기능) - Dashboard, CO, SO, 계약 등
  */
 @RequiredArgsConstructor
 @Getter

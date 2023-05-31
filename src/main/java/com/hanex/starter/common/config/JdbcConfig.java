@@ -23,6 +23,10 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * @author jinseul
+ * Spring Data JDBC 설정
+ */
 @EnableJdbcAuditing
 @Configuration
 public class JdbcConfig extends AbstractJdbcConfiguration {
@@ -49,6 +53,11 @@ public class JdbcConfig extends AbstractJdbcConfiguration {
 			}));
 	}
 
+	/**
+	 * 엔티티가 저장되기전에 Validation 검사
+	 * @param validator
+	 * @return
+	 */
 	@Bean
 	@Order
 	BeforeSaveCallback<?> validateBeforeSave(Validator validator) {
@@ -62,7 +71,9 @@ public class JdbcConfig extends AbstractJdbcConfiguration {
 		};
 	}
 
-
+	/**
+	 *
+	 */
 	@WritingConverter
 	static class EncryptStringWritingConverter implements Converter<EncryptString, byte[]> {
 		private final Encryptor encryptor;

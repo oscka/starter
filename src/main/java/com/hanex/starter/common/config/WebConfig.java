@@ -13,6 +13,9 @@ import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 
 import java.util.Locale;
 
+/**
+ * WEB Config
+ */
 @RequiredArgsConstructor
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
@@ -24,6 +27,10 @@ public class WebConfig implements WebMvcConfigurer {
         return slr;
     }
 
+    /**
+     * ERROR message 설정
+     * @return
+     */
     @Bean
     public MessageSource messageSource(){
 
@@ -37,6 +44,10 @@ public class WebConfig implements WebMvcConfigurer {
         return messageSource;
     }
 
+    /**
+     * javax.validation message 설정
+     * @return
+     */
     @Bean
     public MessageSource validationMessageSource() {
         ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();

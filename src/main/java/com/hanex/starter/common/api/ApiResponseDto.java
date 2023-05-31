@@ -7,8 +7,15 @@ import org.springframework.http.HttpStatus;
 @ToString
 @Getter
 public class ApiResponseDto<T> {
-    private Integer status; // 에러시에 의미 있음.
-    private String msg; // 에러시에 의미 있음. ex) badRequest
+
+    public static <T> ApiResponseDto<T> createOK(T data) {
+        return new ApiResponseDto<>(data);
+    }
+
+    public static final ApiResponseDto<String> DEFAULT_OK = new ApiResponseDto<>();
+
+    private Integer status; // 에러시에 의미 있음
+    private String msg; // 에러시에 의미 있음 ex) badRequest
     private T data; // 에러시에는 구체적인 에러 내용 ex) username이 입력되지 않았습니다
 
     public ApiResponseDto(){

@@ -26,11 +26,8 @@ custom:
 #--------------------------
 # logging
 #--------------------------
-logging:
-  level:
-    #  root: debug
-    org.springframework.jdbc.core: TRACE
-    org.springframework.jdbc.core.StatementCreatorUtils: TRACE
+logging.config: classpath:log4j2.xml
+
 #--------------------------
 # actuator
 #--------------------------
