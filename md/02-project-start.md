@@ -1,6 +1,6 @@
 # 02. Project 사용 방법
 
-1. Create User, DATABASE(DCL), Table (DDL)
+### 1. Create User, DATABASE(DCL), Table (DDL)
 
 **(필수)**
 - [User, Database 생성](../db/dcl.sql)
@@ -11,7 +11,7 @@
 
 **위 SQL 문**으로 User,Database, Table 생성후 H2 DB (Embedded DB) 를 사용하거나 설치된 Postgres DB 를 사용하면된다.
 
-2. **H2 console**
+### 2. H2 console
 
 ```yaml
 ---
@@ -38,13 +38,13 @@ application.yml 에서 profile 을 local 로 지정하면 application-local.yml 
     - ex) http://localhost:18080/h2-console
 
 
-3. docker-compose for Postgres
+### 3. docker-compose for Postgres
 - [postgres Local PC 에서 docker-compose 로 설치](md/etc/docker-compose.yml)  
 Postgres DB 를 설치해서 사용하고 싶다면 위 docker-compose.yml 를 이용하여 사용하면 된다.
 
-4. API TEST
+### 4. API TEST
 
-### http 파일을 이용한 API 테스트
+#### http 파일을 이용한 API 테스트
 
 사용하기전 http 확장자로 파일을 생성하고, IDE 가 필요하다.
 
@@ -58,7 +58,7 @@ Postgres DB 를 설치해서 사용하고 싶다면 위 docker-compose.yml 를 �
   - [User API 테스트](http/users.http)  
 
 
-### swagger 를 이용한 API 테스트
+#### swagger 를 이용한 API 테스트
 
 **(!)**  사용하기전 **auth-service** 어플리케이션이 실행됐는지 확인해야한다.
 
