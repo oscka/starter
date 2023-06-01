@@ -2,8 +2,12 @@
 
 1. Create User, DATABASE(DCL), Table (DDL)
 
-- [User, Database 생성](db/dcl.sql)
-- [테이블 생성 SQL](db/create_table.sql)
+**(필수)**
+- [User, Database 생성](../db/dcl.sql)
+- [테이블 생성 SQL](../db/create_table.sql)
+
+**(선택 사항)**
+- [User Data Insert SQL](../db/insert.sql)
 
 **위 SQL 문**으로 User,Database, Table 생성후 H2 DB (Embedded DB) 를 사용하거나 설치된 Postgres DB 를 사용하면된다.
 
