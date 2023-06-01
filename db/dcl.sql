@@ -4,6 +4,9 @@
 -- CREATE USER {user_name} WITH PASSWORD '{user_password}';
 create user hanex with password 'hanex1234';
 
+-- psql 연결
+psql -U hanex -d hanexdb  -W -h localhost
+
 -- 계정 조회 (psql)
 \du
 
@@ -13,5 +16,3 @@ ALTER ROLE hanex CREATEDB REPLICATION;
 -- database 생성
 CREATE DATABASE hanexdb OWNER hanex ENCODING 'utf-8';
 
--- psql 연결
-psql -U hanex -d hanexdb  -W -h localhost
