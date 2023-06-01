@@ -39,7 +39,7 @@ application.yml 에서 profile 을 local 로 지정하면 application-local.yml 
 
 
 ### 3. docker-compose for Postgres
-- [postgres Local PC 에서 docker-compose 로 설치](md/etc/docker-compose.yml)  
+- [docker-compose 로 Postgres 설치](etc/docker-compose.yml)  
 Postgres DB 를 설치해서 사용하고 싶다면 위 docker-compose.yml 를 이용하여 사용하면 된다.
 
 ### 4. API TEST
@@ -55,7 +55,7 @@ Postgres DB 를 설치해서 사용하고 싶다면 위 docker-compose.yml 를 �
   - Ultimate(유료) 일경우 http 테스트 사용가능
 
 - HTTP 파일 참고  
-  - [User API 테스트](http/users.http)  
+  - [User API 테스트](../http/users.http)  
 
 
 #### swagger 를 이용한 API 테스트
