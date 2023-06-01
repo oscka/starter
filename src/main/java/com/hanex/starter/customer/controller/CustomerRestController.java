@@ -10,7 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.UUID;
+import javax.validation.constraints.NotNull;
 
 @Tag(name = "고객사 (화주) API",description = "고객사 (화주) API")
 @RequestMapping("/v1/customer")
@@ -22,7 +22,7 @@ public class CustomerRestController {
 
     @Operation(description = "고객사 상세 조회",summary = "고객사 고유번호로 상세 조회")
     @GetMapping("/{id}")
-    public ApiResponseDto findById (UUID id){
+    public ApiResponseDto findById (@NotNull @PathVariable String id){
         return ApiResponseDto.createOK(customerService.findById(id));
     }
 
@@ -42,7 +42,7 @@ public class CustomerRestController {
 
     @Operation(description = "고객사 수정",summary = "고객사 수정")
     @PutMapping("/{id}")
-    public ApiResponseDto update(@PathVariable UUID id, @Valid @RequestBody CustomerDto.UpdateRequest updateRequest){
+    public ApiResponseDto update(@PathVariable String id, @Valid @RequestBody CustomerDto.UpdateRequest updateRequest){
         customerService.update(id,updateRequest);
         return ApiResponseDto.DEFAULT_OK;
     }
@@ -50,7 +50,7 @@ public class CustomerRestController {
 
     @Operation(description = "고객사 삭제",summary = "고객사 삭제")
     @DeleteMapping("/{id}")
-    public ApiResponseDto delete(@PathVariable UUID id){
+    public ApiResponseDto delete(@PathVariable String id){
         customerService.delete(id);
         return ApiResponseDto.DEFAULT_OK;
     }

@@ -15,7 +15,6 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 
 import java.util.List;
-import java.util.UUID;
 
 public class MemberRepositoryImpl implements MemberRepositoryCustom {
 
@@ -35,7 +34,7 @@ public class MemberRepositoryImpl implements MemberRepositoryCustom {
 
     @Override
     public Page<Member> findByClientIdAndSearchCondition(
-            AggregateReference<Customer, UUID> clientId,
+            AggregateReference<Customer, String> clientId,
             Pageable pageable
             ) {
         // SORT property 는 entity property 명으로 변경되야 한다.
@@ -56,7 +55,7 @@ public class MemberRepositoryImpl implements MemberRepositoryCustom {
                         , Long.class));
     }
 
-    public boolean updateMember(UUID id , Member member) {
+    public boolean updateMember(String id , Member member) {
         SqlParameterSource parameterSource = new MapSqlParameterSource()
                 .addValue("id", id)
                 .addValue("memberType", member.getMemberType())

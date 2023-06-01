@@ -4,9 +4,9 @@ import com.hanex.starter.user.domain.User;
 import com.hanex.starter.common.enums.UserRole;
 import io.jsonwebtoken.*;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
@@ -54,6 +54,10 @@ public class JwtRequestFilter extends BasicAuthenticationFilter {
 
             String loginId = (String) claims.get("loginId");
             String role = (String) claims.get("role");
+            String sub = (String) claims.get("sub");
+
+            // TODO CustomUser 에 id 만들어서 user id 값을 SecurityContext 에 넣을 예정
+            log.info("loginId : {}, role : {}, sub: {}",loginId,role,sub);
             if (StringUtils.hasLength(loginId) && StringUtils.hasLength(role)) {
 
                 //List<String> roleList = (List<String>) claims.get("role");
@@ -62,6 +66,7 @@ public class JwtRequestFilter extends BasicAuthenticationFilter {
                 User user = User.builder()
                         .loginId(loginId)
                         .role(UserRole.valueOf(role))
+                        .password(sub)
                         .build();
 
                 CustomUser myUserDetails = new CustomUser(user);

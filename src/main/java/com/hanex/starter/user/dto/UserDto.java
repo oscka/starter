@@ -74,18 +74,25 @@ public class UserDto{
 	@NoArgsConstructor(access = AccessLevel.PROTECTED)
 	public static class UserInfoResponse {
 
+		@Schema(description = "사용자 ID", nullable = false, example = "user1")
 		private String loginId;
 
+		@Schema(description = "사용자 이름", nullable = false, example = "홍길동")
 		private String name;
 
+		@Schema(description = "사용자 상태", nullable = false,  example = "ACTIVE")
 		private UserStatus userStatus;
 
+		@Schema(description = "사용자 권한", nullable = false,  example = "ROLE_ADMIN")
 		private UserRole role;
 
+		@Schema(description = "이메일", nullable = false,  example = "test@test.com")
 		private String email;
 
+		@Schema(description = "휴대폰", example = "01012345678")
 		private String phone;
 
+		@Schema(description = "생성일", example = "2023-06-01 11:22:40.109")
 		private Instant createdAt;
 
 	}

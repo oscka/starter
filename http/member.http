@@ -21,7 +21,7 @@ Content-Type: application/json
 
 ###
 # member 상세 조회
-# GET /v1/member/{uuid}
+# GET /v1/member/{memberId}
 GET /v1/member/
 Host: localhost:18080
 

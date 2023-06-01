@@ -13,7 +13,7 @@ public class ProductDto {
         private String name;
         private Long price;
         private String description;
-        private UUID ownerId;
+        private String ownerId;
     }
 
     @Getter
@@ -24,7 +24,7 @@ public class ProductDto {
         private String name;
         private Long price;
         private String description;
-        private UUID ownerId;
+        private String ownerId;
     }
 
 

@@ -16,9 +16,37 @@ INSERT INTO user_tb
 (id, login_id, user_name, user_status, user_role, email, user_password, phone, created_at, updated_at)
 VALUES('7de5eb3f-fe59-453e-a0c1-f1f497ceee5c'::uuid, 'test', '테스트', 'ACTIVE', 'ROLE_MEMBER', 'test@demo.com', '$2a$10$Yf6yGPfbLcAn.0rRe.UcFuE2TRDHHKLOJ6r1XIHqzCvrW6sq5TZCW', '01056781234', '2023-05-30 16:35:39.466', '2023-05-30 16:35:39.493');
 
+--------------------------------------
+-- base_user insert
+-- customer 와 member_tb 의 로그인, password , ROLE 정보를 갖고 있다.
+-- login table 로 사용할 예정
+-- 비밀번호 통일함 : test1234
+--------------------------------------
+INSERT INTO base_user
+(id, user_id, login_id, "password", user_role)
+VALUES(1, '0cffe143-d103-4525-a0d6-f6b780d97f3f', 'customer01', '$2a$10$LXFGD10re0RMyFn18gAVBOoKTHHH7Xcln2Q3kIPB8exHr6jWvf6Sa', 'ROLE_CUSTOMER');
 
+INSERT INTO base_user
+(id, user_id, login_id, "password", user_role)
+VALUES(3, 'f2741827-b891-41cb-b809-63440424dca8', 'member_01', '$2a$10$laB73UtlDyiCxFbW.XfHuOlp6GF/oAsX3CJ3GVfqgsGdIRLq5tAzC', 'ROLE_MEMBER');
 
+--------------------------------------
+-- customer insert
+--------------------------------------
+INSERT INTO customer
+(id, "version", customer_status, customer_group, customer_name, phone, memo, email, created_by, created_at, updated_by, updated_at)
+VALUES('0cffe143-d103-4525-a0d6-f6b780d97f3f', 1, 'ACTIVE', 'FINANCE', '인삼공사', '01012345678', '고객사 메모', 'customer01@test.com', NULL, '2023-06-01 16:45:27.035', NULL, '2023-06-01 16:45:27.035');
 
+--------------------------------------
+-- member insert
+--------------------------------------
+INSERT INTO member_tb
+(id, customer_id, member_code, member_type, manager_name, member_status, ceo_name, registration_number, phone, memo, email, created_by, created_at, updated_by, updated_at)
+VALUES('f2741827-b891-41cb-b809-63440424dca8', '0cffe143-d103-4525-a0d6-f6b780d97f3f', 'e315282134c9470791fc6100785edb61', 'CLIENT', '홍길동', 'ACTIVE', '홍길동', '130-81-16025', '02-3400-5474', '고객메모', 'member_01@test.com', '0cffe143-d103-4525-a0d6-f6b780d97f3f', '2023-06-01 18:10:39.633', '0cffe143-d103-4525-a0d6-f6b780d97f3f', '2023-06-01 18:10:39.679');
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------- 개발 전 --------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --------------------------------------
 -- auth_mgmt insert
 --------------------------------------

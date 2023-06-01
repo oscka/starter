@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 @RequestMapping("/v1/customer")
 @RequiredArgsConstructor
@@ -25,26 +24,27 @@ public class CustomerService {
         return null;
     }
 
-    public CustomerDto.CustomerInfoResponse findById (UUID id){
+    public CustomerDto.CustomerInfoResponse findById (String id){
         Customer customer = customerRepository.findById(id).orElseThrow(()-> new Exception404("존재하지 않는 고객사 입니다."));
         return customer.toDto();
     }
 
     public void save(CustomerDto.SaveRequest save){
+        // TODO 중복로그인 추가 > BaseUser 를 가져오는 방법?
 //        Optional<Customer> customer = customerRepository.findByBaseUser(save.getLoginId());
 //        if (customer.isPresent()){
 //            throw new Exception400("loginId","중복되는 로그인 아이디 입니다.");
 //        }
-        customerRepository.save(save.toEntity());
+            customerRepository.save(save.toEntity());
     }
 
-    public  void update(UUID id,CustomerDto.UpdateRequest update){
+    public void update(String id,CustomerDto.UpdateRequest update){
         Customer customer = customerRepository.findById(id).orElseThrow(()-> new Exception404("존재하지 않는 고객사 입니다."));
 
 
     }
 
-    public void delete (UUID id){
+    public void delete (String id){
         Customer customer = customerRepository.findById(id).orElseThrow(()-> new Exception404("존재하지 않는 고객사 입니다."));
         customerRepository.delete(customer);
     }

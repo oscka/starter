@@ -11,15 +11,12 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
 import org.springframework.data.annotation.*;
-import org.springframework.data.jdbc.core.mapping.AggregateReference;
 import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
 
 import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PositiveOrZero;
 import java.time.Instant;
-import java.util.UUID;
 
 @EqualsAndHashCode(of = "id")
 @Builder
@@ -29,14 +26,14 @@ import java.util.UUID;
 public class Customer {
 
     @Id
-    private UUID id;
+    private String id;
 
     @PositiveOrZero
     @Version
     private long version;
 
     @Valid
-    @Column("customer_id")
+    @Column("user_id")
     private BaseUser baseUser;
 
     private UserStatus customerStatus;
@@ -62,7 +59,7 @@ public class Customer {
 
 //    @CreatedBy
 //    private AggregateReference<User, @NotNull UUID> createdBy;
-//
+
 //    @LastModifiedBy
 //    private AggregateReference<User, @NotNull UUID> updatedBy;
 

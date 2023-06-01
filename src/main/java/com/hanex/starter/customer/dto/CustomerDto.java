@@ -9,6 +9,8 @@ import com.hanex.starter.user.domain.BaseUser;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.time.Instant;
 import java.util.UUID;
 
@@ -21,35 +23,42 @@ public class CustomerDto {
     @AllArgsConstructor
     public static class SaveRequest {
 
-        @Schema(description = "로그인 ID", example = "user1")
+        @Schema(description = "로그인 ID", nullable = false, example = "user-001")
+        @NotBlank(message = "{validation.notBlank.id}")
         private String loginId;
 
-        @Schema(description = "비밀번호", example = "test1234")
+        @Schema(description = "비밀번호", nullable = false, example = "test1234")
+        @NotBlank(message = "{validation.notBlank.password}")
         private String password;
 
-        @Schema(description = "고객사 계정 상태", example = "ACTIVE")
+        @Schema(description = "고객사 계정 상태", nullable = false, example = "ACTIVE")
+        @NotNull
         private UserStatus customerStatus;
 
-        @Schema(description = "고객사 그룹", example = "FINANCE")
+        @Schema(description = "고객사 그룹", nullable = false, example = "FINANCE")
+        @NotNull
         private Group customerGroup;
 
-        @Schema(description = "이메일", example = "test@test.com")
-        private String email;
-
-        @Schema(description = "고객사명", example = "한익스프레스")
+        @Schema(description = "고객사명", nullable = false, example = "인삼공사")
+        @NotBlank(message = "{validation.notBlank.name}")
         private String name;
 
         @Schema(description = "휴대폰", example = "01012345678")
         private String phone;
 
-        @Schema(description = "메모")
+        @Schema(description = "메모" ,example = "고객사 메모")
         private String memo;
+
+
+        @Schema(description = "이메일", example = "test@test.com")
+        private String email;
 
         public Customer toEntity (){
             return Customer.builder()
-                    .id(UUID.randomUUID())
+                    .id(UUID.randomUUID().toString())
                     .version(0L)
                     .customerStatus(this.customerStatus)
+                    .customerGroup(this.customerGroup)
                     .baseUser(BaseUser.builder()
                             .loginId(this.loginId)
                             .password(new CommonEncoder().encode(this.password))
@@ -57,7 +66,6 @@ public class CustomerDto {
                             .build())
                     .email(this.email)
                     .memo(this.memo)
-                    .customerGroup(this.customerGroup)
                     .name(this.name)
                     .phone(this.phone)
                     .build();
@@ -73,36 +81,36 @@ public class CustomerDto {
     public static class CustomerInfoResponse {
 
         @Schema(description = "고객사 고유번호")
-        private UUID id;
+        private String id;
 
-        @Schema(description = "로그인 ID")
+        @Schema(description = "로그인 ID", nullable = false, example = "user-001")
         private String loginId;
 
-        @Schema(description = "고객사 계정 상태")
+        @Schema(description = "고객사 계정 상태", nullable = false, example = "ACTIVE")
         private UserStatus customerStatus;
 
-        @Schema(description = "고객사 권한")
+        @Schema(description = "고객사 권한" , example = "ROLE_CUSTOMER")
         private UserRole role;
 
-        @Schema(description = "이메일")
+        @Schema(description = "이메일", example = "test@test.com")
         private String email;
         
-        @Schema(description = "메모")
+        @Schema(description = "메모" ,example = "고객사 메모")
         private String memo;
 
-        @Schema(description = "고객사 그룹")
+        @Schema(description = "고객사 그룹", nullable = false, example = "FINANCE")
         private Group customerGroup;
 
-        @Schema(description = "고객사명")
+        @Schema(description = "고객사명", nullable = false, example = "인삼공사")
         private String name;
 
-        @Schema(description = "휴대폰")
+        @Schema(description = "휴대폰", example = "01012345678")
         private String phone;
 
-        @Schema(description = "생성일")
+        @Schema(description = "생성일", example = "2023-06-01 11:22:40.109")
         private Instant createdAt;
 
-        @Schema(description = "수정일")
+        @Schema(description = "수정일", example = "2023-06-01 11:22:40.109")
         private Instant updatedAt;
     }
 
@@ -114,19 +122,20 @@ public class CustomerDto {
     @AllArgsConstructor
     public static class UpdateRequest {
 
-        @Schema(description = "이메일")
-        private String email;
 
-        @Schema(description = "고객사 그룹")
+        @Schema(description = "고객사 그룹", nullable = false, example = "FINANCE")
         private Group customerGroup;
 
-        @Schema(description = "고객사명")
+        @Schema(description = "고객사명", nullable = false, example = "인삼공사")
         private String name;
 
-        @Schema(description = "휴대폰")
+        @Schema(description = "이메일", example = "test@test.com")
+        private String email;
+
+        @Schema(description = "휴대폰", example = "01012345678")
         private String phone;
 
-        @Schema(description = "메모")
+        @Schema(description = "메모", example = "고객사 메모 업데이트")
         private String memo;
     }
 }

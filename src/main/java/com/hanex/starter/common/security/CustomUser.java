@@ -26,6 +26,7 @@ public class CustomUser implements UserDetails {
         return collector;
     }
 
+
     @Override
     public String getPassword() {
         return user.getPassword();
