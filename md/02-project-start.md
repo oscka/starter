@@ -1,6 +1,13 @@
 # 02. Project 사용 방법
 
-1. **H2 console**
+1. Create User, DATABASE(DCL), Table (DDL)
+
+- [User, Database 생성](db/dcl.sql)
+- [테이블 생성 SQL](db/create_table.sql)
+
+**위 SQL 문**으로 User,Database, Table 생성후 H2 DB (Embedded DB) 를 사용하거나 설치된 Postgres DB 를 사용하면된다.
+
+2. **H2 console**
 
 ```yaml
 ---
@@ -26,15 +33,44 @@ application.yml 에서 profile 을 local 로 지정하면 application-local.yml 
 - URL : {server-address}**/h2-console**
     - ex) http://localhost:18080/h2-console
 
-2. **API TEST**
-- VSCode
-    - (httpYac - Rest Client) Extensions 설치
-    - http 확장자인 파일 테스트
-- IntelliJ
-    - Ultimate(유료) 일경우 http 테스트 사용가능
 
-- [User API 테스트](http/users.http)
+3. docker-compose for Postgres
+- [postgres Local PC 에서 docker-compose 로 설치](md/etc/docker-compose.yml)  
+Postgres DB 를 설치해서 사용하고 싶다면 위 docker-compose.yml 를 이용하여 사용하면 된다.
 
-3. **docker-compose for postgres**
-- [postgres Local PC 에서 docker-compose 로 실행](md/etc/docker-compose.yml)
+4. API TEST
+
+### http 파일을 이용한 API 테스트
+
+사용하기전 http 확장자로 파일을 생성하고, IDE 가 필요하다.
+
+- VSCode (IDE)
+  - (httpYac - Rest Client) Extensions 설치
+  - http 확장자인 파일 테스트
+- IntelliJ (IDE)
+  - Ultimate(유료) 일경우 http 테스트 사용가능
+
+- HTTP 파일 참고  
+  - [User API 테스트](http/users.http)  
+
+
+### swagger 를 이용한 API 테스트
+
+**(!)**  사용하기전 **auth-service** 어플리케이션이 실행됐는지 확인해야한다.
+
+auth-service 는 [GitHub](https://github.com/oscka/auth-service) 에서 clone 받는다.
+
+http://localhost:8080/swagger-ui/index.html  
+{starter URL}**/swagger-ui/index.html** 으로 접속하면 Swagger 화면을 확인할 수 있다.
+
+![swagger.jpg](etc/swagger-ui-guide.jpg)
+
+- 화면접속후 API 별 Grouping 이 돼있으므로 select box 에서 선택해야한다.
+
+- 현재 User API 를 제외하고 모든 요청에서 JWT 토큰이 필요하도록 설정했으므로 User API 의 로그인 API 를 이용하여 JWT 토큰을 auth-service 로부터 발급받아야한다.
+- 토큰 발급후 Authorize 버튼을 클릭 > 발급받은 JWT 토큰을 세팅해준다.
+
+
+
+
 
