@@ -1,5 +1,6 @@
 package com.hanex.starter.customer.service;
 
+import com.hanex.starter.common.exception.Exception400;
 import com.hanex.starter.common.exception.Exception404;
 import com.hanex.starter.customer.domain.Customer;
 import com.hanex.starter.customer.dto.CustomerDto;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @RequestMapping("/v1/customer")
@@ -29,6 +31,10 @@ public class CustomerService {
     }
 
     public void save(CustomerDto.SaveRequest save){
+//        Optional<Customer> customer = customerRepository.findByBaseUser(save.getLoginId());
+//        if (customer.isPresent()){
+//            throw new Exception400("loginId","중복되는 로그인 아이디 입니다.");
+//        }
         customerRepository.save(save.toEntity());
     }
 

@@ -48,7 +48,7 @@ public class UserDto{
 		@NotBlank(message = "{validation.notBlank.password}")
 		private String password;
 
-		@Schema(description = "전화번호", example = "01012345678")
+		@Schema(description = "휴대폰", example = "01012345678")
 		private String phone;
 
 		public User toEntity(){
@@ -107,7 +107,7 @@ public class UserDto{
 		@NotBlank(message = "{validation.notBlank.email}")
 		private String email;
 
-		@Schema(description = "휴대폰번호", nullable = false,  example = "01012345678")
+		@Schema(description = "휴대폰", nullable = false,  example = "01012345678")
 		@NotBlank(message = "{validation.notBlank.password}")
 		private String phone;
 

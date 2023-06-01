@@ -115,9 +115,11 @@ public class SecurityConfig {
             .authorizeRequests().antMatchers(PERMIT_URL_ARRAY).permitAll()
             .and()
             .authorizeRequests(
-                    authorize -> authorize.antMatchers("/v1/order/**").authenticated()
+                    authorize -> authorize
+                            .antMatchers("/v1/order/**").authenticated()
                             .antMatchers("/v1/member/**").access("hasRole('CUSTOMER') or hasRole('ADMIN')")
                             .antMatchers("/v1/admin/**").hasRole("ADMIN")
+                            .antMatchers("/v1/customer/**").hasRole("ADMIN")
                             .anyRequest().permitAll()
             );
 

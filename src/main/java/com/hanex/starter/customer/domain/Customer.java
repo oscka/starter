@@ -5,13 +5,20 @@ import com.hanex.starter.user.domain.BaseUser;
 import com.hanex.starter.common.enums.Group;
 import com.hanex.starter.common.enums.UserRole;
 import com.hanex.starter.common.enums.UserStatus;
+import com.hanex.starter.user.domain.User;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
-import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.*;
+import org.springframework.data.jdbc.core.mapping.AggregateReference;
+import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.PositiveOrZero;
+import java.time.Instant;
 import java.util.UUID;
 
 @EqualsAndHashCode(of = "id")
@@ -23,25 +30,59 @@ public class Customer {
 
     @Id
     private UUID id;
+
+    @PositiveOrZero
+    @Version
+    private long version;
+
+    @Valid
+    @Column("customer_id")
     private BaseUser baseUser;
+
     private UserStatus customerStatus;
-    @Builder.Default
-    private UserRole role = UserRole.ROLE_CUSTOMER;
-    private String email;
-    private Group group;
+
+    @Column("customer_name")
     private String name;
+
+    private String email;
+
+    private Group customerGroup;
+
     private String phone;
+
+    private String memo;
+
+    @Builder.Default
+    @CreatedDate
+    private Instant createdAt = Instant.now();
+
+    @Builder.Default
+    @LastModifiedDate
+    private Instant updatedAt = Instant.now();
+
+//    @CreatedBy
+//    private AggregateReference<User, @NotNull UUID> createdBy;
+//
+//    @LastModifiedBy
+//    private AggregateReference<User, @NotNull UUID> updatedBy;
+
+    // ---------------- 비지니스 로직 --------------- //
 
     public CustomerDto.CustomerInfoResponse toDto(){
         return CustomerDto.CustomerInfoResponse.builder()
                 .id(this.id)
                 .customerStatus(this.customerStatus)
-                .role(this.role)
+                .customerGroup(this.customerGroup)
+                .loginId(this.baseUser.getLoginId())
+                .role(this.baseUser.getUserRole())
                 .email(this.email)
                 .name(this.name)
                 .phone(this.phone)
-                .group(this.group)
+                .memo(this.memo)
+                .createdAt(this.createdAt)
+                .updatedAt(this.updatedAt)
                 .build();
     }
+
 
 }
