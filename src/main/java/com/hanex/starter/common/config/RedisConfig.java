@@ -7,20 +7,24 @@ import com.fasterxml.jackson.databind.jsontype.BasicPolymorphicTypeValidator;
 import com.fasterxml.jackson.databind.jsontype.PolymorphicTypeValidator;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.hanex.starter.common.properties.CacheProperties;
+import io.lettuce.core.ClientOptions;
+import io.lettuce.core.cluster.ClusterClientOptions;
+import io.lettuce.core.cluster.ClusterTopologyRefreshOptions;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.data.redis.RedisProperties;
 import org.springframework.cache.CacheManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.cache.RedisCacheConfiguration;
 import org.springframework.data.redis.cache.RedisCacheManager;
+import org.springframework.data.redis.connection.RedisClusterConfiguration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
+import org.springframework.data.redis.connection.lettuce.LettuceClientConfiguration;
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
-import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.core.ZSetOperations;
 import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.RedisSerializationContext;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
@@ -30,6 +34,8 @@ import java.time.Duration;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
+
+import static io.lettuce.core.ReadFrom.REPLICA_PREFERRED;
 
 /**
  * RedisStandAloneConfig.java
@@ -43,30 +49,49 @@ import java.util.Map.Entry;
 @Configuration
 public class RedisConfig {
 
-    @Value("${spring.redis.host}")
-    private String redisHost;
-
-    @Value("${spring.redis.port}")
-    private int redisPort;
+    @Value("spring.redis.cluster.mode")
+    private Boolean clusterMode;
 
     private final CacheProperties cacheProperties;
 
     @Bean(name = "redisCacheConnectionFactory")
-    public LettuceConnectionFactory redisConnectionFactory() {
-        return new LettuceConnectionFactory(new RedisStandaloneConfiguration(redisHost,redisPort));
+    public LettuceConnectionFactory redisConnectionFactory(RedisProperties redisProperties) {
+
+        if (clusterMode){
+            // 클러스터 호스트 세팅
+            RedisClusterConfiguration clusterConfig = new RedisClusterConfiguration(redisProperties.getCluster().getNodes());
+            clusterConfig.setMaxRedirects(redisProperties.getCluster().getMaxRedirects());
+
+            // topology 자동 업데이트 옵션 추가
+            // enablePeriodicRefresh(tolpology 정보 감시 텀) default vaule : 60s
+            ClusterTopologyRefreshOptions clusterTopologyRefreshOptions = ClusterTopologyRefreshOptions.builder()
+                    .enableAllAdaptiveRefreshTriggers()  // MOVED, ASK, PERSISTENT_RECONNECTS, UNCOVERED_SLOT, UNKOWN_NODE trigger시 refresh 진행
+                    .build();
+
+            ClientOptions clientOptions = ClusterClientOptions.builder()
+                    .topologyRefreshOptions(clusterTopologyRefreshOptions)
+                    .build();
+
+            // topology 옵션 및 timeout 세팅
+            LettuceClientConfiguration clientConfig = LettuceClientConfiguration.builder()
+                    .clientOptions(clientOptions)
+                    .commandTimeout(Duration.ofSeconds(2000L)) // timeout Duration 값
+                    .readFrom(REPLICA_PREFERRED) // slave 에서 읽도록 설정
+                    .build();
+            return new LettuceConnectionFactory(clusterConfig,clientConfig);
+        } else {
+            // REDIS StandAlone 설정
+            RedisStandaloneConfiguration standaloneConfig = new RedisStandaloneConfiguration(redisProperties.getHost(),redisProperties.getPort());
+            return new LettuceConnectionFactory(standaloneConfig);
+        }
+
     }
 
-    /*
-     * Jackson2는 Java8의 LocalDate의 타입을 알지못해서 적절하게 직렬화해주지 않으므로 역직렬화 시 에러가 발생한다.
-     * 따라서 적절한 ObjectMapper를 Serializer에 전달하여 직렬화 및 역직렬화를 정상화함.
-     */
     private ObjectMapper objectMapper() {
-
         PolymorphicTypeValidator ptv = BasicPolymorphicTypeValidator
                 .builder()
                 .allowIfSubType(Object.class)
                 .build();
-
         ObjectMapper mapper = new ObjectMapper();
         mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
         mapper.registerModule(new JavaTimeModule());
@@ -75,8 +100,8 @@ public class RedisConfig {
     }
 
     private RedisCacheConfiguration redisCacheDefaultConfiguration() {
-        RedisCacheConfiguration redisCacheConfiguration = RedisCacheConfiguration
-                .defaultCacheConfig()
+        RedisCacheConfiguration redisCacheConfiguration =
+                RedisCacheConfiguration.defaultCacheConfig()
                 .serializeKeysWith(RedisSerializationContext.SerializationPair.fromSerializer(new StringRedisSerializer()))
                 .serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(new GenericJackson2JsonRedisSerializer(objectMapper())));
         return redisCacheConfiguration;
@@ -105,24 +130,4 @@ public class RedisConfig {
         return redisCacheManager;
     }
 
-    public RedisTemplate<Object,Object> redisTemplate(){
-        RedisTemplate<Object,Object> redisTemplate = new RedisTemplate<>();
-        redisTemplate.setConnectionFactory(redisConnectionFactory());
-        redisTemplate.setKeySerializer(new StringRedisSerializer());
-        redisTemplate.setHashKeySerializer(new StringRedisSerializer());
-        //redisTemplate.setValueSerializer(new GenericJackson2JsonRedisSerializer(objectMapper()));
-        //redisTemplate.setHashValueSerializer(new GenericJackson2JsonRedisSerializer(objectMapper()));
-        redisTemplate.setEnableTransactionSupport(true); // transaction setting
-        redisTemplate.afterPropertiesSet();
-        return redisTemplate;
-    }
-
-
-
-    @Bean
-    public ZSetOperations<Object, Object> zSetOperations() {
-        return redisTemplate().opsForZSet();
-    }
-
 }
-

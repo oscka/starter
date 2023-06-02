@@ -13,6 +13,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class OpenApiConfig {
 
+    // TODO 특정 profile (dev,local) 에서만 swagger 를 사용할 수 있도록 설정
 
     /**
      * 1) API Grouping > ALL

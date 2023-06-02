@@ -8,6 +8,8 @@ server:
       charset: utf-8
       force: true
 
+
+# spring.redis.cluster.mode
 #--------------------------
 # spring
 #--------------------------
