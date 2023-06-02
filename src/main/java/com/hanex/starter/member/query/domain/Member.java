@@ -2,6 +2,7 @@ package com.hanex.starter.member.query.domain;
 
 import com.hanex.starter.common.enums.MemberType;
 import com.hanex.starter.common.enums.UserStatus;
+import com.hanex.starter.common.util.jdbc.AggregateReferenceValueExtractor;
 import com.hanex.starter.customer.domain.Customer;
 import com.hanex.starter.member.query.dto.MemberDto;
 import com.hanex.starter.user.domain.BaseUser;
@@ -69,14 +70,42 @@ public class Member {
 	public MemberDto.MemberResponse toDto(){
 		return MemberDto.MemberResponse.builder()
 				.id(this.id)
+				.customerId(String.valueOf(this.customerId.getId()))
 				.email(this.email)
 				.memberType(this.memberType)
 				.memberCode(this.memberCode)
+				.memberStatus(this.memberStatus)
+				.managerName(this.managerName)
+				.loginId(this.baseUser.getLoginId())
+				.role(this.baseUser.getUserRole())
+				.ceoName(this.ceoName)
+				.registrationNumber(this.registrationNumber)
+				.phone(this.phone)
+				.memo(this.memo)
+				.createdAt(this.createdAt)
+				.createdBy(String.valueOf(this.createdBy.getId()))
+				.updatedAt(this.updatedAt)
+				.updatedBy(String.valueOf(this.updatedBy.getId()))
+				.build();
+	}
+
+	public MemberDto.MemberResponse listToDto(){
+		return MemberDto.MemberResponse.builder()
+				.id(this.id)
+				.customerId(String.valueOf(this.customerId.getId()))
+				.email(this.email)
+				.memberType(this.memberType)
+				.memberCode(this.memberCode)
+				.memberStatus(this.memberStatus)
 				.managerName(this.managerName)
 				.ceoName(this.ceoName)
 				.registrationNumber(this.registrationNumber)
 				.phone(this.phone)
 				.memo(this.memo)
+				.createdAt(this.createdAt)
+				.createdBy(String.valueOf(this.createdBy.getId()))
+				.updatedAt(this.updatedAt)
+				.updatedBy(String.valueOf(this.updatedBy.getId()))
 				.build();
 	}
 

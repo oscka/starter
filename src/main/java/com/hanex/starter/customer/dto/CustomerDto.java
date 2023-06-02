@@ -23,7 +23,7 @@ public class CustomerDto {
     @AllArgsConstructor
     public static class SaveRequest {
 
-        @Schema(description = "로그인 ID", nullable = false, example = "user-001")
+        @Schema(description = "로그인 ID", nullable = false, example = "customer01")
         @NotBlank(message = "{validation.notBlank.id}")
         private String loginId;
 
@@ -50,7 +50,7 @@ public class CustomerDto {
         private String memo;
 
 
-        @Schema(description = "이메일", example = "test@test.com")
+        @Schema(description = "이메일", example = "customer01@test.com")
         private String email;
 
         public Customer toEntity (){
@@ -83,7 +83,7 @@ public class CustomerDto {
         @Schema(description = "고객사 고유번호")
         private String id;
 
-        @Schema(description = "로그인 ID", nullable = false, example = "user-001")
+        @Schema(description = "로그인 ID", nullable = false, example = "customer01")
         private String loginId;
 
         @Schema(description = "고객사 계정 상태", nullable = false, example = "ACTIVE")
@@ -92,7 +92,7 @@ public class CustomerDto {
         @Schema(description = "고객사 권한" , example = "ROLE_CUSTOMER")
         private UserRole role;
 
-        @Schema(description = "이메일", example = "test@test.com")
+        @Schema(description = "이메일", example = "customer01@test.com")
         private String email;
         
         @Schema(description = "메모" ,example = "고객사 메모")
@@ -122,14 +122,17 @@ public class CustomerDto {
     @AllArgsConstructor
     public static class UpdateRequest {
 
-
         @Schema(description = "고객사 그룹", nullable = false, example = "FINANCE")
         private Group customerGroup;
+
+        @Schema(description = "고객사 계정 상태", nullable = false, example = "ACTIVE")
+        @NotNull
+        private UserStatus customerStatus;
 
         @Schema(description = "고객사명", nullable = false, example = "인삼공사")
         private String name;
 
-        @Schema(description = "이메일", example = "test@test.com")
+        @Schema(description = "이메일", example = "customer01@test.com")
         private String email;
 
         @Schema(description = "휴대폰", example = "01012345678")
@@ -137,5 +140,16 @@ public class CustomerDto {
 
         @Schema(description = "메모", example = "고객사 메모 업데이트")
         private String memo;
+
+        public Customer toEntity (){
+            return Customer.builder()
+                    .customerStatus(this.customerStatus)
+                    .customerGroup(this.customerGroup)
+                    .email(this.email)
+                    .memo(this.memo)
+                    .name(this.name)
+                    .phone(this.phone)
+                    .build();
+        }
     }
 }

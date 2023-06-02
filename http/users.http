@@ -1,47 +1,56 @@
 #-----------------------
 # users.http
+# jwt 토큰 발급 > access_token 전역변수 설정
 #-----------------------
 
-# 회원가입
+### 1. 회원가입
 POST /v1/users
 Content-Type: application/json
 Host: localhost:18080
 
 {
   "name" : "홍길동",
-  "email" : "test@demo.com",
-  "loginId" : "mem",
+  "email" : "admin@demo.com",
+  "loginId" : "admin",
   "password" : "test1234",
-  "role": "ROLE_MEMBER",
+  "role": "ROLE_ADMIN",
   "phone" : "01012345678",
   "userStatus" : "ACTIVE"
 }
 
-###
-# 로그인
+### 2. 로그인 (JWT 토큰 발급)
 POST /security/jwtlogin
 Host: localhost:18080
 Content-Type: application/json
 
 {
-  "loginId" : "mem",
-  "password" : "test1234"
+ "loginId" : "admin",
+ "password": "test1234"
 }
 
+> {%
+client.test("Validate", function() { // Validate라는 이름의 테스트를 수행
+client.assert(response.status === 200, "Response status is not 200"); // 응답값이 200이면 통과
+client.assert(response.contentType.mimeType === "application/json", "Expected 'application/json'"); // 응답값이 application/json이면 통과
+client.assert(response.body.accessToken.trim().length > 0); // 토큰 길이가 0보다 크면 통과
+});
 
-###
-# 사용자 조회 (detail) (회원조회-detail)
+client.log(response.body.accessToken); // 토큰 값 로깅, body에는 응답받은 json이 객체 형식으로 저장된다. 즉 { accessToken:"value" }가 응답이라면, 여기선 value라 로깅된다.
+client.global.set("access_token",response.body.accessToken) // 토큰 값을 global 변수에 set
+%}
+
+
+### 3. 사용자 조회 (회원조회-detail)
 # /v1/users/{loginId}
 GET /v1/users/test
 Host: localhost:8080
-Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2ODU0MzIyNDgsImlzcyI6Imh0dHA6Ly9hdXRoLXNlcnZpY2UiLCJhdWQiOiJ1c2VyIiwiaWF0IjoxNjg1NDMyMTQ4LCJzdWIiOiI3ZGU1ZWIzZi1mZTU5LTQ1M2UtYTBjMS1mMWY0OTdjZWVlNWMiLCJsb2dpbklkIjoibWVtIiwicm9sZSI6IlJPTEVfTUVNQkVSIn0.kQudq-MCD_mbRam04TKWd88H2ey-_vRdm3tqI60ww_o
+Authorization: Bearer {{access_token}}
 
-###
-# 사용자 수정 (회원수정)
-# PUT /v1/users/{id}
+### 4. 사용자 수정 (회원수정)
+# PUT /v1/users/{loginId}
 PUT /v1/users/3
-Host: localhost:18080
-Authorization: Bearer <jwt-token>
+Host: localhost:8080
+Authorization: Bearer {{access_token}}
 Content-Type: application/json
 
 {
@@ -51,17 +60,16 @@ Content-Type: application/json
   "userStatus" : "ACTIVE"
 }
 
-###
-# 사용자 삭제 (회원탈퇴)
-# DELETE /v1/users/{id}
+### 5. 사용자 삭제 (회원탈퇴)
+# DELETE /v1/users/{loginId}
 DELETE /v1/users/1
-Host: localhost:18080
-Authorization: Bearer <jwt-token>
+Host: localhost:8080
+Authorization: Bearer {{access_token}}
 
-###
-# 로그인
+# ------------------------------------- 미사용 -------------------------
+### 로그인
 POST /v1/users/login
-Host: localhost:18080
+Host: localhost:8080
 Content-Type: application/json
 
 {
@@ -69,20 +77,10 @@ Content-Type: application/json
   "password" : "test1234"
 }
 
-###
-# 로그아웃
+### 로그아웃
 GET /v1/users/logout
-Host: localhost:18080
-Authorization: Bearer <jwt-token>
+Host: localhost:8080
+Authorization: Bearer {{access_token}}
 
 
 
-#-----------------------
-# admin.http
-#-----------------------
-
-###
-# 사용자 리스트 조회 (회원 list 조회 > admin 권한)
-GET /v1/users
-Host: localhost:18080
-Authorization: Bearer <jwt-token>

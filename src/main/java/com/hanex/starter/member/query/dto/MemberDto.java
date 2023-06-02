@@ -12,6 +12,7 @@ import org.springframework.data.jdbc.core.mapping.AggregateReference;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.time.Instant;
 import java.util.UUID;
 
 public class MemberDto {
@@ -34,6 +35,7 @@ public class MemberDto {
 		@NotBlank(message = "{validation.notBlank.password}")
 		private String password;
 
+		@Schema(description = "사용자 상태", nullable = false, example = "ACTIVE")
 		private UserStatus memberStatus;
 
 		@Schema(description = "사용자 분류", nullable = false, example = "CLIENT")
@@ -55,6 +57,7 @@ public class MemberDto {
 		@Schema(description = "메모", nullable = false, example = "고객메모")
 		private String memo;
 
+		@Schema(description = "이메일",  example = "member_01@test.com")
 		private String email;
 
 
@@ -100,7 +103,10 @@ public class MemberDto {
 		@NotBlank(message = "{validation.notBlank.id}")
 		private String loginId;
 
-		@Schema(description = "사용자 코드", nullable = false, example = "ME130-81-160")
+		@Schema(description = "사용자 권한" , example = "ROLE_CLIENT")
+		private UserRole role;
+		
+		@Schema(description = "사용자 코드", nullable = false, example = "0f038eee22f84026b71919d1a9dbc4e5")
 		private String memberCode; // memberCode > 자동생성
 
 		@Schema(description = "사용자 분류", nullable = false, example = "CLIENT")
@@ -124,7 +130,20 @@ public class MemberDto {
 		@Schema(description = "메모", nullable = false, example = "고객메모")
 		private String memo;
 
+		@Schema(description = "이메일",  example = "member_01@test.com")
 		private String email;
+
+		@Schema(description = "생성일",  example = "2023-06-02T01:07:14.356666Z")
+		private Instant createdAt;
+
+		@Schema(description = "수정일",  example = "2023-06-02T01:07:14.356666Z")
+		private Instant updatedAt;
+
+		@Schema(description = "생성자 ID",  example = "7de5eb3f-fe59-453e-a0c1-f1f497ceee5c")
+		private String createdBy;
+
+		@Schema(description = "수정자 ID",  example = "7de5eb3f-fe59-453e-a0c1-f1f497ceee5c")
+		private String updatedBy;
 	}
 
 	@Schema(description = "사용자 (거래처,실행사) 수정 요청 DTO")
@@ -154,6 +173,8 @@ public class MemberDto {
 
 		@Schema(description = "메모", nullable = false, example = "고객메모")
 		private String memo;
+
+		@Schema(description = "이메일",  example = "member_01@test.com")
 		private String email;
 
 		public Member toEntity(){

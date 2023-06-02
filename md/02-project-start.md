@@ -44,18 +44,22 @@ Postgres DB 를 설치해서 사용하고 싶다면 위 docker-compose.yml 를 �
 
 ### 4. API TEST
 
-#### http 파일을 이용한 API 테스트
+#### HTTP 파일을 이용한 API 테스트
 
 사용하기전 http 확장자로 파일을 생성하고, IDE 가 필요하다.
 
 - VSCode (IDE)
   - (httpYac - Rest Client) Extensions 설치
   - http 확장자인 파일 테스트
+
 - IntelliJ (IDE)
-  - Ultimate(유료) 일경우 http 테스트 사용가능
+  - Ultimate(유료) 일경우 http 테스트 사용가능  
 
 - HTTP 파일 참고  
   - [User API 테스트](../http/users.http)  
+  - [Admin API 테스트](../http/admin.http)
+  - [고객사 (화주) API 테스트](../http/customer.http)  
+  - [사용자 (실행사,택배사) API 테스트](../http/member.http)  
 
 
 #### swagger 를 이용한 API 테스트

@@ -74,3 +74,15 @@ public void save(MemberDto.SaveRequest save){
     }
 }
 ```
+
+Exception400 응답 json
+```json
+{
+  "status": 400,
+  "msg": "badRequest",
+  "data": {
+    "key": "loginId",
+    "value": "중복되는 로그인 아이디 입니다."
+  }
+}
+```

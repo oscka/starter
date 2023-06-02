@@ -2,18 +2,23 @@ package com.hanex.starter.customer.repository;
 
 import com.hanex.starter.common.enums.Group;
 import com.hanex.starter.customer.domain.Customer;
+import com.hanex.starter.member.query.repository.MemberSql;
+import com.hanex.starter.user.domain.BaseUser;
 import org.springframework.data.jdbc.repository.query.Modifying;
 import org.springframework.data.jdbc.repository.query.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 
 @Repository
 public interface CustomerRepository extends CrudRepository<Customer, String> , CustomerRepositoryCustom{
 
-    // TODO baseUser 찾는 방법 > loginId 중복 검사 필요
-    //Optional<Customer> findByBaseUser(String loginId);
+    // baseUser > loginId 중복 검사
+    @Query(CustomerSql.SELECT_BY_LOGIN_ID)
+    Optional<BaseUser> selectByLoginId(@Param("loginId") String loginId);
 
     @Modifying
     @Query(
