@@ -1,7 +1,8 @@
 package com.hanex.starter.common.util.encrypt;
 
 public interface Encryptor {
-	byte[] encrypt(String value);
+	EncryptedField encrypt(String text);
 
-	String decrypt(byte[] encrypted);
+	String decrypt(byte[] cipherText, byte[] nonce);
+
 }

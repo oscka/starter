@@ -10,7 +10,7 @@ Content-Type: application/json
 Authorization: Bearer {{access_token}}
 
 {
-  "loginId": "customer022",
+  "loginId": "customer092",
   "password": "test1234",
   "customerStatus": "ACTIVE",
   "customerGroup": "FINANCE",
@@ -27,7 +27,7 @@ Authorization: Bearer {{access_token}}
 
 ### 3. customer 상세 조회
 #GET /v1/customer/{{customer_id}}
-GET /v1/customer/e1065afe-5d59-4293-b3f9-037d3122b8b6
+GET /v1/customer/7b59ae19-292e-4f2d-9c74-da3f4102b71c
 Host: localhost:8080
 Authorization: Bearer {{access_token}}
 

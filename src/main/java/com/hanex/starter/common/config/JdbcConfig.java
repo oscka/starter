@@ -32,7 +32,7 @@ public class JdbcConfig extends AbstractJdbcConfiguration {
 	@Bean
 	@Override
 	public JdbcCustomConversions jdbcCustomConversions() {
-		Encryptor encryptor = new SimpleEncryptor();
+		Encryptor encryptor = new AESEncryptor();
 		return new JdbcCustomConversions(List.of(
 			new EncryptStringWritingConverter(encryptor),
 			new EncryptStringReadingConverter(encryptor),
@@ -71,22 +71,20 @@ public class JdbcConfig extends AbstractJdbcConfiguration {
 
 
 	@WritingConverter
-	static class EncryptStringWritingConverter implements Converter<EncryptString, byte[]> {
+	static class EncryptStringWritingConverter implements Converter<EncryptString,String> {
 		private final Encryptor encryptor;
 
 		public EncryptStringWritingConverter(Encryptor encryptor) {
 			this.encryptor = encryptor;
 		}
-
-		@Override
-		public byte[] convert(EncryptString source) {
-			return this.encryptor.encrypt(source.getValue());
-		}
-	}
-
+        @Override
+        public String convert(EncryptString source) {
+            return this.encryptor.encrypt(source.getValue()).getField();
+        }
+    }
 
 	@ReadingConverter
-	static class EncryptStringReadingConverter implements Converter<byte[], EncryptString> {
+	static class EncryptStringReadingConverter implements Converter<String, EncryptString> {
 		private final Encryptor encryptor;
 
 		public EncryptStringReadingConverter(Encryptor encryptor) {
@@ -94,8 +92,9 @@ public class JdbcConfig extends AbstractJdbcConfiguration {
 		}
 
 		@Override
-		public EncryptString convert(byte[] source) {
-			String value = this.encryptor.decrypt(source);
+		public EncryptString convert(String source) {
+            EncryptedField field = new EncryptedField(source);
+			String value = this.encryptor.decrypt(field.getCipherTextAndTag(), field.getNonce());
 			if (value == null) {
 				return null;
 			}
