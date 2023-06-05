@@ -3,7 +3,7 @@ pipeline {
     environment {
         PATH = "$PATH:/usr/local/bin/"  // skaffold, argocd path
         SOURCECODE_JENKINS_CREDENTIAL_ID = 'evelyn-git'
-        SOURCE_CODE_URL = 'https://github.com/oscka/starter.git'
+        SOURCE_CODE_URL = 'https://github.com/evelyn0410/starter.git'
         RELEASE_BRANCH = 'main'
     }
 
@@ -30,6 +30,7 @@ pipeline {
                 script {
                     def scannerHome = tool 'SonarScanner';
                      withSonarQubeEnv(credentialsId:"SONAR_TOKEN", installationName:'sonarqube') {
+                      sh "./gradlew bootJar"
                       sh "${scannerHome}/bin/sonar-scanner"
                     }
                 }
