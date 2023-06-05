@@ -49,10 +49,10 @@ import static io.lettuce.core.ReadFrom.REPLICA_PREFERRED;
 @Configuration
 public class RedisConfig {
 
-    @Value("spring.redis.cluster.mode")
-    private Boolean clusterMode;
-
     private final CacheProperties cacheProperties;
+
+    @Value("${spring.redis.cluster.mode:true}")
+    private Boolean clusterMode;
 
     @Bean(name = "redisCacheConnectionFactory")
     public LettuceConnectionFactory redisConnectionFactory(RedisProperties redisProperties) {

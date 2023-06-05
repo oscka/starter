@@ -6,7 +6,7 @@ import javax.crypto.spec.SecretKeySpec;
 import java.nio.charset.StandardCharsets;
 
 public class SimpleEncryptor implements Encryptor {
-	private final String transformation = "AES/ECB/PKCS5Padding";
+	private final String transformation = "AES/GCM/NoPadding";
 	private final String algorithm = "AES";
 	private final byte[] keyBytes = "UkXp2s5v8y/B?E(H".getBytes(StandardCharsets.UTF_8); //16byte(128bit)key
 

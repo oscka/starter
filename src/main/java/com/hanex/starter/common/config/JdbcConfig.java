@@ -1,8 +1,6 @@
 package com.hanex.starter.common.config;
 
-import com.hanex.starter.common.util.encrypt.EncryptString;
-import com.hanex.starter.common.util.encrypt.Encryptor;
-import com.hanex.starter.common.util.encrypt.SimpleEncryptor;
+import com.hanex.starter.common.util.encrypt.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
@@ -71,9 +69,7 @@ public class JdbcConfig extends AbstractJdbcConfiguration {
 		};
 	}
 
-	/**
-	 *
-	 */
+
 	@WritingConverter
 	static class EncryptStringWritingConverter implements Converter<EncryptString, byte[]> {
 		private final Encryptor encryptor;
@@ -87,6 +83,7 @@ public class JdbcConfig extends AbstractJdbcConfiguration {
 			return this.encryptor.encrypt(source.getValue());
 		}
 	}
+
 
 	@ReadingConverter
 	static class EncryptStringReadingConverter implements Converter<byte[], EncryptString> {

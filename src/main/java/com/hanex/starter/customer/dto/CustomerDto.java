@@ -4,6 +4,7 @@ import com.hanex.starter.common.enums.Group;
 import com.hanex.starter.common.enums.UserRole;
 import com.hanex.starter.common.enums.UserStatus;
 import com.hanex.starter.common.util.CommonEncoder;
+import com.hanex.starter.common.util.encrypt.EncryptString;
 import com.hanex.starter.customer.domain.Customer;
 import com.hanex.starter.user.domain.BaseUser;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -67,7 +68,7 @@ public class CustomerDto {
                     .email(this.email)
                     .memo(this.memo)
                     .name(this.name)
-                    .phone(this.phone)
+                    .phone(new EncryptString(this.phone))
                     .build();
         }
 
@@ -148,7 +149,7 @@ public class CustomerDto {
                     .email(this.email)
                     .memo(this.memo)
                     .name(this.name)
-                    .phone(this.phone)
+                    .phone(new EncryptString(this.phone))
                     .build();
         }
     }

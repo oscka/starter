@@ -10,7 +10,7 @@ Content-Type: application/json
 Authorization: Bearer {{access_token}}
 
 {
-  "loginId": "customer01",
+  "loginId": "customer022",
   "password": "test1234",
   "customerStatus": "ACTIVE",
   "customerGroup": "FINANCE",

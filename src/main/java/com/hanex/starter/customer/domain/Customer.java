@@ -1,11 +1,10 @@
 package com.hanex.starter.customer.domain;
 
+import com.hanex.starter.common.util.encrypt.EncryptString;
 import com.hanex.starter.customer.dto.CustomerDto;
 import com.hanex.starter.user.domain.BaseUser;
 import com.hanex.starter.common.enums.Group;
-import com.hanex.starter.common.enums.UserRole;
 import com.hanex.starter.common.enums.UserStatus;
-import com.hanex.starter.user.domain.User;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -45,7 +44,8 @@ public class Customer {
 
     private Group customerGroup;
 
-    private String phone;
+    @Valid
+    private EncryptString phone;
 
     private String memo;
 
@@ -74,7 +74,7 @@ public class Customer {
                 .role(this.baseUser.getUserRole())
                 .email(this.email)
                 .name(this.name)
-                .phone(this.phone)
+                .phone(this.phone.getValue())
                 .memo(this.memo)
                 .createdAt(this.createdAt)
                 .updatedAt(this.updatedAt)
