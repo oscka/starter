@@ -11,7 +11,7 @@ Authorization: Bearer {{access_token}}
 
 {
    "customerId": "e1065afe-5d59-4293-b3f9-037d3122b8b6",
-   "loginId": "member_02",
+   "loginId": "member_04",
    "password": "test1234",
    "memberStatus": "ACTIVE",
    "memberType": "CLIENT",
@@ -31,7 +31,7 @@ Authorization: Bearer {{access_token}}
 
 ### 3. member 상세 조회
 #GET /v1/member/{{member_id}}
-GET /v1/member/be0403c8-6b43-41c3-bedc-0bd53dfc5977
+GET /v1/member/5edfc5a9-3675-4b6d-a72e-43a7f5c6cf0f
 Host: localhost:8080
 Authorization: Bearer {{access_token}}
 

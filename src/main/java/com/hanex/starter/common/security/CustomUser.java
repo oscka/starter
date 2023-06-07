@@ -8,6 +8,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.UUID;
 
 @Setter
 @Getter
@@ -17,6 +18,10 @@ public class CustomUser implements UserDetails {
 
     public CustomUser(User user) {
         this.user = user;
+    }
+
+    public UUID getUserId(){
+        return user.getId();
     }
 
     @Override

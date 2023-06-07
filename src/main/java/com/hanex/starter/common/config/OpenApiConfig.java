@@ -3,21 +3,31 @@ package com.hanex.starter.common.config;
 import io.swagger.v3.oas.models.security.SecurityRequirement;
 import io.swagger.v3.oas.models.security.SecurityScheme;
 import org.springdoc.core.GroupedOpenApi;
+import org.springdoc.core.SpringDocUtils;
 import org.springframework.context.annotation.Bean;
 
 import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.CookieValue;
+
+import static org.springframework.security.config.Elements.JWT;
 
 @Configuration
 public class OpenApiConfig {
 
-    // TODO 특정 profile (dev,local) 에서만 swagger 를 사용할 수 있도록 설정
+    private final static String jwtSchemeName = "AUTH-TOKEN"; //jwtAuth
+
+    static {
+        SpringDocUtils.getConfig()
+                //.replaceWithClass(LocalDateTime.class, String.class)
+                .addAnnotationsToIgnore(AuthenticationPrincipal.class, CookieValue.class); // 해당 class 는 swagger Example Value JSON 에서 삭제함
+    }
 
     /**
      * 1) API Grouping > ALL
-     * @return
      */
     @Bean
     public GroupedOpenApi allApi() {
@@ -29,7 +39,6 @@ public class OpenApiConfig {
 
     /**
      * 2) API Grouping > Admin
-     * @return
      */
     @Bean
     public GroupedOpenApi adminApi() {
@@ -42,7 +51,6 @@ public class OpenApiConfig {
 
     /**
      * 3) API Grouping > User
-     * @return
      */
     @Bean
     public GroupedOpenApi userApi() {
@@ -54,7 +62,6 @@ public class OpenApiConfig {
 
     /**
      * 4) API Grouping > Member
-     * @return
      */
     @Bean
     public GroupedOpenApi memberApi() {
@@ -66,7 +73,6 @@ public class OpenApiConfig {
 
     /**
      * 5) API Grouping > Customer
-     * @return
      */
     @Bean
     public GroupedOpenApi customerApi() {
@@ -79,10 +85,8 @@ public class OpenApiConfig {
     @Bean
     public OpenAPI openAPI() {
 
-        // SecuritySecheme명
-        String jwtSchemeName = "jwtAuth";
         // API 요청헤더에 인증정보 포함
-        SecurityRequirement securityRequirement = new SecurityRequirement().addList(jwtSchemeName);
+        SecurityRequirement securityRequirement = new SecurityRequirement().addList(JWT);
         // SecuritySchemes 등록
         Components components = new Components()
                 .addSecuritySchemes(jwtSchemeName, new SecurityScheme()
@@ -90,7 +94,6 @@ public class OpenApiConfig {
                         .type(SecurityScheme.Type.HTTP) // HTTP 방식
                         .scheme("bearer")
                         .bearerFormat("JWT")); // 토큰 형식을 지정하는 임의의 문자(Optional)
-
 
         Info info = new Info()
                 .title("Starter API")

@@ -2,6 +2,7 @@ package com.hanex.starter.member.query.service;
 
 import com.hanex.starter.common.exception.Exception400;
 import com.hanex.starter.common.exception.Exception404;
+import com.hanex.starter.common.security.CustomUser;
 import com.hanex.starter.member.query.domain.Member;
 import com.hanex.starter.member.query.dto.MemberDto;
 import com.hanex.starter.member.query.dto.MemberSearchCondition;
@@ -36,7 +37,7 @@ public class MemberService {
     }
 
     @Transactional
-    public String save(MemberDto.SaveRequest save){
+    public String save(MemberDto.SaveRequest save, CustomUser securityUser){
 
         // baseUser > loginId 중복 검사
         Optional<BaseUser> baseUser = memberRepository.selectByLoginId(save.getLoginId());
@@ -44,15 +45,15 @@ public class MemberService {
             throw new Exception400("loginId","중복되는 로그인 아이디 입니다.");
         }
 
-        Member member = memberRepository.insert(save.toEntity());
+        Member member = memberRepository.insert(save.toEntity(securityUser));
         return member.getId();
     }
 
 
     @Transactional
-    public void update(String id, MemberDto.UpdateRequest update){
+    public void update(String id, MemberDto.UpdateRequest update,CustomUser securityUser){
         Member member = memberRepository.findById(id).orElseThrow(()-> new Exception404("존재하지 않는 고객입니다."));
-        memberRepository.updateMemberInfo(id,update.toEntity());
+        memberRepository.updateMemberInfo(id,update.toEntity(securityUser));
     }
 
     @Transactional

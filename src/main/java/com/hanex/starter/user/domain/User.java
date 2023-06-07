@@ -66,6 +66,7 @@ public class User {
 
 	public UserDto.UserInfoResponse toDto(){
 		return UserDto.UserInfoResponse.builder()
+				.id(this.id)
 				.createdAt(this.createdAt)
 				.name(this.name)
 				.email(this.email)

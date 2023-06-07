@@ -65,8 +65,8 @@ public class Member {
 	@LastModifiedBy
 	private AggregateReference<Customer, @NotNull String> updatedBy;
 
-	// ---------------- 비지니스 로직 --------------- //
 
+	// ---------------- 비지니스 로직 --------------- //
 	public MemberDto.MemberResponse toDto(){
 		return MemberDto.MemberResponse.builder()
 				.id(this.id)

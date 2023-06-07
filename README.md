@@ -8,8 +8,9 @@
 - Spring Data JDBC + Spring JDBC
 - Postgresql (prod,dev) , H2 (local,test)
 - log4j2 , MDC
-- spring i18n (message source > 다국어처리)
+- Spring i18n (message source > 다국어처리)
 - Spring Data Redis
+- swagger (springdoc-openapi)
 
 ## Project Description
 1. [Project 요구사항 정리](md/01-requirement.md)

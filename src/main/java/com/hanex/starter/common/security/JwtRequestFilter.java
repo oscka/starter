@@ -17,6 +17,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.UUID;
 
 
 /**
@@ -35,14 +36,11 @@ public class JwtRequestFilter extends BasicAuthenticationFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filter) throws ServletException, IOException {
 
-
         String header = request.getHeader(SecurityConstants.TOKEN_HEADER);
 
-        if (header.isBlank()){
+        if (!StringUtils.hasLength(header)){
             filter.doFilter(request,response);
-            return;
         }
-
 
         try {
             byte[] signingkey = SecurityConstants.JWT_SECRET.getBytes();
@@ -54,19 +52,21 @@ public class JwtRequestFilter extends BasicAuthenticationFilter {
 
             String loginId = (String) claims.get("loginId");
             String role = (String) claims.get("role");
-            String sub = (String) claims.get("sub");
+            String sub = (String) claims.get("sub"); // user primary key (id)
 
-            // TODO CustomUser 에 id 만들어서 user id 값을 SecurityContext 에 넣을 예정
+            // CustomUser 에 id 만들어서 user id 값을 SecurityContext 에 넣을 예정
             log.info("loginId : {}, role : {}, sub: {}",loginId,role,sub);
+
             if (StringUtils.hasLength(loginId) && StringUtils.hasLength(role)) {
 
+                // ROLE 이 List 형태로 들어올경우 아래 code 사용
                 //List<String> roleList = (List<String>) claims.get("role");
                 //List<SimpleGrantedAuthority> authorities = ((List<?>) claims.get("role")).stream().map(authority -> new SimpleGrantedAuthority((String) authority)).collect(Collectors.toList());
 
                 User user = User.builder()
+                        .id(UUID.fromString(sub))
                         .loginId(loginId)
                         .role(UserRole.valueOf(role))
-                        .password(sub)
                         .build();
 
                 CustomUser myUserDetails = new CustomUser(user);

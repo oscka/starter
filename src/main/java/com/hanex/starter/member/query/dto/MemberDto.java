@@ -3,6 +3,7 @@ package com.hanex.starter.member.query.dto;
 import com.hanex.starter.common.enums.MemberType;
 import com.hanex.starter.common.enums.UserRole;
 import com.hanex.starter.common.enums.UserStatus;
+import com.hanex.starter.common.security.CustomUser;
 import com.hanex.starter.common.util.CommonEncoder;
 import com.hanex.starter.member.query.domain.Member;
 import com.hanex.starter.user.domain.BaseUser;
@@ -61,7 +62,7 @@ public class MemberDto {
 		private String email;
 
 
-		public Member toEntity(){
+		public Member toEntity(CustomUser requestUser){
 			return Member.builder()
 					.id(UUID.randomUUID().toString())
 					.customerId(AggregateReference.to(customerId))
@@ -80,8 +81,8 @@ public class MemberDto {
 					.phone(this.phone)
 					.memo(this.memo)
 					.email(this.email)
-					.createdBy(AggregateReference.to(customerId))
-					.updatedBy(AggregateReference.to(customerId))
+					.createdBy(AggregateReference.to(String.valueOf(requestUser.getUserId())))
+					.updatedBy(AggregateReference.to(String.valueOf(requestUser.getUserId())))
 					.build();
 		}
 	}
@@ -177,7 +178,7 @@ public class MemberDto {
 		@Schema(description = "이메일",  example = "member_01@test.com")
 		private String email;
 
-		public Member toEntity(){
+		public Member toEntity(CustomUser requestUser){
 			return Member.builder()
 					.memberType(this.memberType)
 					.managerName(this.managerName)
@@ -186,7 +187,7 @@ public class MemberDto {
 					.phone(this.phone)
 					.memo(this.memo)
 					.email(this.email)
-					.updatedBy(AggregateReference.to(customerId))
+					.updatedBy(AggregateReference.to(String.valueOf(requestUser.getUserId())))
 					.build();
 		}
 	}

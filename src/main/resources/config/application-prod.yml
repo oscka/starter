@@ -20,3 +20,13 @@ spring:
       # 6379 : master , 6380 slave
       nodes: redis-service.redis:6379,redis-service.redis:6380
       max-redirect: 3
+
+#-------------------------
+# swagger (springdoc-openapi)
+# production 에서는 swagger 비활성화
+#-------------------------
+springdoc:
+  swagger-ui:
+    enabled: false # swagger-ui 비활성화
+  api-docs:
+    enabled: false

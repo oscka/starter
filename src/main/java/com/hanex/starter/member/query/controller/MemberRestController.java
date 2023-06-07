@@ -31,11 +31,8 @@ public class MemberRestController {
 	@PostMapping
 	public ApiResponseDto save (@Valid @RequestBody MemberDto.SaveRequest save
 							, @AuthenticationPrincipal CustomUser securityUser){
-		// TODO AuthenticationPrincipal 은 jwt 에서 가져오므로 swagger 에 입력안해도 되는데 request example data 로 뜨고 있음
-		// TODO swagger 에서 AuthenticationPrincipal request example 없애기
-		// TODO 해당 security context 이용할 방법 찾기
-		log.info("securityUser : {}",securityUser.getUsername(),securityUser.getPassword());
-		return ApiResponseDto.createOK(memberService.save(save));
+		// CustomUser : JWT 에 포함된 user 정보로 생성된 객체
+		return ApiResponseDto.createOK(memberService.save(save,securityUser));
 	}
 
 
@@ -55,8 +52,9 @@ public class MemberRestController {
 
 	@Operation(summary = "사용자 수정", description = "Customer (고객사) 가 사용자를 수정")
 	@PutMapping("/{id}")
-	public ApiResponseDto update(@NotBlank @PathVariable String id, @Valid @RequestBody MemberDto.UpdateRequest update){
-		memberService.update(id, update);
+	public ApiResponseDto update(@NotBlank @PathVariable String id, @Valid @RequestBody MemberDto.UpdateRequest update
+								, @AuthenticationPrincipal CustomUser securityUser){
+		memberService.update(id, update,securityUser);
 		return ApiResponseDto.DEFAULT_OK;
 	}
 

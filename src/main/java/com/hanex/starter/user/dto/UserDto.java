@@ -74,7 +74,10 @@ public class UserDto{
 	@NoArgsConstructor(access = AccessLevel.PROTECTED)
 	public static class UserInfoResponse {
 
-		@Schema(description = "사용자 ID", nullable = false, example = "user1")
+		@Schema(description = "사용자 고유 ID", nullable = false, example = "user1")
+		private UUID id;
+
+		@Schema(description = "사용자 로그인 ID", nullable = false, example = "user1")
 		private String loginId;
 
 		@Schema(description = "사용자 이름", nullable = false, example = "홍길동")
