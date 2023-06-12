@@ -2,6 +2,7 @@ package com.hanex.starter.member.query.repository;
 
 import com.hanex.starter.member.query.domain.Member;
 import com.hanex.starter.member.query.dto.MemberSearchCondition;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jdbc.core.convert.EntityRowMapper;
@@ -15,6 +16,7 @@ import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 
 import java.util.List;
 
+@Slf4j
 public class MemberRepositoryImpl implements MemberRepositoryCustom {
 
     private final NamedParameterJdbcOperations jdbcOperations;
@@ -41,8 +43,6 @@ public class MemberRepositoryImpl implements MemberRepositoryCustom {
         SqlParameterSource parameterSource = new MapSqlParameterSource()
                 .addValue("customerId",condition.getCustomerId())
                 .addValue("managerName",condition.getManagerName())
-                .addValue("memberType",condition.getMemberType())
-                .addValue("memberStatus",condition.getMemberStatus())
                 .addValue("offset", pageable.getOffset())
                 .addValue("pageSize", pageable.getPageSize());
 
@@ -67,7 +67,7 @@ public class MemberRepositoryImpl implements MemberRepositoryCustom {
     public boolean updateMemberInfo(String id , Member member) {
         SqlParameterSource parameterSource = new MapSqlParameterSource()
                 .addValue("id", id)
-                .addValue("memberType", member.getMemberType())
+                //.addValue("memberType", member.getMemberType())
                 .addValue("ceoName", member.getCeoName())
                 .addValue("registrationNumber", member.getRegistrationNumber())
                 .addValue("phone", member.getPhone())

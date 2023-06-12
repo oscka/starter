@@ -1,22 +1,19 @@
 package com.hanex.starter.member.query.repository;
 
-import com.hanex.starter.member.query.domain.Member;
+import com.hanex.starter.common.enums.EnumType;
 import com.hanex.starter.member.query.dto.MemberSearchCondition;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.util.Assert;
 import org.springframework.util.ObjectUtils;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.joining;
-import static org.apache.commons.lang3.StringUtils.firstNonBlank;
 
 public class MemberSql {
 
@@ -53,8 +50,8 @@ public class MemberSql {
                 whereAnd (
                         notEmpty(member.getCustomerId(), "customer_id = :customerId"),
                         notEmpty(member.getManagerName(), "manager_name = :managerName"),
-                        notEmptyForObject(member.getMemberType(), "member_type = :memberType"),
-                        notEmptyForObject(member.getMemberStatus(), "member_status = :memberStatus")
+                        notEmptyForObject(member.getMemberType(), "member_type = '"),
+                        notEmptyForObject(member.getMemberStatus(), "member_status = '")
                 )
                 +
                 " ORDER BY " + orderBy(pageable.getSort())
@@ -74,8 +71,8 @@ public class MemberSql {
             whereAnd (
                     notEmpty(member.getCustomerId(), "customer_id = :customerId"),
                     notEmpty(member.getManagerName(), "manager_name = :managerName"),
-                    notEmptyForObject(member.getMemberType(), "member_type = :memberType"),
-                    notEmptyForObject(member.getMemberStatus(), "member_status = :memberStatus")
+                    notEmptyForObject(member.getMemberType(), "member_type = '"),
+                    notEmptyForObject(member.getMemberStatus(), "member_status = '")
             );
     }
 
@@ -86,8 +83,12 @@ public class MemberSql {
         return StringUtils.isEmpty(param)? null: condition;
     }
 
-    private static String notEmptyForObject(Enum param, String condition) {
-        return ObjectUtils.isEmpty(param)? null: condition;
+    /**
+       spring data jdbc 에서 enum name 을 인식하지 못하므로
+       해당 메서드에서 null check 하는 동시에 enum id 를 넣어줌
+     */
+    private static String notEmptyForObject(EnumType param, String condition) {
+        return ObjectUtils.isEmpty(param)? null: condition + param.getId() + "'";
     }
 
     private static String whereAnd(String ... conditions) {
