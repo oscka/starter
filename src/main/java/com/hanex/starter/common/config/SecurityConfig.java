@@ -59,7 +59,8 @@ public class SecurityConfig {
             // 9. CORS 설정
             builder.addFilter(corsConfig.corsFilter());
             // 시큐리티 관련 필터
-            builder.addFilterAfter(new JwtRequestFilter(authenticationManager),BasicAuthenticationFilter.class);
+            builder.addFilterBefore(new JwtRequestFilter(authenticationManager),BasicAuthenticationFilter.class);
+            //builder.addFilterAfter(new JwtRequestFilter(authenticationManager),BasicAuthenticationFilter.class);
 
             super.configure(builder);
         }
@@ -124,11 +125,7 @@ public class SecurityConfig {
                                 .anyRequest().permitAll()
                 );
 
-
-
-
-
-
+        // h2-console 접속을 위해 설정
         http.headers().addHeaderWriter(new XFrameOptionsHeaderWriter(XFrameOptionsHeaderWriter.XFrameOptionsMode.SAMEORIGIN));
         http.headers().frameOptions().sameOrigin();
 
