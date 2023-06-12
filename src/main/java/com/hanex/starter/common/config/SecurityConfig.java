@@ -1,6 +1,5 @@
 package com.hanex.starter.common.config;
 
-import com.hanex.starter.common.exception.Exception400;
 import com.hanex.starter.common.exception.Exception401;
 import com.hanex.starter.common.exception.Exception403;
 import com.hanex.starter.common.security.FilterResponseUtil;
@@ -13,7 +12,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -94,6 +92,9 @@ public class SecurityConfig {
         // 5. 커스텀 필터 등록 (security filter 교환)
         http.apply(new CustomSecurityFilterManager());
 
+        /*
+         SecurityConfig 에서 지정한 authenticationEntryPoint 와  accessDeniedHandler 는 GlobalExceptionHandler 에서 처리하지 않음
+         */
         // 6. 인증 실패 처리
         http.exceptionHandling().authenticationEntryPoint((request, response, authException) -> {
             log.warn("인증되지 않은 사용자가 resource 접근 : {}",authException.getMessage());
@@ -109,19 +110,21 @@ public class SecurityConfig {
 
         // 8. 인증, 권한 필터 설정
         http
-            // img , css 과 같은 static resources 는 허용
-            .authorizeRequests().requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
-            .and()
-            .authorizeRequests().antMatchers(PERMIT_URL_ARRAY).permitAll()
-            .and()
-            .authorizeRequests(
-                    authorize -> authorize
-                            .antMatchers("/v1/order/**").authenticated()
-                            .antMatchers("/v1/member/**").access("hasRole('CUSTOMER') or hasRole('ADMIN')")
-                            .antMatchers("/v1/admin/**").hasRole("ADMIN")
-                            .antMatchers("/v1/customer/**").hasRole("ADMIN")
-                            .anyRequest().permitAll()
-            );
+                // img , css 과 같은 static resources 는 허용
+                .authorizeRequests().requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
+                .and()
+                .authorizeRequests().antMatchers(PERMIT_URL_ARRAY).permitAll()
+                .and()
+                .authorizeRequests(
+                        authorize -> authorize
+                                .antMatchers("/v1/order/**").authenticated()
+                                .antMatchers("/v1/member/**").access("hasRole('CUSTOMER') or hasRole('ADMIN')")
+                                .antMatchers("/v1/admin/**").hasRole("ADMIN")
+                                .antMatchers("/v1/customer/**").hasRole("ADMIN")
+                                .anyRequest().permitAll()
+                );
+
+
 
 
 
