@@ -5,9 +5,7 @@ import com.hanex.starter.order.service.OrderService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @Tag(name = "출고 API" ,description = "OMS 출고")
 @RequestMapping("/v1/order")
@@ -20,8 +18,15 @@ public class OrderRestController {
     @Operation(summary = "출고 생성",description = "출고 생성")
     @PostMapping
     public ApiResponseDto createOrder(){
-
         orderService.createOrder();
+        return ApiResponseDto.DEFAULT_OK;
+    }
+
+
+    @Operation(summary = "출고 단일 조회",description = "출고 아이디로 단일 조회")
+    @GetMapping("/{id}")
+    public ApiResponseDto findByOrderId(@PathVariable Long id){
+        orderService.findByOrderId(id);
         return ApiResponseDto.DEFAULT_OK;
     }
 
