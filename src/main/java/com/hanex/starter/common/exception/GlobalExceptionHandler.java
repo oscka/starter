@@ -5,25 +5,19 @@ import com.hanex.starter.common.api.ApiResponseDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.exception.ExceptionUtils;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.slf4j.MDC;
 import org.springframework.context.MessageSource;
-import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-
-@RequiredArgsConstructor
 @Slf4j
+@RequiredArgsConstructor
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
 	private final MessageSource messageSource;
-
-	private static final Logger logger = LogManager.getLogger(GlobalExceptionHandler.class);
 
 	@CustomErrorLog
 	@ExceptionHandler(Exception400.class)
@@ -67,17 +61,17 @@ public class GlobalExceptionHandler {
 		MDC.put("error_trace", ExceptionUtils.getStackTrace(e));
 
 		ApiResponseDto<String> apiResponseDto = new ApiResponseDto<>(HttpStatus.INTERNAL_SERVER_ERROR, "unknownServerError", e.getMessage());
+		log.error(e.getMessage());
 		return new ResponseEntity<>(apiResponseDto, HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 	
 
-	public String getMessage(String code){
-		return getMessage(code,null);
-	}
+//	public String getMessage(String code){
+//		return getMessage(code,null);
+//	}
 
-
-	public String getMessage(String code,Object[] args){
-		return messageSource.getMessage(code ,args, LocaleContextHolder.getLocale());
-	}
+//	public String getMessage(String code,Object[] args){
+//		return messageSource.getMessage(code ,args, LocaleContextHolder.getLocale());
+//	}
 
 }

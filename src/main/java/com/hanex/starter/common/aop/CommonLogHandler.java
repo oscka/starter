@@ -40,7 +40,7 @@ public class CommonLogHandler {
             if(arg instanceof Exception){
                 Exception e = (Exception) arg;
                 log.error("[CommonLogHandler] ERROR > {}",e.getMessage());
-                log.error(Arrays.toString(e.getStackTrace()));
+                //log.error(Arrays.toString(e.getStackTrace()));
             }
         }
     }

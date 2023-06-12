@@ -20,20 +20,17 @@ public class AdminService {
 
     private final UserRepository userRepository;
 
-    @CustomLog
     public UserDto.UserInfoResponse findById(UUID id){
         return userRepository.findById(id).orElseThrow(()
                 -> new Exception404("존재하지 않는 계정입니다.")).toDto();
     }
 
-    @CustomLog
     public void userBan(UUID id){
         User user = userRepository.findById(id).orElseThrow(()->new Exception404("존재하지 않는 계정입니다."));
         user.ban();
         userRepository.save(user);
     }
 
-    @CustomLog
     public List<UserDto.UserInfoResponse> findByUserStatus(Pageable pageable, String userStatus){
         return userRepository.findByUserStatus(pageable,UserStatus.valueOf(userStatus)).stream().map(users -> users.toDto()).collect(Collectors.toList());
     }
