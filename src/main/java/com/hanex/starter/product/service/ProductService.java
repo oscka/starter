@@ -3,6 +3,7 @@ package com.hanex.starter.product.service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.hanex.starter.common.exception.Exception403;
 import com.hanex.starter.common.exception.Exception404;
 import com.hanex.starter.common.exception.Exception500;
 import com.hanex.starter.common.security.CustomUser;
@@ -42,8 +43,12 @@ public class ProductService {
     }
 
     @Transactional(readOnly = true)
-    public ProductDto.ProductInfoResponse findProductById(Long id){
+    public ProductDto.ProductInfoResponse findProductById(Long id,CustomUser customUser){
         Product product = productRepository.findById(id).orElseThrow(()-> new Exception404("존재하지 않는 상품입니다."));
+
+        if (product.getCreatedBy().equals(customUser.getUserId().toString())){
+            throw new Exception403("본인이 생성한 상품만 확인할 수 있습니다.");
+        }
         return product.toDto();
     }
 
@@ -62,10 +67,6 @@ public class ProductService {
         try {
             Product product = productRepository.findById(id).orElseThrow(()-> new Exception404("존재하지 않는 상품입니다."));
             int affected = productRepository.updateProduct(update.getName(),update.getStock(),id);
-
-            log.info(mapper.writeValueAsString(product));
-            log.info("affected : {}",affected);
-
             ProductChanged productChanged = ProductChanged.builder()
                     .productId(id)
                     .productStock(update.getStock())
@@ -88,7 +89,6 @@ public class ProductService {
                     .setHeader(MessageHeaders.CONTENT_TYPE, MimeTypeUtils.APPLICATION_JSON)
                     .build());
 
-            log.info(json);
         } catch (Exception e){
             e.printStackTrace();
         }

@@ -1,11 +1,14 @@
 package com.hanex.starter.order.controller;
 
 import com.hanex.starter.common.api.ApiResponseDto;
+import com.hanex.starter.order.dto.OrderDto;
 import com.hanex.starter.order.service.OrderService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 @Tag(name = "출고 API" ,description = "OMS 출고")
 @RequestMapping("/v1/order")
@@ -17,8 +20,8 @@ public class OrderRestController {
 
     @Operation(summary = "출고 생성",description = "출고 생성")
     @PostMapping
-    public ApiResponseDto createOrder(){
-        orderService.createOrder();
+    public ApiResponseDto createOrder(@RequestBody @Valid OrderDto.CreateOrderRequest request){
+        orderService.createOrder(request);
         return ApiResponseDto.DEFAULT_OK;
     }
 

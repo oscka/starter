@@ -31,8 +31,8 @@ public class ProductRestController {
 
 	@Operation(description = "상품 상세 조회",summary = "상품 상세 조회")
 	@GetMapping("/{id}")
-	public ApiResponseDto findProductById(@PathVariable Long id){
-		return ApiResponseDto.createOK(productService.findProductById(id));
+	public ApiResponseDto findProductById(@PathVariable Long id,@AuthenticationPrincipal CustomUser customUser){
+		return ApiResponseDto.createOK(productService.findProductById(id,customUser));
 	}
 
 

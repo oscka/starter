@@ -25,7 +25,7 @@ import javax.validation.constraints.Pattern;
 @RequestMapping("/v1/member")
 @RestController
 @RequiredArgsConstructor
-public class MemberRestController {
+public class MemberController {
 
 	private final MemberService memberService;
 

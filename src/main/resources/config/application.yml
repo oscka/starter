@@ -19,7 +19,7 @@ spring:
   lifecycle:
     timeout-per-shutdown-phase: 35s # graceful shutdown 유예시간 설정 (default 30s)
   #--------------------------
-  # spring.cloud
+  # spring.cloud.stream (kafka 설정)
   #--------------------------
   cloud:
     stream:
@@ -27,10 +27,10 @@ spring:
         binder:
           brokers: localhost:29092
       bindings:
-#        product-success-update:
-#          group: product
-#          destination: product-update-topic
-#          contentType: application/json
+        product-success-update:
+          group: product
+          destination: product-update-topic
+          contentType: application/json
         product-update-to-kafka:
           destination: product-update-topic
           contentType: application/json
