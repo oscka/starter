@@ -64,14 +64,14 @@ spring:
     stream:
       kafka:
         binder:
-          brokers: localhost:9092
+          brokers: localhost:29092
       bindings:
-        input:
+        product-success-update:
           group: product
-          destination: order
+          destination: product-update-topic
           contentType: application/json # 인바운드 역직렬화
-        output:
-          destination: order
+        product-update-to-kafka:
+          destination: product-update-topic
           contentType: application/json # 아웃바운드 직렬화
 ```
 - spring.cloud.stream.kafka.binder.brokers
