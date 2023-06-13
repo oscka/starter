@@ -1,4 +1,4 @@
-package com.hanex.starter.member.query.dto;
+package com.hanex.starter.member.dto;
 
 import com.hanex.starter.common.enums.MemberType;
 import com.hanex.starter.common.enums.UserStatus;

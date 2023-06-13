@@ -2,7 +2,6 @@ package com.hanex.starter.customer.repository;
 
 import com.hanex.starter.common.enums.Group;
 import com.hanex.starter.customer.domain.Customer;
-import com.hanex.starter.member.query.repository.MemberSql;
 import com.hanex.starter.user.domain.BaseUser;
 import org.springframework.data.jdbc.repository.query.Modifying;
 import org.springframework.data.jdbc.repository.query.Query;

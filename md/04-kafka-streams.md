@@ -20,6 +20,8 @@ docker-compose 로 Kafka , Zookeeper 를 설치합니다. (Local PC Test 용도)
 - **바인딩**: 외부 메시징 시스템과 최종 사용자가 제공하는 애플리케이션 코드(생산자/소비자) 사이를 연결합니다.
 - **메시지**: 생산자와 소비자가 대상 바인더(및 외부 메시징 시스템을 통한 다른 응용 프로그램)와 통신하기 위해 사용하는 표준 데이터 구조입니다.
 
+### 5. application.yml
+
 -------
 ### Order OrderItem Product 
 

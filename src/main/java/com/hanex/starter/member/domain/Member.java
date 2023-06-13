@@ -1,10 +1,9 @@
-package com.hanex.starter.member.query.domain;
+package com.hanex.starter.member.domain;
 
 import com.hanex.starter.common.enums.MemberType;
 import com.hanex.starter.common.enums.UserStatus;
-import com.hanex.starter.common.util.jdbc.AggregateReferenceValueExtractor;
 import com.hanex.starter.customer.domain.Customer;
-import com.hanex.starter.member.query.dto.MemberDto;
+import com.hanex.starter.member.dto.MemberDto;
 import com.hanex.starter.user.domain.BaseUser;
 import lombok.*;
 import org.springframework.data.annotation.*;

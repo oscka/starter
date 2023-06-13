@@ -18,6 +18,22 @@ spring:
     active: dev
   lifecycle:
     timeout-per-shutdown-phase: 35s # graceful shutdown 유예시간 설정 (default 30s)
+  #--------------------------
+  # spring.cloud
+  #--------------------------
+  cloud:
+    stream:
+      kafka:
+        binder:
+          brokers: localhost:9092
+      bindings:
+        input:
+          group: product
+          destination: order
+          contentType: application/json
+        output:
+          destination: order
+          contentType: application/json
 
 #--------------------------
 # logging
@@ -59,3 +75,4 @@ api:
 custom:
   cache:
     customer-info: 86400000 # 1000 * 60 * 60* 24 = 86400000 (24 시간)
+

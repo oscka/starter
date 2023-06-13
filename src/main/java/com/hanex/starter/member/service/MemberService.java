@@ -1,17 +1,16 @@
-package com.hanex.starter.member.query.service;
+package com.hanex.starter.member.service;
 
 import com.hanex.starter.common.exception.Exception400;
 import com.hanex.starter.common.exception.Exception404;
 import com.hanex.starter.common.security.CustomUser;
-import com.hanex.starter.member.query.domain.Member;
-import com.hanex.starter.member.query.dto.MemberDto;
-import com.hanex.starter.member.query.dto.MemberSearchCondition;
-import com.hanex.starter.member.query.repository.MemberRepository;
+import com.hanex.starter.member.domain.Member;
+import com.hanex.starter.member.dto.MemberDto;
+import com.hanex.starter.member.dto.MemberSearchCondition;
+import com.hanex.starter.member.repository.MemberRepository;
 import com.hanex.starter.user.domain.BaseUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.jdbc.core.mapping.AggregateReference;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

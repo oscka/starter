@@ -1,10 +1,10 @@
-package com.hanex.starter.member.query.controller;
+package com.hanex.starter.member.controller;
 
 import com.hanex.starter.common.api.ApiResponseDto;
 import com.hanex.starter.common.security.CustomUser;
-import com.hanex.starter.member.query.dto.MemberDto;
-import com.hanex.starter.member.query.dto.MemberSearchCondition;
-import com.hanex.starter.member.query.service.MemberService;
+import com.hanex.starter.member.dto.MemberDto;
+import com.hanex.starter.member.dto.MemberSearchCondition;
+import com.hanex.starter.member.service.MemberService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;

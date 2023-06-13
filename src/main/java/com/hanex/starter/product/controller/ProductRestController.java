@@ -36,7 +36,7 @@ public class ProductRestController {
 	}
 
 
-	@Operation(description = "상품 내역 생성",summary = "상품 내역 생성")
+	@Operation(description = "상품 생성",summary = "상품 생성")
 	@PostMapping("/{id}")
 	private ApiResponseDto createProduct(@RequestBody @Valid ProductDto.SaveRequest save, @AuthenticationPrincipal CustomUser user){
 		productService.createProduct(save,user);

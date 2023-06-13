@@ -1,7 +1,7 @@
-package com.hanex.starter.member.query.repository;
+package com.hanex.starter.member.repository;
 
 import com.hanex.starter.common.enums.EnumType;
-import com.hanex.starter.member.query.dto.MemberSearchCondition;
+import com.hanex.starter.member.dto.MemberSearchCondition;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;

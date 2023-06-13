@@ -1,8 +1,7 @@
-package com.hanex.starter.member.query.repository;
+package com.hanex.starter.member.repository;
 
 import com.hanex.starter.common.util.jdbc.WithInsert;
-import com.hanex.starter.customer.repository.CustomerSql;
-import com.hanex.starter.member.query.domain.Member;
+import com.hanex.starter.member.domain.Member;
 import com.hanex.starter.user.domain.BaseUser;
 import org.springframework.data.jdbc.repository.query.Query;
 import org.springframework.data.repository.CrudRepository;

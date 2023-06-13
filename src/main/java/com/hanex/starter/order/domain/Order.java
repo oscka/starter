@@ -2,9 +2,6 @@ package com.hanex.starter.order.domain;
 
 import com.hanex.starter.common.enums.OrderStatus;
 import com.hanex.starter.customer.domain.Customer;
-import com.hanex.starter.member.query.domain.Member;
-import com.hanex.starter.product.domain.Product;
-import com.hanex.starter.user.domain.User;
 import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.jdbc.core.mapping.AggregateReference;

@@ -27,11 +27,6 @@ public class ProductDto {
         @Schema(description = "상품설명",example = "남녀노소 좋아하는 스테이크볶음밥")
         private String description;
 
-        @Schema(description = "상품 바코드",example = "880952124212")
-        private String barcode;
-
-        @Schema(description = "관리 키워드",example = "냉동식품")
-        private String manageKeyword;
 
         @Schema(description = "고객사 ID",example = "e1065afe-5d59-4293-b3f9-037d3122b8b6")
         private String customerId;
@@ -48,8 +43,6 @@ public class ProductDto {
                     .name(name)
                     .quantity(quantity)
                     .description(description)
-                    .barcode(barcode)
-                    .manageKeyword(manageKeyword)
                     .productCode(UUID.randomUUID().toString().replaceAll("-",""))
                     .customerId(AggregateReference.to(customerId))
                     .supplyCompanyId(AggregateReference.to(supplyCompanyId))
@@ -77,14 +70,10 @@ public class ProductDto {
         @Schema(description = "상품설명",example = "남녀노소 좋아하는 스테이크볶음밥")
         private String description;
 
-        @Schema(description = "상품 바코드",example = "880952124212")
-        private String barcode;
 
         @Schema(description = "상품 코드",example = "880952124212")
         private String productCode;
 
-        @Schema(description = "관리 키워드",example = "냉동식품")
-        private String manageKeyword;
 
         @Schema(description = "고객사 ID",example = "e1065afe-5d59-4293-b3f9-037d3122b8b6")
         private String customerId;
@@ -113,7 +102,8 @@ public class ProductDto {
     @Builder
     @NoArgsConstructor(access = AccessLevel.PROTECTED)
     @AllArgsConstructor
-    public static class UpdateRequest{
+    public static class ProductInfoUpdateRequest{
+
         @Schema(description = "상품명",example = "스테이크볶음밥")
         private String name;
 
@@ -122,12 +112,6 @@ public class ProductDto {
 
         @Schema(description = "상품설명",example = "남녀노소 좋아하는 스테이크볶음밥")
         private String description;
-
-        @Schema(description = "상품 바코드",example = "880952124212")
-        private String barcode;
-
-        @Schema(description = "관리 키워드",example = "냉동식품")
-        private String manageKeyword;
 
         @Schema(description = "고객사 ID",example = "e1065afe-5d59-4293-b3f9-037d3122b8b6")
         private String customerId;
@@ -144,8 +128,6 @@ public class ProductDto {
                     .name(name)
                     .quantity(quantity)
                     .description(description)
-                    .barcode(barcode)
-                    .manageKeyword(manageKeyword)
                     .productCode(UUID.randomUUID().toString().replaceAll("-",""))
                     .customerId(AggregateReference.to(customerId))
                     .supplyCompanyId(AggregateReference.to(supplyCompanyId))
@@ -155,5 +137,19 @@ public class ProductDto {
         }
     }
 
+
+    @Getter
+    @Builder
+    @NoArgsConstructor(access = AccessLevel.PROTECTED)
+    @AllArgsConstructor
+    public static class UpdateRequest{
+
+        @Schema(description = "상품명",example = "스테이크볶음밥")
+        private String name;
+
+        @Schema(description = "상품명",example = "100")
+        private Integer stock;
+
+    }
 
 }
