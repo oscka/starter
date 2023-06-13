@@ -21,18 +21,31 @@ docker-compose 로 Kafka , Zookeeper 를 설치합니다. (Local PC Test 용도)
 - **메시지**: 생산자와 소비자가 대상 바인더(및 외부 메시징 시스템을 통한 다른 응용 프로그램)와 통신하기 위해 사용하는 표준 데이터 구조입니다.
 
 ### 5. application.yml
+```yaml
+spring:
+  cloud:
+    stream:
+      kafka:
+        binder:
+          brokers: localhost:9092
+      bindings:
+        input:
+          group: product
+          destination: order
+          contentType: application/json
+        output:
+          destination: order
+          contentType: application/json
+```
+
 
 -------
-### Order OrderItem Product 
+### Product 
 
-1. createOrder > product 재고 감소    >> C
-2. completeOrder > orderState 변경   >> U
-3. cancleOrder > product 재고 보상    >> U
-   (order > delete X)
+1. ChangeProductEvent > product 정보 변경시 event 발생
 
 kafka topic
 1. product  Stock
-2. order    State
 
 
 
