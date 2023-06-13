@@ -3,24 +3,31 @@
 ### 1. docker-compose for Kafka
 - [docker-compose 로 Kafka, Zookeeper 설치](etc/kafka-docker-compose.yml)
 
-docker-compose 로 Kafka , Zookeeper 를 설치합니다. (Local PC Test 용도) 
-사전에 docker-compose 가 설치돼있어야합니다.
+(!) 사전에 docker-compose 가 설치돼있어야합니다.  
+docker-compose 로 Kafka , Zookeeper 를 설치합니다.  
+Local PC Test 용도 Single Broker 입니다.  
 
 ```shell
-# docker-compose command
+# docker-compose 실행
 docker-compose -f kafka-docker-compose.yml up -d
+
+# docker 상태,로그 확인
+docker ps
+docker logs -f {CONTAINER ID} 
+
+# docker-compose 종료
+docker-compose -f kafka-docker-compose.yml down -v
 ```
 
 ### 2. Kafka shell example
 - [Kafka Command Example](etc/kafka-command-example.sh)  
 
-위 파일에서는 Topic , Message 관리 Command 를 간단히 소개합니다.
-
+위 파일에서는 Topic 생성및 확인 , Message 관리 Command 를 간단히 설명합니다.
 
 ### 3. Why Kafka Streams?
 1) [Kafka 공식 문서 - Kafka Streams 란](https://kafka.apache.org/26/documentation/streams/core-concepts)
-1) [java example - Kafka Streams VS Kafka Consumer](https://www.baeldung.com/java-kafka-streams-vs-kafka-consumer)
-2) [kafka Consumer api vs Streams api](https://stackoverflow.com/questions/44014975/kafka-consumer-api-vs-streams-api)
+2) [java example - Kafka Streams VS Kafka Consumer](https://www.baeldung.com/java-kafka-streams-vs-kafka-consumer)
+3) [kafka Consumer api vs Streams api](https://stackoverflow.com/questions/44014975/kafka-consumer-api-vs-streams-api)
 
   
 Kafka Streams 는 Kafka 에 저장된 데이터를 처리하고 분석하기 위한 클라이언트 라이브러리이다.  
@@ -46,9 +53,9 @@ RabbitMQ, Apache Kafka, Kafka Streams, Amazon Kinesis 등 다양한 binder 를 �
   - 외부 메시징 시스템과 최종 사용자가 제공하는 애플리케이션 코드(생산자/소비자) 사이를 연결한다.
 - **메시지**
   - 생산자와 소비자가 대상 바인더(및 외부 메시징 시스템을 통한 다른 응용 프로그램)와 통신하기 위해 사용하는 표준 데이터 구조
-- 
 
-### 5. application.yml (Spring Cloud Stream Kafka)
+
+### 5. application.yml (Spring Cloud Stream Binder Kafka)
 [Spring 공식문서 - application.yml 속성](https://cloud.spring.io/spring-cloud-stream-binder-kafka/spring-cloud-stream-binder-kafka.html)
 
 ```yaml
