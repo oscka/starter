@@ -5,7 +5,7 @@ public class ProductSql {
 	public static final String SELECT_BY_ID =  """
 		SELECT
 			P.id AS product_id,
-			P.name AS product_name,
+			P.product_name AS name,
 			P.supply_company_id,
 			P.description,
 			P.customer_id,
@@ -22,10 +22,12 @@ public class ProductSql {
 	""";
 
 	public static final String UPDATE = """
-	   UPDATE product_tb P
-		SET P.name = :name
-			, P.stock = :stock
-		WHERE P.id :=id
+	   UPDATE product_tb
+		SET 
+			version = version + 1
+			, product_name = :name
+			, stock = :stock
+		WHERE id = :id
 	""";
 
 }

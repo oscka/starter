@@ -111,19 +111,20 @@ public class SecurityConfig {
 
         // 8. 인증, 권한 필터 설정
         http
-                // img , css 과 같은 static resources 는 허용
-                .authorizeRequests().requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
-                .and()
-                .authorizeRequests().antMatchers(PERMIT_URL_ARRAY).permitAll()
-                .and()
-                .authorizeRequests(
-                        authorize -> authorize
-                                .antMatchers("/v1/order/**").authenticated()
-                                .antMatchers("/v1/member/**").access("hasRole('CUSTOMER') or hasRole('ADMIN')")
-                                .antMatchers("/v1/admin/**").hasRole("ADMIN")
-                                .antMatchers("/v1/customer/**").hasRole("ADMIN")
-                                .anyRequest().permitAll()
-                );
+            // img , css 과 같은 static resources 는 허용
+            .authorizeRequests().requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
+            .and()
+            .authorizeRequests().antMatchers(PERMIT_URL_ARRAY).permitAll()
+            .and()
+            .authorizeRequests(
+                    authorize -> authorize
+                            .antMatchers("/v1/order/**").authenticated()
+                            .antMatchers("/v1/admin/**").hasRole("ADMIN")
+                            .antMatchers("/v1/customer/**").hasRole("ADMIN")
+                            .antMatchers("/v1/member/**").access("hasRole('CUSTOMER') or hasRole('ADMIN')")
+                            .antMatchers("/v1/product/**").access("hasRole('CUSTOMER') or hasRole('MEMBER')")
+                            .anyRequest().permitAll()
+            );
 
         // h2-console 접속을 위해 설정
         http.headers().addHeaderWriter(new XFrameOptionsHeaderWriter(XFrameOptionsHeaderWriter.XFrameOptionsMode.SAMEORIGIN));

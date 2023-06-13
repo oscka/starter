@@ -11,8 +11,10 @@
 - Spring i18n (message source > 다국어처리)
 - Spring Data Redis
 - swagger (springdoc-openapi)
+- kafka streams (spring cloud streams)
 
 ## Project Description
 1. [Project 요구사항 정리](md/01-requirement.md)
 2. [Project 시작 및 사용방법](md/02-project-start.md)
 3. [Project 에러 처리](/md/03-project-error.md)
+4. [Kafka Streams - Spring Cloud Streams](/md/04-kafka-streams.md)

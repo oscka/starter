@@ -32,12 +32,5 @@ public class OrderDto {
 
     }
 
-    @Builder
-    @AllArgsConstructor
-    @NoArgsConstructor(access = AccessLevel.PROTECTED)
-    @Getter
-    public static class OrderItem {
-
-    }
 
 }

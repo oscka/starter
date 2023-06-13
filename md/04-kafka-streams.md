@@ -79,8 +79,46 @@ spring:
 - spring.cloud.stream.bindings.output.contentType: application/json
   - 기본 인코딩이 비활성화된 경우(기본값) 프레임워크는 사용자가 설정한 contentType을 사용하여 메시지를 변환
 
-### 6. 해당 프로젝트에서 사용한 sample code flow
-1. ChangeProductEvent > product 정보 변경시 event 발생
+### 6. Error Handling
+
+메세지 처리 도중 에러가 발생했을 때 처리하는 방법
+
+#### 1) Drop Failed Messages (실패한 메세지 삭제)
+첫번째 오류처리기는 단순히 오류메시지를 기록한다.
+두번째 오류처리기는 특정 메시지 시스템의 컨텍스트에서 오류 메시지를 처리하는 책임이 있는 바인더 특정 오류 처리기이다.
+
+#### 2) Handle Error Messages (오류 메시지 처리)
+
+
+#### 3) DLQ ( Dead Letter Queue )
+- DLQ 가 설정 되어 있을경우 실패한 메세지를 후속처리 하기위해 설정한 목적지로 전송된다.
+- DLQ 메커니즘 특성상 반드시 group 이 지정돼있어야한다.(실패한 메세지를 전송할 토픽에 group 이름이 들어감)
+- 기본값 >> DLQ: false 
+
+#### 4) Retry Template (재시도 프로퍼티 속성)
+
+
+
+
+### 7. starter 프로젝트 sample code flow
+
+1. Create Topic
+   product-update-topic 을 만들어준다.
+```shell
+docker exec kafka kafka-topics --create --topic product-update-topic --bootstrap-server kafka:9092 --replication-factor 1 --partitions 1
+```
+
+2. product 정보 변경시 event 발생
+swagger > product api 화면에서 상품 정보를 수정한다.
+이벤트 발생시 kafka consumer shell 에서 확인할 수 있다.
+```shell
+[appuser@c0715a9c629a ~]$ kafka-console-consumer --topic product-update-topic --from-beginning --bootstrap-server kafka:9092
+{"eventType":"ProductChanged","productId":1,"productName":"스테이크볶음밥","productStock":50}
+```
+
+
+
+
 
 
 

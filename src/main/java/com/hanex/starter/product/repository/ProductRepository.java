@@ -1,6 +1,7 @@
 package com.hanex.starter.product.repository;
 
 import com.hanex.starter.product.domain.Product;
+import org.springframework.data.jdbc.repository.query.Modifying;
 import org.springframework.data.jdbc.repository.query.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.query.Param;
@@ -16,8 +17,9 @@ public interface ProductRepository extends PagingAndSortingRepository<Product,Lo
     Optional<Product> selectById(Long id);
 
 
+    @Modifying
     @Query(ProductSql.UPDATE)
-    Product updateProduct(@Param("name")String name,@Param("stock")Integer stock,@Param("id") Long id);
+    int updateProduct(@Param("name")String name,@Param("stock")Integer stock,@Param("id") Long id);
 
 
 

@@ -28,6 +28,8 @@ public interface CustomerRepository extends CrudRepository<Customer, String> , C
                 , name = :name
                 , phone = :phone
                 , memo = :memo
+                , version = version + 1
+           WHERE id = :id
         """
     )
     boolean changeCustomer(@Param("email") String email
@@ -35,5 +37,6 @@ public interface CustomerRepository extends CrudRepository<Customer, String> , C
                             , @Param("name") String name
                             , @Param("phone") String phone
                            , @Param("memo") String memo
+                           , @Param("id") String id
                         );
 }

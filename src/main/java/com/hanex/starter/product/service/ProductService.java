@@ -2,13 +2,13 @@ package com.hanex.starter.product.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.hanex.starter.common.exception.Exception400;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.hanex.starter.common.exception.Exception404;
 import com.hanex.starter.common.exception.Exception500;
 import com.hanex.starter.common.security.CustomUser;
 import com.hanex.starter.product.domain.Product;
 import com.hanex.starter.product.dto.ProductDto;
-import com.hanex.starter.product.event.ProductChangeEvent;
+import com.hanex.starter.product.event.ProductChanged;
 import com.hanex.starter.product.event.StreamProcessor;
 import com.hanex.starter.product.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
@@ -48,38 +48,51 @@ public class ProductService {
     }
 
     @Transactional
-    public void createProduct(ProductDto.SaveRequest request, CustomUser user){
-        Product product = productRepository.save(request.toEntity(user));
+    public void createProduct(ProductDto.ProductSaveRequest request, CustomUser user){
+        productRepository.save(request.toEntity(user));
     }
 
 
     @Transactional
-    public void updateProduct(Long id,ProductDto.UpdateRequest update,CustomUser user){
-        Product product = productRepository.findById(id).orElseThrow(()-> new Exception404("존재하지 않는 상품입니다."));
-        productRepository.updateProduct(update.getName(),update.getStock(),id);
+    public void updateProduct(Long id,ProductDto.ProductUpdateRequest update, CustomUser user){
 
-        ProductChangeEvent productChanged = ProductChangeEvent.builder()
-                .productId(product.getId())
-                .productStock(product.getStock())
-                .productName(product.getName())
-                .build();
+        ObjectMapper mapper = new ObjectMapper().registerModule(new JavaTimeModule());
 
-        ObjectMapper objectMapper = new ObjectMapper();
-        String json = null;
+
         try {
-            json = objectMapper.writeValueAsString(productChanged);
-        } catch (JsonProcessingException e) {
+            Product product = productRepository.findById(id).orElseThrow(()-> new Exception404("존재하지 않는 상품입니다."));
+            int affected = productRepository.updateProduct(update.getName(),update.getStock(),id);
+
+            log.info(mapper.writeValueAsString(product));
+            log.info("affected : {}",affected);
+
+            ProductChanged productChanged = ProductChanged.builder()
+                    .productId(id)
+                    .productStock(update.getStock())
+                    .productName(update.getName())
+                    .build();
+
+
+            String json = null;
+            try {
+                json = mapper.writeValueAsString(productChanged);
+            } catch (JsonProcessingException e) {
+                e.printStackTrace();
+                throw new Exception500("JSON format exception");
+            }
+
+            MessageChannel outputChannel = processor.output();
+
+            outputChannel.send(MessageBuilder
+                    .withPayload(json)
+                    .setHeader(MessageHeaders.CONTENT_TYPE, MimeTypeUtils.APPLICATION_JSON)
+                    .build());
+
+            log.info(json);
+        } catch (Exception e){
             e.printStackTrace();
-            throw new Exception500("JSON format exception");
         }
 
-        MessageChannel outputChannel = processor.output();
-        outputChannel.send(MessageBuilder
-                .withPayload(json)
-                .setHeader(MessageHeaders.CONTENT_TYPE, MimeTypeUtils.APPLICATION_JSON)
-                .build());
-
-        log.info(json);
     }
 
 
@@ -89,10 +102,5 @@ public class ProductService {
         productRepository.deleteById(id);
     }
 
-    @Transactional(readOnly = true)
-    public void selectById(Long id){
 
-        Product product = productRepository.selectById(id).orElseThrow(()-> new Exception404("존재하지 않는 상품입니다."));
-
-    }
 }

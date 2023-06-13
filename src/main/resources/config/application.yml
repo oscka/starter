@@ -25,14 +25,14 @@ spring:
     stream:
       kafka:
         binder:
-          brokers: localhost:9092
+          brokers: localhost:29092
       bindings:
-        input:
-          group: product
-          destination: order
-          contentType: application/json
-        output:
-          destination: order
+#        product-success-update:
+#          group: product
+#          destination: product-update-topic
+#          contentType: application/json
+        product-update-to-kafka:
+          destination: product-update-topic
           contentType: application/json
 
 #--------------------------

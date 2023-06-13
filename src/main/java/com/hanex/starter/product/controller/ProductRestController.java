@@ -23,36 +23,36 @@ public class ProductRestController {
 
 	private final ProductService productService;
 
-	@Operation(description = "상품 내역 검색(리스트)",summary = "상품 내역 검색 > 리스트,페이징")
+	@Operation(description = "상품 검색(리스트)",summary = "상품 검색 > 리스트,페이징")
 	@GetMapping
-	private ApiResponseDto searchProduct(@PageableDefault(size = 50, sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable){
+	public ApiResponseDto searchProduct(@PageableDefault(size = 50, sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable){
 		return ApiResponseDto.createOK(productService.searchProduct(pageable));
 	}
 
-	@Operation(description = "상품 내역 상세 조회",summary = "상품 내역 상세 조회")
+	@Operation(description = "상품 상세 조회",summary = "상품 상세 조회")
 	@GetMapping("/{id}")
-	private ApiResponseDto findProductById(@PathVariable Long id){
+	public ApiResponseDto findProductById(@PathVariable Long id){
 		return ApiResponseDto.createOK(productService.findProductById(id));
 	}
 
 
 	@Operation(description = "상품 생성",summary = "상품 생성")
-	@PostMapping("/{id}")
-	private ApiResponseDto createProduct(@RequestBody @Valid ProductDto.SaveRequest save, @AuthenticationPrincipal CustomUser user){
+	@PostMapping
+	public ApiResponseDto createProduct(@RequestBody @Valid ProductDto.ProductSaveRequest save, @AuthenticationPrincipal CustomUser user){
 		productService.createProduct(save,user);
 		return ApiResponseDto.DEFAULT_OK;
 	}
 
-	@Operation(description = "상품 내역 수정",summary = "상품 내역 수정")
+	@Operation(description = "상품 수정",summary = "상품 수정")
 	@PutMapping("/{id}")
-	private ApiResponseDto updateProduct(@PathVariable Long id,@RequestBody @Valid ProductDto.UpdateRequest update, @AuthenticationPrincipal CustomUser user){
+	public ApiResponseDto updateProduct(@PathVariable Long id,@RequestBody @Valid ProductDto.ProductUpdateRequest update, @AuthenticationPrincipal CustomUser user){
 		productService.updateProduct(id,update,user);
 		return ApiResponseDto.DEFAULT_OK;
 	}
 
-	@Operation(description = "상품 내역 삭제",summary = "상품 내역 삭제")
+	@Operation(description = "상품 삭제",summary = "상품 삭제")
 	@DeleteMapping("/{id}")
-	private ApiResponseDto deleteById(@PathVariable Long id,@AuthenticationPrincipal CustomUser user){
+	public ApiResponseDto deleteById(@PathVariable Long id,@AuthenticationPrincipal CustomUser user){
 		productService.deleteById(id,user);
 		return ApiResponseDto.DEFAULT_OK;
 	}

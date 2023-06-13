@@ -16,13 +16,13 @@ public class ProductDto {
     @Builder
     @NoArgsConstructor(access = AccessLevel.PROTECTED)
     @AllArgsConstructor
-    public static class SaveRequest {
+    public static class ProductSaveRequest {
 
         @Schema(description = "상품명",example = "스테이크볶음밥")
         private String name;
 
-        @Schema(description = "상품 수량",example = "100")
-        private Integer quantity;
+        @Schema(description = "상품 재고 수량",example = "100")
+        private Integer stock;
 
         @Schema(description = "상품설명",example = "남녀노소 좋아하는 스테이크볶음밥")
         private String description;
@@ -41,13 +41,14 @@ public class ProductDto {
         public Product toEntity(CustomUser user){
             return Product.builder()
                     .name(name)
-                    .quantity(quantity)
+                    .stock(stock)
                     .description(description)
+                    .productStatus(productStatus)
                     .productCode(UUID.randomUUID().toString().replaceAll("-",""))
                     .customerId(AggregateReference.to(customerId))
                     .supplyCompanyId(AggregateReference.to(supplyCompanyId))
-                    .createdBy(AggregateReference.to(user.getUserId().toString()))
-                    .updatedBy(AggregateReference.to(user.getUserId().toString()))
+                    .createdBy(AggregateReference.to(String.valueOf(user.getUserId())))
+                    .updatedBy(AggregateReference.to(String.valueOf(user.getUserId())))
                     .build();
         }
     }
@@ -64,8 +65,6 @@ public class ProductDto {
         @Schema(description = "상품명",example = "스테이크볶음밥")
         private String name;
 
-        @Schema(description = "상품 수량",example = "100")
-        private Integer quantity;
 
         @Schema(description = "상품설명",example = "남녀노소 좋아하는 스테이크볶음밥")
         private String description;
@@ -107,8 +106,8 @@ public class ProductDto {
         @Schema(description = "상품명",example = "스테이크볶음밥")
         private String name;
 
-        @Schema(description = "상품 수량",example = "100")
-        private Integer quantity;
+        @Schema(description = "상품 재고 수량",example = "100")
+        private Integer stock;
 
         @Schema(description = "상품설명",example = "남녀노소 좋아하는 스테이크볶음밥")
         private String description;
@@ -126,7 +125,6 @@ public class ProductDto {
         public Product toEntity(CustomUser user){
             return Product.builder()
                     .name(name)
-                    .quantity(quantity)
                     .description(description)
                     .productCode(UUID.randomUUID().toString().replaceAll("-",""))
                     .customerId(AggregateReference.to(customerId))
@@ -142,12 +140,12 @@ public class ProductDto {
     @Builder
     @NoArgsConstructor(access = AccessLevel.PROTECTED)
     @AllArgsConstructor
-    public static class UpdateRequest{
+    public static class ProductUpdateRequest{
 
         @Schema(description = "상품명",example = "스테이크볶음밥")
         private String name;
 
-        @Schema(description = "상품명",example = "100")
+        @Schema(description = "상품 재고 수량",example = "100")
         private Integer stock;
 
     }
