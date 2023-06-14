@@ -21,6 +21,9 @@ spring:
       nodes: redis-service.redis:6379,redis-service.redis:6380
       max-redirect: 3
 
+      # kafka-headless:9092
+      # kafka-headless:9093
+
 #-------------------------
 # swagger (springdoc-openapi)
 # production 에서는 swagger 비활성화

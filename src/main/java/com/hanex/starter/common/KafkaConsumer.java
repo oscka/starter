@@ -18,12 +18,12 @@ public class KafkaConsumer {
     public void productChanged(@Payload ProductChanged productChanged){
 
         try {
+            // TODO ObjectMapper bean 생성하는 class 작성할것 > 사용빈도 가 많으며,생성 비용이 높은 객체를 매번 생성하는건 리소스 낭비
             ObjectMapper mapper = new ObjectMapper();
             log.info("productChanged StreamListener : {}",mapper.writeValueAsString(productChanged));
         } catch (JsonProcessingException e){
             log.error("json parse error {}",e);
         }
-
     }
 
 //    @Bean

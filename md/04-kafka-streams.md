@@ -93,9 +93,15 @@ spring:
 #### 3) DLQ ( Dead Letter Queue )
 - DLQ 가 설정 되어 있을경우 실패한 메세지를 후속처리 하기위해 설정한 목적지로 전송된다.
 - DLQ 메커니즘 특성상 반드시 group 이 지정돼있어야한다.(실패한 메세지를 전송할 토픽에 group 이름이 들어감)
-- 기본값 >> DLQ: false 
+- 기본값 >> DLQ: false
+
+```yaml
+# DLQ name 설정
+spring.cloud.stream.kafka.streams.bindings.input.consumer.dlqName: foo-dlq
+```
 
 #### 4) Retry Template (재시도 프로퍼티 속성)
+
 
 
 
@@ -118,11 +124,18 @@ swagger > product api 화면에서 상품 정보를 수정한다.
 
 
 
+### ETC
 
+Kafka Consumer Properties
 
+- autoRebalanceEnabled
+파티션 밸런싱 자동 처리 여부 (기본값: true)
 
+- autoCommitOffset
 
+```yaml
+spring.cloud.stream.kafka.bindings.input.consumer.autoCommitOffset
+```
+메시지가 처리되었을 경우, 오프셋을 자동으로 커밋할지 설정 (기본값 : true)
 
-
-
-
+- In-Sync Replicas(ISR), ACK 설정 
