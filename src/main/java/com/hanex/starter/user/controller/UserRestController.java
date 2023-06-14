@@ -11,6 +11,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 import java.util.UUID;
 
 @Tag(name = "사용자 API",description = "JWT 토큰 발급용 사용자")
@@ -36,7 +38,8 @@ public class UserRestController {
 
 	@Operation(summary = "사용자 정보 수정",description = "user upate")
 	@PutMapping("/{id}")
-	public ResponseEntity<Void> update(@PathVariable UUID id,@Valid @RequestBody UserDto.UpdateRequest update){
+	public ResponseEntity<Void> update(@NotBlank @Pattern(regexp = "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$") @PathVariable UUID id,
+									   @Valid @RequestBody UserDto.UpdateRequest update){
 		userService.update(id,update);
 		return ResponseEntity.ok().build();
 	}

@@ -27,8 +27,6 @@ import java.util.UUID;
 @Slf4j
 public class JwtRequestFilter extends BasicAuthenticationFilter {
 
-
-
     public JwtRequestFilter(AuthenticationManager authenticationManager) {
         super(authenticationManager);
     }
@@ -36,13 +34,17 @@ public class JwtRequestFilter extends BasicAuthenticationFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filter) throws ServletException, IOException {
 
-        String header = request.getHeader(SecurityConstants.TOKEN_HEADER);
-
-        if (!StringUtils.hasLength(header)){
-            filter.doFilter(request,response);
-        }
+        String header = "";
 
         try {
+
+            header = request.getHeader(SecurityConstants.TOKEN_HEADER);
+
+            if (!StringUtils.hasLength(header)){
+                filter.doFilter(request, response);
+                return;
+            }
+
             byte[] signingkey = SecurityConstants.JWT_SECRET.getBytes();
 
             Jws<Claims> parsedToken = Jwts.parser().setSigningKey(signingkey)
@@ -66,6 +68,7 @@ public class JwtRequestFilter extends BasicAuthenticationFilter {
                 User user = User.builder()
                         .id(UUID.fromString(sub))
                         .loginId(loginId)
+                        .password("") // password 빈값으로 넣어야함!
                         .role(UserRole.valueOf(role))
                         .build();
 
@@ -77,7 +80,9 @@ public class JwtRequestFilter extends BasicAuthenticationFilter {
                                 myUserDetails.getPassword(),
                                 myUserDetails.getAuthorities()
                         );
+
                 SecurityContextHolder.getContext().setAuthentication(authentication);
+                filter.doFilter(request, response);
 
             }
 
@@ -89,8 +94,6 @@ public class JwtRequestFilter extends BasicAuthenticationFilter {
             log.warn("Request to parse invalid JWT : {} failed : {}", header, exception.getMessage());
         } catch (IllegalArgumentException exception) {
             log.warn("Request to parse empty or null JWT : {} failed : {}", header, exception.getMessage());
-        } finally {
-            filter.doFilter(request, response);
         }
     }
 

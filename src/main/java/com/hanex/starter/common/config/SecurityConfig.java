@@ -1,6 +1,5 @@
 package com.hanex.starter.common.config;
 
-import com.hanex.starter.common.exception.Exception400;
 import com.hanex.starter.common.exception.Exception401;
 import com.hanex.starter.common.exception.Exception403;
 import com.hanex.starter.common.security.FilterResponseUtil;
@@ -13,7 +12,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -61,7 +59,8 @@ public class SecurityConfig {
             // 9. CORS 설정
             builder.addFilter(corsConfig.corsFilter());
             // 시큐리티 관련 필터
-            builder.addFilterAfter(new JwtRequestFilter(authenticationManager),BasicAuthenticationFilter.class);
+            builder.addFilterBefore(new JwtRequestFilter(authenticationManager),BasicAuthenticationFilter.class);
+            //builder.addFilterAfter(new JwtRequestFilter(authenticationManager),BasicAuthenticationFilter.class);
 
             super.configure(builder);
         }
@@ -94,6 +93,9 @@ public class SecurityConfig {
         // 5. 커스텀 필터 등록 (security filter 교환)
         http.apply(new CustomSecurityFilterManager());
 
+        /*
+         SecurityConfig 에서 지정한 authenticationEntryPoint 와  accessDeniedHandler 는 GlobalExceptionHandler 에서 처리하지 않음
+         */
         // 6. 인증 실패 처리
         http.exceptionHandling().authenticationEntryPoint((request, response, authException) -> {
             log.warn("인증되지 않은 사용자가 resource 접근 : {}",authException.getMessage());
@@ -117,15 +119,14 @@ public class SecurityConfig {
             .authorizeRequests(
                     authorize -> authorize
                             .antMatchers("/v1/order/**").authenticated()
-                            .antMatchers("/v1/member/**").access("hasRole('CUSTOMER') or hasRole('ADMIN')")
                             .antMatchers("/v1/admin/**").hasRole("ADMIN")
                             .antMatchers("/v1/customer/**").hasRole("ADMIN")
+                            .antMatchers("/v1/member/**").access("hasRole('CUSTOMER') or hasRole('ADMIN')")
+                            .antMatchers("/v1/product/**").access("hasRole('CUSTOMER') or hasRole('MEMBER')")
                             .anyRequest().permitAll()
             );
 
-
-
-
+        // h2-console 접속을 위해 설정
         http.headers().addHeaderWriter(new XFrameOptionsHeaderWriter(XFrameOptionsHeaderWriter.XFrameOptionsMode.SAMEORIGIN));
         http.headers().frameOptions().sameOrigin();
 

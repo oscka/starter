@@ -58,6 +58,7 @@ public class CustomerService {
                 , update.getName()
                 , update.getPhone()
                 , update.getMemo()
+                , id
         );
 
         log.debug("Customer Update Result :: {}",isUpdated);

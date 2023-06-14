@@ -46,6 +46,20 @@ GlobalExceptionHandler.java 의 badRequest 메서드를 보면 @CustomErrorLog �
 
 ### ERROR RESPONSE
 - 에러 발생시 ApiResponseDto.java 를 직렬화한 json 을 반환하게됩니다.
+
+Exception400 응답 json
+```json
+{
+  "status": 400,
+  "msg": "badRequest",
+  "data": {
+    "key": "loginId",
+    "value": "중복되는 로그인 아이디 입니다."
+  }
+}
+```
+
+Exception500 응답 json
 ```json
 {
   "status": 500,
@@ -53,6 +67,7 @@ GlobalExceptionHandler.java 의 badRequest 메서드를 보면 @CustomErrorLog �
   "data": "PreparedStatementCallback; bad SQL grammar [SELECT\n     m.id\n     , m.name\n     , m.manager_name\n     , m.member_code\n     , m.ceo_name\n     , m.registration_number\n     , m.phone\n     , m.memo\n     , m.client_id\n     , m.email\n     , m.created_by\n     , m.created_at\n     , m.updated_by\n     , m.updated_at\nFROM member_tb m\n WHERE  ORDER BY string ASC LIMIT ? OFFSET ?]; nested exception is org.postgresql.util.PSQLException: ERROR: syntax error at or near \"ORDER\"\n  Position: 290"
 }
 ```
+
 
 ### Error Stack Trace 를 봐야할때
 
@@ -72,17 +87,5 @@ public void save(MemberDto.SaveRequest save){
     }catch (Exception e){
         e.printStackTrace();
     }
-}
-```
-
-Exception400 응답 json
-```json
-{
-  "status": 400,
-  "msg": "badRequest",
-  "data": {
-    "key": "loginId",
-    "value": "중복되는 로그인 아이디 입니다."
-  }
 }
 ```

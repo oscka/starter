@@ -71,10 +71,8 @@ public class OrderSql {
     }
 
     private static String whereAnd(String ... conditions) {
-        //List<String> finalCond = conditions.findAll({it != null});
         List<String> finalCond = Collections.singletonList(firstNonBlank(conditions));
         Assert.notEmpty(finalCond);
-        //return "WHERE " + finalCond.join("\nAND ");
         return " WHERE " + String.join(finalCond + "\nAND");
     }
 

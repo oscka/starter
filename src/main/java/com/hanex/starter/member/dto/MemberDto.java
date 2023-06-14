@@ -1,11 +1,11 @@
-package com.hanex.starter.member.query.dto;
+package com.hanex.starter.member.dto;
 
 import com.hanex.starter.common.enums.MemberType;
 import com.hanex.starter.common.enums.UserRole;
 import com.hanex.starter.common.enums.UserStatus;
 import com.hanex.starter.common.security.CustomUser;
 import com.hanex.starter.common.util.CommonEncoder;
-import com.hanex.starter.member.query.domain.Member;
+import com.hanex.starter.member.domain.Member;
 import com.hanex.starter.user.domain.BaseUser;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;

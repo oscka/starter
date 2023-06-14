@@ -39,7 +39,7 @@ application.yml 에서 profile 을 local 로 지정하면 application-local.yml 
 
 
 ### 3. docker-compose for Postgres
-- [docker-compose 로 Postgres 설치](etc/docker-compose.yml)  
+- [docker-compose 로 Postgres 설치](etc/postgres-docker127.0.0.1)  
 Postgres DB 를 설치해서 사용하고 싶다면 위 docker-compose.yml 를 이용하여 사용하면 된다.
 
 ### 4. API TEST

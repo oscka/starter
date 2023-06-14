@@ -27,7 +27,6 @@ https://postgresql.kr/docs/10/sql-keywords-appendix.html
 
 
 -- base_user: 로그인
-
 CREATE TABLE base_user (
 	id int8 NOT NULL GENERATED ALWAYS AS IDENTITY,
 	user_id varchar(40) NOT NULL UNIQUE,
@@ -91,7 +90,23 @@ CREATE TABLE user_tb (
     PRIMARY KEY (id)
 );
 
-
+-- product_tb: 상품
+CREATE TABLE product_tb (
+	id int8 NOT NULL GENERATED ALWAYS AS IDENTITY,
+	version int8,
+	product_name varchar(255) NOT NULL,
+	stock int8 NOT NULL,
+	description varchar(500),
+	product_code varchar(255),
+	product_status varchar(50),
+	customer_id varchar(200),
+	supply_company_id varchar(200),
+	created_by varchar(40),
+    created_at timestamp,
+    updated_by varchar(40),
+    updated_at timestamp,
+	PRIMARY KEY(id)
+);
 -----------------
 -- fk
 -----------------

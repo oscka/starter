@@ -2,7 +2,6 @@ package com.hanex.starter.customer.repository;
 
 import com.hanex.starter.common.enums.Group;
 import com.hanex.starter.customer.domain.Customer;
-import com.hanex.starter.member.query.repository.MemberSql;
 import com.hanex.starter.user.domain.BaseUser;
 import org.springframework.data.jdbc.repository.query.Modifying;
 import org.springframework.data.jdbc.repository.query.Query;
@@ -29,6 +28,8 @@ public interface CustomerRepository extends CrudRepository<Customer, String> , C
                 , name = :name
                 , phone = :phone
                 , memo = :memo
+                , version = version + 1
+           WHERE id = :id
         """
     )
     boolean changeCustomer(@Param("email") String email
@@ -36,5 +37,6 @@ public interface CustomerRepository extends CrudRepository<Customer, String> , C
                             , @Param("name") String name
                             , @Param("phone") String phone
                            , @Param("memo") String memo
+                           , @Param("id") String id
                         );
 }
