@@ -2,7 +2,7 @@
 # docker-compose 로 띄운 Kafka 에서 사용하는 간단한 Command
 
 # Create Topic (토픽 생성)
-docker exec kafka kafka-topics --create --topic product-update-topic --bootstrap-server kafka:9092 --replication-factor 1 --partitions 1
+docker exec kafka kafka-topics --create --topic product-update-dlq --bootstrap-server kafka:9092 --replication-factor 1 --partitions 1
 
 # Describe Topic (생성된 토픽 확인)
 docker exec kafka kafka-topics --describe --topic product-update-topic --bootstrap-server kafka:9092

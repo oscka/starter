@@ -58,41 +58,39 @@ public class ProductService {
     }
 
 
-    @Transactional
-    public void updateProduct(Long id,ProductDto.ProductUpdateRequest update, CustomUser user){
+    // TODO CustomUser > 각 entity 에 setting 하지 않고 @CreatedBy ,@LastModifiedBy (JDBC Audit 기능) 사용할 방법?
+    public void updateProduct(Long id,ProductDto.ProductUpdateRequest request, CustomUser user){
 
+        // RDB 작업
+        update(id,request);
+
+        ProductChanged productChanged = ProductChanged.builder()
+                .productId(id)
+                .productStock(request.getStock())
+                .productName(request.getName())
+                .build();
+
+        // TODO mapper bean 으로 만드는 class 생성
         ObjectMapper mapper = new ObjectMapper().registerModule(new JavaTimeModule());
-
-
+        String json = "";
         try {
-            Product product = productRepository.findById(id).orElseThrow(()-> new Exception404("존재하지 않는 상품입니다."));
-            int affected = productRepository.updateProduct(update.getName(),update.getStock(),id);
-            ProductChanged productChanged = ProductChanged.builder()
-                    .productId(id)
-                    .productStock(update.getStock())
-                    .productName(update.getName())
-                    .build();
-
-
-            String json = null;
-            try {
-                json = mapper.writeValueAsString(productChanged);
-            } catch (JsonProcessingException e) {
-                e.printStackTrace();
-                throw new Exception500("JSON format exception");
-            }
-
-            MessageChannel outputChannel = processor.output();
-
-            outputChannel.send(MessageBuilder
-                    .withPayload(json)
-                    .setHeader(MessageHeaders.CONTENT_TYPE, MimeTypeUtils.APPLICATION_JSON)
-                    .build());
-
-        } catch (Exception e){
-            e.printStackTrace();
+            json = mapper.writeValueAsString(productChanged);
+        } catch (JsonProcessingException e){
+            throw new Exception500("JSON format exception");
         }
 
+        MessageChannel outputChannel = processor.output();
+
+        outputChannel.send(MessageBuilder
+                .withPayload(json)
+                .setHeader(MessageHeaders.CONTENT_TYPE, MimeTypeUtils.APPLICATION_JSON)
+                .build());
+    }
+
+    @Transactional
+    private void update(Long id,ProductDto.ProductUpdateRequest update){
+        Product product = productRepository.findById(id).orElseThrow(()-> new Exception404("존재하지 않는 상품입니다."));
+        int affected = productRepository.updateProduct(update.getName(),update.getStock(),id);
     }
 
 

@@ -8,8 +8,8 @@ import org.springframework.messaging.SubscribableChannel;
 
 public interface StreamProcessor {
 
-    String INPUT = "product-success-update";
-    String OUTPUT = "product-update-to-kafka";
+    String INPUT = "productUpdate-in-0";
+    String OUTPUT = "productUpdate-out-0";
 
     @Input(INPUT)
     SubscribableChannel input();

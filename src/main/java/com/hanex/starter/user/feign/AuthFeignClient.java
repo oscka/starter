@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.Map;
 
-@FeignClient(value = "authFeignClient", url = "${api.auth-service}")
+@FeignClient(value = "authFeignClient", url = "${api.auth-service.url}")
 public interface AuthFeignClient {
 
     @PostMapping("/security/jwtlogin")

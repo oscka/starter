@@ -1,4 +1,4 @@
-package com.hanex.starter.common.operation;
+package com.hanex.starter.common.redis;
 
 import org.springframework.data.redis.core.RedisOperations;
 
