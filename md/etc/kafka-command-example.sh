@@ -9,9 +9,10 @@ docker exec kafka kafka-topics --describe --topic product-update-topic --bootstr
 
 # Remove Topic (토픽 삭제)
 docker exec kafka kafka-topics --delete --topic product-update-topic --bootstrap-server kafka:9092
+docker exec kafka kafka-topics --delete --topic domainEventModel-out-0 --bootstrap-server kafka:9092
 
 # Show List Topic (토픽 리스트 확인)
-docker exec kafka kafka-topics --list --bootstrap-server kafka:9092
+
 
 # 컨슈머 실행
 ## 1) 컨테이너 내부의 쉘로 접속
@@ -20,7 +21,7 @@ docker exec -it kafka bash
 ## 2) 컨슘할 토픽을 지정하고, 브로커를 지정하기 위해서 --bootstrap-server 를 이용
 # [appuser@c0715a9c629a ~]$ kafka-console-consumer --topic {토픽명} --bootstrap-server kafka:9092
 kafka-console-consumer --topic product-update-topic --bootstrap-server kafka:9092
-
+#  해당 토픽의 모든 메시지 출력
 kafka-console-consumer --topic product-update-topic --from-beginning --bootstrap-server kafka:9092
 
 # 프로듀서 실행하기

@@ -79,7 +79,48 @@
 #    기본값 : 16384
     
     batchTimeout
-    프로듀서가 메시지를 보내기 전에 동일한 배치에 더 많은 메시지가 누적될 수 있도록 대기하는 시간. 
-    예를 들어 버퍼사이즈가 꽉 차지 않았을 경우 얼마나 기다렸다고 메시지 처리할 것인가를 정하는 시간이다.
-    기본값 : 0
+# 프로듀서가 메시지를 보내기 전에 동일한 배치에 더 많은 메시지가 누적될 수 있도록 대기하는 시간. 
+# 예를 들어 버퍼사이즈가 꽉 차지 않았을 경우 얼마나 기다렸다고 메시지 처리할 것인가를 정하는 시간이다.
+# 기본값 : 0
 ```
+-------------------------------------------
+auto.offset.reset
+
+auto.offset.reset에서 offset은 consumer offset입니다. 
+만약 이번에 topic에 붙은 consumer의 offset정보가 존재하지 않는다면 
+auto.offset.reset의 default값(latest)이나 또는 설정한 값을 따라가게 됩니다.
+
+- latest 
+  - 가장 마지막 offset부터
+- earliest
+  - 가장 처음 offset부터
+- none
+  - 해당 consumer group이 가져가고자 하는 topic의 consuer offset정보가 없으면 exception을 발생시킴.
+-------------------------------------------
+
+- RECORD
+  - 레코드 단위로 프로세싱 이후 커밋
+- BATCH
+  - poll() 메서드로 호출된 레코드가 모두 처리된 이후 커밋 , 스프링 카프카 컨슈머의 AckMode 기본값
+- TIME
+  - 특정 시간 이후에 커밋이 옵션을 사용할 경우 시간 간격을 선언하는 AckTime 옵션을 설정해야 한다.
+- COUNT
+  - 특정 개수만큼 레코드가 처리된 이후 커밋이 옵션을 사용할 경우에는 레코드 개수를 선언하는 AckCount 옵션을 설정해야 한다.
+- COUNT_TIME
+  - TIME, COUNT 옵션 중 맞는 조건이 하나라도 나올 경우 커밋
+- MANUAL
+  - Acknowledgement.acknowledge() 메서드가 호출되면 다음번 poll() 때 커밋을 한다.
+  - 매번 acknowledge() 메서드를 호출하면 BATCH 옵션과 동일하게 동작한다.
+  - 이 옵션을 사용할 경우에는 AcknowledgingMessageListener 또는 BatchAcknowledgingMessageListener를 리스너로 사용해야 한다.
+- MANUAL_IMMEDIATE
+  - Acknowledgement.acknowledge() 메서드를 호출한 즉시 커밋한다.
+  - 이 옵션을 사용할 경우에는 AcknowledgingMessageListener 또는 BatchAcknowledgingMessageListener를 리스너로 사용해야 한다.
+
+-------------
+재시도 구현을 위한 구성:
+spring.cloud.stream.bindings.poppyPants.consumer.maxAttempts=3
+spring.cloud.stream.bindings.poppyPants.consumer.backOffInitialInterval=900000
+spring.cloud.stream.bindings.poppyPants.consumer.backOffMaxInterval=900000
+spring.cloud.stream .bindings.poppyPants.consumer.backoffMultiplier=1.0
+spring.cloud.stream.bindings.poppyPants.consumer.defaultRetryable=false
+-------------
