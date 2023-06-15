@@ -20,9 +20,14 @@ spring:
       # 6379 : master , 6380 slave
       nodes: redis-service.redis:6379,redis-service.redis:6380
       max-redirect: 3
-
-      # kafka-headless:9092
-      # kafka-headless:9093
+  #--------------------------
+  # spring.cloud.stream (kafka 설정)
+  #--------------------------
+  cloud:
+    stream:
+      kafka:
+        binder:
+          brokers: kafka-headless.kafka:9092, kafka-headless.kafka:9093
 
 #-------------------------
 # swagger (springdoc-openapi)
@@ -33,3 +38,10 @@ springdoc:
     enabled: false # swagger-ui 비활성화
   api-docs:
     enabled: false
+
+#--------------------------
+# API CONFIG
+#--------------------------
+api:
+  auth-service:
+    url: http://auth-service.auth.svc.cluster.local:18080

@@ -19,6 +19,15 @@ spring:
     port: 6001
     cluster:
       mode: false
+  #--------------------------
+  # spring.cloud.stream (kafka 설정)
+  #--------------------------
+  cloud:
+    stream:
+      kafka:
+        binder:
+          brokers: localhost:29092
+
 
 
 #-------------------------
@@ -27,3 +36,9 @@ spring:
 logging:
   config: classpath:log4j2-local.xml
 
+#--------------------------
+# API CONFIG
+#--------------------------
+api:
+  auth-service:
+    url: http://localhost:18080
