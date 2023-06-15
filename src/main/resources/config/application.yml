@@ -21,41 +21,67 @@ spring:
     location: "classpath:config/app-banner.txt"
   lifecycle:
     timeout-per-shutdown-phase: 35s # graceful shutdown 유예시간 설정 (default 30s)
+
   #--------------------------
   # spring.cloud.stream (kafka 설정)
   #--------------------------
   cloud:
     stream:
-      # spring.cloud.function
-      function.definition: productUpdate
-
+      defaultBinder: kafka
+      # spring.cloud.stream.function
+      function:
+        definition: productUpdate
+      # spring.cloud.stream.bindings
       bindings:
         productUpdate-in-0:
-          group: product
           destination: product-update-topic
+          group: product
           contentType: application/json
+          consumer:
+            max-attempts: 2
         productUpdate-out-0:
           destination: product-update-topic
           contentType: application/json
+
+      # spring.cloud.stream.kafka
       kafka:
+        # spring.cloud.stream.kafka.default
         default:
           consumer:
             ack-mode: MANUAL_IMMEDIATE
+          producer:
+            useTopicHeader: true
+        # spring.cloud.stream.kafka.bindings
         bindings:
           productUpdate-in-0:
             consumer:
+              autoCommitOffset: false # 메시지가 처리되었을 경우, 오프셋을 자동으로 커밋할지를 설정한다.
               enableDlq: true
               dlqName: product-update-dlq
+              #dlqPartitions: 1
+        # spring.cloud.stream.kafka.binder
         binder:
-          configuration:
-            auto.offset.reset: earliest
-        #    key.deserializer: org.apache.kafka.common.serialization.StringDeserializer
-        #    value.deserializer: org.apache.kafka.common.serialization.StringDeserializer
+          autoCreateTopics: false # true로 설정하면 토픽이 존재하지 않을 경우 자동으로 토픽을 만들어준다.
+          producerProperties:
+            key.serializer: org.apache.kafka.common.serialization.StringSerializer
+            value.serializer: org.apache.kafka.common.serialization.ByteArraySerializer
+            #max.block.ms: 100
+#          configuration:
+            #auto.offset.reset: earliest
 
 #--------------------------
 # logging
 #--------------------------
-logging.config: classpath:log4j2.xml
+logging:
+  config: classpath:log4j2.xml
+  level:
+    org.springframework: WARN
+    com.spring.kafka: DEBUG
+    org:
+      apache:
+        kafka:
+          common:
+            config.AbstractConfig: WARN
 
 #--------------------------
 # actuator
