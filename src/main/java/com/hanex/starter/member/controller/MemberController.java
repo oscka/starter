@@ -41,7 +41,7 @@ public class MemberController {
 	@Operation(summary = "사용자 리스트 조회", description = "Customer (고객사) 가 사용자 리스트 조회")
 	@GetMapping
 	public ApiResponseDto findAll(@PageableDefault(page = 0, size = 10, sort = "created_at", direction = Sort.Direction.DESC) Pageable pageable
-			 					,  @Nullable MemberSearchCondition memberSearchCondition){
+			 					,  @RequestParam MemberSearchCondition memberSearchCondition){
 		return ApiResponseDto.createOK(memberService.findByCustomerIdAndSearchCondition(pageable,memberSearchCondition));
 	}
 

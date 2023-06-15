@@ -93,14 +93,12 @@ custom:
 # open feign
 #--------------------------
 feign:
-  # circuitbreaker:
-  #   enabled: true
   client:
     config:
       default:
-        connectTimeout: 5000  # feign의 전역 timeout 설정 : 5초
-        readTimeout: 5000
-        loggerLevel: FULL # basic
+        connectTimeout: 50000  # feignClient 연결 시간 제한 전역 설정 (default: 10초)
+        readTimeout: 10000     # feignClient 읽기 시간 제한 전역 설정 (default: 60초)
+        loggerLevel: FULL      # feignClient 로그 레벨 전역 설정 (BASIC)
 
 #--------------------------
 # app info
@@ -108,5 +106,5 @@ feign:
 app-info:
   title: starter
   build:
-    version: "${project.version}"
-    timestamp: '@project.timestamp@'
+    version: "${version}"
+    timestamp: "${ext.projectBuildTime}"
