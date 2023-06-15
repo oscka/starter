@@ -1,6 +1,5 @@
-package com.hanex.starter.consumer;
+package com.hanex.starter.kafka;
 
-import com.hanex.starter.product.event.ProductChanged;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -10,26 +9,31 @@ import org.springframework.messaging.Message;
 
 import java.util.function.Consumer;
 
-
+/**
+ * kafka consumer sample
+ */
 @Slf4j
 @Configuration
 public class KafkaConsumer {
 
+    /**
+     * productUpdate Consume
+     * @return
+     */
     @Bean
-    Consumer<Message<ProductChanged>> productUpdate() {
-        log.info("KafkaConsumer >  productUpdate ----------------------------------------------------------");
-
-
+    Consumer<Message<String>> productUpdate() {
         return ((input) ->{
            try {
+               log.info("[productUpdate] -------------- [Consumer] -------------- Header : {}" ,input.getHeaders());
+               log.info("[productUpdate] -------------- [Consumer] -------------- Payload : {}" ,input.getPayload());
 
-               log.info(input.getHeaders().toString());
-               log.info(String.valueOf(input.getPayload()));
+               // 로직 수행후 offset 커밋
                Acknowledgment acknowledgment = input.getHeaders().get(KafkaHeaders.ACKNOWLEDGMENT, Acknowledgment.class);
                if(acknowledgment != null){
+                   log.info("[productUpdate] -------------- [Consumer] -------------- Acknowledgment provided -------------- ");
                    acknowledgment.acknowledge();
                }
-               log.info("KafkaConsumer >  productUpdateEvent ----------------------------------------------------------");
+
            }catch (Exception e){
                e.printStackTrace();
            }
@@ -37,7 +41,7 @@ public class KafkaConsumer {
 
     }
 
-
+// 방법 1) StreamListener
 //    @StreamListener(StreamProcessor.INPUT)
 //    public void productChanged(@Payload ProductChanged productChanged){
 //        try {
@@ -47,8 +51,4 @@ public class KafkaConsumer {
 //        }
 //    }
 
-//    @Bean
-//    public Consumer<Message> productUpdateEvent(){
-//        return message -> log.info("product Change Consume :: {}",message);
-//    }
 }

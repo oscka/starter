@@ -5,7 +5,7 @@ import com.hanex.starter.common.exception.Exception404;
 import com.hanex.starter.common.security.CustomUser;
 import com.hanex.starter.product.domain.Product;
 import com.hanex.starter.product.dto.ProductDto;
-import com.hanex.starter.product.event.KafkaProducer;
+import com.hanex.starter.kafka.KafkaProducer;
 import com.hanex.starter.product.event.ProductChanged;
 import com.hanex.starter.product.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
