@@ -16,7 +16,7 @@ spring:
       #path: /h2-console  # H2 Console의 Path
   redis:
     host: host.docker.internal
-    port: 6001
+    port: 6379
     cluster:
       mode: false
   #--------------------------

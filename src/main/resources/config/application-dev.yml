@@ -16,7 +16,7 @@ spring:
   #-------------------------
   redis:
     host: host.docker.internal
-    port: 6001
+    port: 6379
     cluster:
       mode: false
   #--------------------------
