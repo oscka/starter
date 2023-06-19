@@ -62,17 +62,43 @@ RabbitMQ, Apache Kafka, Kafka Streams, Amazon Kinesis 등 다양한 binder 를 �
 spring:
   cloud:
     stream:
-      kafka:
-        binder:
-          brokers: localhost:29092
+      defaultBinder: kafka
+      # spring.cloud.stream.function
+      function:
+        definition: productUpdate
+      # spring.cloud.stream.bindings
       bindings:
-        product-success-update:
+        productUpdate-in-0:
+          destination: product-update-topic
           group: product
+          contentType: application/json
+          consumer:
+            max-attempts: 2
+        productUpdate-out-0:
           destination: product-update-topic
-          contentType: application/json # 인바운드 역직렬화
-        product-update-to-kafka:
-          destination: product-update-topic
-          contentType: application/json # 아웃바운드 직렬화
+          contentType: application/json
+      # spring.cloud.stream.kafka
+      kafka:
+        # spring.cloud.stream.kafka.default
+        default:
+          consumer:
+            ack-mode: MANUAL_IMMEDIATE
+          producer:
+            useTopicHeader: true
+        # spring.cloud.stream.kafka.bindings
+        bindings:
+          productUpdate-in-0:
+            consumer:
+              autoCommitOffset: false # 메시지가 처리되었을 경우, 오프셋을 자동으로 커밋할지를 설정한다.
+              enableDlq: true
+              dlqName: product-update-dlq
+              #dlqPartitions: 1
+        # spring.cloud.stream.kafka.binder
+        binder:
+          autoCreateTopics: false # true로 설정하면 토픽이 존재하지 않을 경우 자동으로 토픽을 만들어준다.
+          producerProperties:
+            key.serializer: org.apache.kafka.common.serialization.StringSerializer
+            value.serializer: org.apache.kafka.common.serialization.ByteArraySerializer
 ```
 - spring.cloud.stream.kafka.binder.brokers
   - Kafka 바인더가 연결되는 브로커 목록
@@ -82,15 +108,16 @@ spring:
 
 ### 6. starter 프로젝트 sample code flow
 
-1. Create Topic
-   product-update-topic 을 만들어준다.
+1. Create Topic (토픽 생성)
+   product-update-topic, product-update-dlq 을 만들어준다.
 ```shell
 docker exec kafka kafka-topics --create --topic product-update-topic --bootstrap-server kafka:9092 --replication-factor 1 --partitions 1
+docker exec kafka kafka-topics --create --topic product-update-dlq --bootstrap-server kafka:9092 --replication-factor 1 --partitions 1
 ```
 
-2. product 정보 변경시 event 발생
-   swagger > product api 화면에서 상품 정보를 수정한다.
-   이벤트 발생시 kafka consumer shell 에서 확인할 수 있다.
+2. product 정보 수정
+   - swagger > product api 화면에서 상품 정보를 수정한다.
+   - 이벤트 발생시 아래 명령어로 터미널에서 확인할 수 있다.
 ```shell
 [appuser@c0715a9c629a ~]$ kafka-console-consumer --topic product-update-topic --from-beginning --bootstrap-server kafka:9092
 {"eventType":"ProductChanged","productId":1,"productName":"스테이크볶음밥","productStock":50}
@@ -118,8 +145,6 @@ spring.cloud.stream.kafka.streams.bindings.input.consumer.dlqName: foo-dlq
 ```
 
 #### 4) Retry Template (재시도 프로퍼티 속성)
-
-
 
 
 
