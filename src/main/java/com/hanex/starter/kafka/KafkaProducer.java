@@ -1,7 +1,8 @@
-package com.hanex.starter.product.event;
+package com.hanex.starter.kafka;
 
 import com.hanex.starter.common.exception.Exception500;
 import com.hanex.starter.common.util.CustomObjectMapper;
+import com.hanex.starter.product.event.ProductChanged;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.stream.function.StreamBridge;
@@ -38,7 +39,7 @@ public class KafkaProducer {
                 .withPayload(productChanged)
                 .setHeader(KafkaHeaders.MESSAGE_KEY, UUID.randomUUID().toString())
                 .build());
-            log.info("result : {}",result);
+            log.info("KafkaProducer > updateProduct > productUpdate-out-0 result : {}",result);
 
         } catch (Exception e){
             e.printStackTrace();
