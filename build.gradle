@@ -8,7 +8,8 @@ plugins {
 
 group = 'com.hanex'
 version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '17'
+sourceCompatibility = JavaVersion.VERSION_17
+
 
 configurations {
 	compileOnly {
@@ -31,61 +32,55 @@ def getDate() {
 
 ext {
 	set('springCloudVersion', "2021.0.7")
-	projectBuildTime = getDate()
+	timestamp = getDate()
 }
 
-springBoot {
-	buildInfo {
-		properties {
-			additional = [
-					'java.version': JavaVersion.current(),
-					'project.build.timestamp': getDate(),
-					'project.version':project.getVersion(),
-			]
+// app banner
+task appInfo {
+
+	springBoot {
+		buildInfo {
 		}
+		finalizedBy 'processResources'
 	}
-}
 
-processResources {
-	filesMatching('**/application.yml') {
-		expand(project.properties)
+	processResources {
+		filesMatching('**/application.yml') {
+			expand(project.properties)
+		}
 	}
 }
 
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 
-	// aop
-	implementation 'org.springframework.boot:spring-boot-starter-aop'
-
-	implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
-	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+	implementation 'org.springframework.boot:spring-boot-starter-aop' // aop
+	implementation 'org.springframework.boot:spring-boot-starter-data-jdbc' // spring data jdbc
+	implementation 'org.springframework.boot:spring-boot-starter-data-redis' // redis
 	implementation 'org.springframework.boot:spring-boot-starter-actuator'
-	implementation 'org.springframework.boot:spring-boot-starter-validation'
-	implementation "org.springframework.cloud:spring-cloud-starter-openfeign"
+	implementation "org.springframework.cloud:spring-cloud-starter-openfeign"  // OpenFeign
+	implementation 'org.springframework.cloud:spring-cloud-starter-stream-kafka' // Kafka
 
-	// kafka
-	implementation 'org.springframework.cloud:spring-cloud-starter-stream-kafka'
 
-	// log4j2
-	//implementation 'org.springframework.boot:spring-boot-starter-log4j2'
-
-	// log4j2 start
-	implementation group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.15.0'
-	implementation group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.15.0'
-	implementation group: 'org.apache.logging.log4j', name: 'log4j-jul', version: '2.15.0'
-	implementation group: 'org.apache.logging.log4j', name: 'log4j-slf4j-impl', version: '2.15.0'
-	implementation group: 'org.slf4j', name: 'slf4j-api', version: '1.7.32'
-	implementation group: 'org.slf4j', name: 'jul-to-slf4j', version: '1.7.32'
-	// log4j2 end
+	//implementation 'org.springframework.boot:spring-boot-starter-log4j2' // log4j2
+	// ---------- log4j2 start
+	implementation 'org.apache.logging.log4j:log4j-api:2.20.0'
+	implementation 'org.apache.logging.log4j:log4j-core:2.20.0'
+	implementation 'org.apache.logging.log4j:log4j-slf4j-impl:2.20.0'
+	implementation 'org.apache.logging.log4j:log4j-jul:2.20.0'
+	implementation 'org.slf4j:slf4j-api:1.7.32'
+	implementation 'org.slf4j:jul-to-slf4j:1.7.32'
+	// ---------- log4j2 end
 
 	implementation 'org.apache.commons:commons-lang3:3.12.0'
 
-	// jwt
+	// ---------- jwt start
 	implementation "io.jsonwebtoken:jjwt-api:0.11.2"
 	implementation 'io.jsonwebtoken:jjwt-impl:0.11.2'
 	implementation 'io.jsonwebtoken:jjwt-jackson:0.11.2'
+	// ---------- jwt end
 
 	implementation 'org.springdoc:springdoc-openapi-ui:1.6.14' // swagger
 
@@ -106,11 +101,6 @@ dependencies {
 
 tasks.named('test') {
 	useJUnitPlatform()
-}
-
-
-tasks.named('compileJava') {
-	options.encoding = 'UTF-8'
 }
 
 

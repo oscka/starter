@@ -21,7 +21,6 @@ spring:
     location: "classpath:config/app-banner.txt"
   lifecycle:
     timeout-per-shutdown-phase: 35s # graceful shutdown 유예시간 설정 (default 30s)
-
   #--------------------------
   # spring.cloud.stream (kafka 설정)
   #--------------------------
@@ -42,7 +41,6 @@ spring:
         productUpdate-out-0:
           destination: product-update-topic
           contentType: application/json
-
       # spring.cloud.stream.kafka
       kafka:
         # spring.cloud.stream.kafka.default
@@ -66,7 +64,7 @@ spring:
             key.serializer: org.apache.kafka.common.serialization.StringSerializer
             value.serializer: org.apache.kafka.common.serialization.ByteArraySerializer
             #max.block.ms: 100
-#          configuration:
+            #          configuration:
             #auto.offset.reset: earliest
 
 #--------------------------
@@ -74,14 +72,7 @@ spring:
 #--------------------------
 logging:
   config: classpath:log4j2.xml
-  level:
-    org.springframework: WARN
-    com.spring.kafka: DEBUG
-    org:
-      apache:
-        kafka:
-          common:
-            config.AbstractConfig: WARN
+
 
 #--------------------------
 # actuator
@@ -130,7 +121,7 @@ feign:
 # app info
 #--------------------------
 app-info:
-  title: starter
+  title: "${name}"
   build:
     version: "${version}"
-    timestamp: "${ext.projectBuildTime}"
+    timestamp: "${ext.timestamp}"

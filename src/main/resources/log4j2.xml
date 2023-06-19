@@ -3,7 +3,8 @@
 
     <Properties>
         <Property name="LOG_PATH">./logs/starter.log</Property>
-        <Property name="LOG_FORMAT">[%date{yyyy-MM-dd HH:mm:ss}] %level %logger{36}(%file:%line) - %msg%n</Property>
+        <!--<Property name="LOG_FORMAT">[%date{yyyy-MM-dd HH:mm:ss}] %level %logger{36}(%file:%line) - %msg%n</Property>-->
+        <Property name="LOG_FORMAT">%date{yyyy-MM-dd HH:mm:ss}] [%t] [%equals{%X{trace_id}}{}{startup}]%-5level %logger{36}(%F:%L) - %msg%n</Property>
     </Properties>
 
     <Appenders>
@@ -21,13 +22,20 @@
         </RollingFile>
     </Appenders>
 
+    <!--Log 대상 설정-->
+    <!--TRACE > DEBUG > INFO > WARN > ERROR > FATAL -->
     <Loggers>
+
+        <Logger name="org.springframework" level="ERROR" additivity="false">
+            <AppenderRef ref="Console" />
+            <AppenderRef ref="file" />
+        </Logger>
+
         <!-- Root logger -->
-        <Root level="info">
+        <Root level="INFO">
             <AppenderRef ref="Console"/>
             <AppenderRef ref="file" />
         </Root>
-
 
     </Loggers>
 </Configuration>
