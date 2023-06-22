@@ -1,0 +1,31 @@
+#-----------------------
+# product.http
+# 상품 API 테스트
+#-----------------------
+
+### 상품 생성
+POST /v1/product
+Host: localhost:8080
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+{
+    "name": "스테이크볶음밥",
+    "stock": 100,
+    "description": "남녀노소 좋아하는 스테이크볶음밥",
+    "productStatus": "Y",
+    "customerId": "e1065afe-5d59-4293-b3f9-037d3122b8b6",
+    "supplyCompanyId": "5edfc5a9-3675-4b6d-a72e-43a7f5c6cf0f",
+}
+
+### 상품 수정
+# PUT /v1/product/{productId}
+PUT /v1/product/1
+Host: localhost:8080
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+{
+    "name": "스테이크볶음밥",
+    "stock": 50,
+}

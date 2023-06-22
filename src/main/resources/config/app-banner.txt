@@ -6,5 +6,4 @@
 |   _   ||   _   || | |   |       |   |___ |   _   ||   |    |   |  | ||   |___  _____| | _____| |
 |__| |__||__| |__||_|  |__|       |_______||__| |__||___|    |___|  |_||_______||_______||_______|
 
-
 :: HAN-EXPRESS :: ${app-info.title} (version: ${app-info.build.version}, build-time: ${app-info.build.timestamp}) :: Powered by Spring Boot ${spring-boot.version} ::
